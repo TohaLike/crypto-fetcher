@@ -7,13 +7,9 @@ import Image from "next/image";
 
 import logo from "./logo.svg";
 
-interface Props {
-  className?: string;
-}
-
-export const Header: React.FC<Props> = ({ className }) => {
+export const Header: React.FC = ({ }) => {
   return (
-    <header>
+    <header className={header.header}>
       <Container>
         <div className={header.container}>
           <div className={header.header__logo}>
@@ -24,12 +20,12 @@ export const Header: React.FC<Props> = ({ className }) => {
               height={32}
               draggable={false}
             />
-            <Typography variant="h1" fontSize={32}>
+            <Typography variant="h1" fontSize={24} fontFamily={"unset"}>
               Crypto Fetcher
             </Typography>
           </div>
-          <div>
-            <Avatar sx={{ width: 42, height: 42, bgcolor: "green" }} />
+          <div className={header.avatar}>
+            <Avatar sx={{ width: 40, height: 40, bgcolor: "green" }}>A</Avatar>
           </div>
         </div>
       </Container>

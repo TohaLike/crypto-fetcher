@@ -6,5 +6,5 @@ interface Props {
 }
 
 export const Container: React.FC<React.PropsWithChildren<Props>> = ({ children }) => {
-  return <CustomContainer sx={{maxWidth: 1470}} maxWidth={false}>{children}</CustomContainer>;
+  return <CustomContainer sx={{maxWidth: 1250}} maxWidth={false}>{children}</CustomContainer>;
 };
