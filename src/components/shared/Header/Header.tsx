@@ -5,7 +5,7 @@ import { Container } from "../Container/Container";
 import { Avatar, Typography } from "@mui/material";
 import Image from "next/image";
 
-import logo from "./logo.svg";
+import logo from "../Assets/Icons/logo.svg";
 
 export const Header: React.FC = ({ }) => {
   return (
