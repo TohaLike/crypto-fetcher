@@ -58,6 +58,7 @@ export const RegisterModal: React.FC<Props> = ({}) => {
                 fontWeight={"regular"}
                 lineHeight={"normal"}
                 fontSize={15}
+                textAlign={"start"}
               >
                 This information will not be publicly available. Please confirm
                 your age, even if this account is intended for a company, pet,

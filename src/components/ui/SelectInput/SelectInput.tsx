@@ -44,7 +44,7 @@ export const SelectInput: React.FC<Props> = ({ label }) => {
             native: true,
             IconComponent: () => (
               <Box sx={{ position: "absolute", top: "18px", right: "5px" }}>
-                <Image src={arrow} alt="arrow" />
+                <Image src={arrow} alt="arrow" draggable={false} />
               </Box>
             ),
           },
