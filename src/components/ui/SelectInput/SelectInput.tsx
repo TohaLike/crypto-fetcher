@@ -5,32 +5,20 @@ import Image from "next/image";
 
 import arrow from "@/components/shared/Assets/Icons/arrow.svg";
 
+interface Option {
+  value: string | number; 
+  label: string;         
+}
+
 interface Props {
   label: string;
   value: string;
+  array: Option[];
   onChange?: (value: string) => void;
 }
 
-const currencies = [
-  {
-    value: "USD",
-    label: "$",
-  },
-  {
-    value: "EUR",
-    label: "€",
-  },
-  {
-    value: "BTC",
-    label: "฿",
-  },
-  {
-    value: "JPY",
-    label: "¥",
-  },
-];
 
-export const SelectInput: React.FC<Props> = ({ label }) => {
+export const SelectInput: React.FC<Props> = ({ label, array, onChange }) => {
   return (
     <>
       <TextField
@@ -38,6 +26,7 @@ export const SelectInput: React.FC<Props> = ({ label }) => {
         select
         label={label || ""}
         defaultValue={""}
+        onChange={(value: any) => onChange && onChange(value)}
         slotProps={{
           input: { disableUnderline: true } as Partial<OutlinedInputProps>,
           select: {
@@ -73,9 +62,9 @@ export const SelectInput: React.FC<Props> = ({ label }) => {
           },
         }}
       >
-        {currencies.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
+        {array.map((option) => (
+          <option key={option?.value} value={option?.value}>
+            {option?.label}
           </option>
         ))}
       </TextField>

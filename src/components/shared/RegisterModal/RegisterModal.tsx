@@ -3,13 +3,26 @@ import React, { useState } from "react";
 import registermodal from "./registermodal.module.scss";
 import { AuthButton, AuthInput, SelectInput } from "@/components/ui";
 import { Box, Modal, Stack, Typography } from "@mui/material";
+import { observer } from "mobx-react-lite";
+import { stateAauth } from "@/store/store";
 import Image from "next/image";
 
 import logo from "../Assets/Icons/logo.svg";
 
-interface Props {}
+const year = [
+  { value: "1", label: "2003" },
+  { value: "2", label: "2004" },
+];
+const month = [
+  { value: "1", label: "august" },
+  { value: "2", label: "september" },
+];
+const day = [
+  { value: "1", label: "6" },
+  { value: "2", label: "7" },
+];
 
-export const RegisterModal: React.FC<Props> = ({}) => {
+export const RegisterModal: React.FC = observer(({}) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -65,19 +78,22 @@ export const RegisterModal: React.FC<Props> = ({}) => {
                 etc.
               </Typography>
               <div className={registermodal.modal__select}>
-                <SelectInput label="Month" value="" />
-                <SelectInput label="Day" value="" />
-                <SelectInput label="Year" value="" />
-
+                <SelectInput label="Month" value="" array={month} />
+                <SelectInput label="Day" value="" array={day} />
+                <SelectInput label="Year" value="" array={year} />
               </div>
             </div>
           </Stack>
 
           <div className={registermodal.modal__button}>
-            <AuthButton title="Next" link="" />
+            <AuthButton
+              title="Registration"
+              link=""
+              onClick={() => stateAauth.registration(email, password)}
+            />
           </div>
         </Box>
       </Modal>
     </>
   );
-};
+});

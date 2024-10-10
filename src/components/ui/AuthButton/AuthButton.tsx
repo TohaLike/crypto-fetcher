@@ -6,15 +6,17 @@ import Link from "next/link";
 interface Props {
   title: string;
   link: string;
+  onClick?: () => void
 }
 
-export const AuthButton: React.FC<Props> = ({ title, link }) => {
+export const AuthButton: React.FC<Props> = ({ title, link, onClick }) => {
   return (
     <>
-      <Link href={link}>
+      {/* <Link href={link}> */}
         <Button
           disableElevation
           disableRipple
+          onClick={onClick}
           sx={{
             bgcolor: "#fff",
             color: "#000",
@@ -31,7 +33,7 @@ export const AuthButton: React.FC<Props> = ({ title, link }) => {
         >
           {title}
         </Button>
-      </Link>
+      {/* </Link> */}
     </>
   );
 };
