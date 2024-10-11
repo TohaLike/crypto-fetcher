@@ -6,27 +6,32 @@ import Image from "next/image";
 import arrow from "@/components/shared/Assets/Icons/arrow.svg";
 
 interface Option {
-  value: string | number; 
-  label: string;         
+  value: string | number;
+  label: string;
 }
 
 interface Props {
+  name: string;
   label: string;
-  value: string;
   array: Option[];
-  onChange?: (value: string) => void;
+  onChange?: (event: any) => void;
 }
 
-
-export const SelectInput: React.FC<Props> = ({ label, array, onChange }) => {
+export const SelectInput: React.FC<Props> = ({
+  name,
+  label,
+  array,
+  onChange,
+}) => {
   return (
     <>
       <TextField
+        name={name || ""}
         variant="filled"
         select
         label={label || ""}
         defaultValue={""}
-        onChange={(value: any) => onChange && onChange(value)}
+        onChange={(event) => onChange && onChange(event)}
         slotProps={{
           input: { disableUnderline: true } as Partial<OutlinedInputProps>,
           select: {
@@ -62,6 +67,7 @@ export const SelectInput: React.FC<Props> = ({ label, array, onChange }) => {
           },
         }}
       >
+        <option key={""} value={""}></option>
         {array.map((option) => (
           <option key={option?.value} value={option?.value}>
             {option?.label}

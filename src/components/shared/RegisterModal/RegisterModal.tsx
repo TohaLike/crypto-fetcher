@@ -9,22 +9,46 @@ import Image from "next/image";
 
 import logo from "../Assets/Icons/logo.svg";
 
-const year = [
-  { value: "1", label: "2003" },
-  { value: "2", label: "2004" },
+const yearArr = [
+  { value: "2003", label: "2003" },
+  { value: "2004", label: "2004" },
 ];
-const month = [
-  { value: "1", label: "august" },
-  { value: "2", label: "september" },
+
+const monthArr = [
+  { value: "1", label: "January" },
+  { value: "2", label: "February" },
+  { value: "3", label: "March" },
+  { value: "4", label: "April" },
+  { value: "5", label: "May" },
+  { value: "6", label: "June" },
+  { value: "7", label: "July" },
+  { value: "8", label: "August" },
+  { value: "9", label: "September" },
+  { value: "10", label: "October" },
+  { value: "11", label: "November" },
+  { value: "12", label: "December" },
 ];
-const day = [
-  { value: "1", label: "6" },
-  { value: "2", label: "7" },
+
+const dayArr = [
+  { value: "6", label: "6" },
+  { value: "7", label: "7" },
 ];
 
 export const RegisterModal: React.FC = observer(({}) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [date, setDate] = useState<object>({
+    month: 0,
+    day: 0,
+    year: 0,
+  });
+
+  const handleChange = (event: any) => {
+    setDate((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
 
   return (
     <>
@@ -78,9 +102,24 @@ export const RegisterModal: React.FC = observer(({}) => {
                 etc.
               </Typography>
               <div className={registermodal.modal__select}>
-                <SelectInput label="Month" value="" array={month} />
-                <SelectInput label="Day" value="" array={day} />
-                <SelectInput label="Year" value="" array={year} />
+                <SelectInput
+                  name="month"
+                  label="Month"
+                  array={monthArr}
+                  onChange={handleChange}
+                />
+                <SelectInput
+                  name="day"
+                  label="Day"
+                  array={dayArr}
+                  onChange={handleChange}
+                />
+                <SelectInput
+                  name="year"
+                  label="Year"
+                  array={yearArr}
+                  onChange={handleChange}
+                />
               </div>
             </div>
           </Stack>
@@ -89,7 +128,7 @@ export const RegisterModal: React.FC = observer(({}) => {
             <AuthButton
               title="Registration"
               link=""
-              onClick={() => stateAauth.registration(email, password)}
+              onClick={() => stateAauth.registration(email, password, date)}
             />
           </div>
         </Box>
