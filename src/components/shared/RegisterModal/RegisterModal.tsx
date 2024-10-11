@@ -9,10 +9,11 @@ import Image from "next/image";
 
 import logo from "../Assets/Icons/logo.svg";
 
-const yearArr = [
-  { value: "2003", label: "2003" },
-  { value: "2004", label: "2004" },
-];
+
+const yearArr = Array.from({ length: 100 }, (_, i) => ({
+  value: (2024 - i).toString(),
+  label: (2024 - i).toString(),
+}));
 
 const monthArr = [
   { value: "1", label: "January" },
@@ -29,10 +30,11 @@ const monthArr = [
   { value: "12", label: "December" },
 ];
 
-const dayArr = [
-  { value: "6", label: "6" },
-  { value: "7", label: "7" },
-];
+const dayArr = Array.from({ length: 31 }, (_, i) => ({
+  value: (i + 1).toString(),
+  label: (i + 1).toString(),
+}));
+
 
 export const RegisterModal: React.FC = observer(({}) => {
   const [email, setEmail] = useState<string>("");
