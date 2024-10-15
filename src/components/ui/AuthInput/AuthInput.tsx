@@ -5,21 +5,24 @@ import { OutlinedInputProps } from "@mui/material/OutlinedInput";
 
 interface Props {
   label: string;
-  value: string;
-  onChange?: (value: string) => void;
+  name: string;
+  register: any;
 }
 
-export const AuthInput: React.FC<Props> = ({ label, value, onChange }) => {
+export const AuthInput: React.FC<Props> = ({ label, name, register }) => {
   return (
     <>
       <TextField
         label={label || ""}
-        value={value}
+        name={name}
         color="primary"
-        onChange={(event) => onChange && onChange(event.target.value)}
         variant="filled"
         slotProps={{
-          input: { disableUnderline: true } as Partial<OutlinedInputProps>,
+          input: {
+            ...register,
+            name: name,
+            disableUnderline: true,
+          } as Partial<OutlinedInputProps>,
         }}
         sx={{
           width: "100%",

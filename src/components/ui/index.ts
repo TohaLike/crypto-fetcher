@@ -1,3 +1,3 @@
 export { AuthInput } from "@/components/ui/AuthInput/AuthInput";
-export { AuthButton } from "@/components/ui/AuthButton/AuthButton";
+export { ActionButton } from "@/components/ui/ActionButton/ActionButton";
 export { SelectInput } from "@/components/ui/SelectInput/SelectInput";

@@ -3,17 +3,17 @@ import axios from "axios";
 
 export const API_URL = "http://localhost:4000/api";
 
-const $api = axios.create({
+const axiosWithAuth = axios.create({
   withCredentials: true,
   baseURL: API_URL,
 });
 
-$api.interceptors.request.use((config) => {
+axiosWithAuth.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
   return config;
 });
 
-$api.interceptors.response.use(
+axiosWithAuth.interceptors.response.use(
   (config) => {
     return config;
   },
@@ -30,7 +30,7 @@ $api.interceptors.response.use(
           withCredentials: true,
         });
         localStorage.setItem("token", response.data.accessToken);
-        return $api.request(originalRequest);
+        return axiosWithAuth.request(originalRequest);
       }
     } catch (e) {
       console.log("Не авторизован");
@@ -39,4 +39,4 @@ $api.interceptors.response.use(
   }
 );
 
-export default $api;
+export default axiosWithAuth;

@@ -1,10 +1,10 @@
 import React from "react";
-import { RegisterModal } from "@/components/shared/RegisterModal/RegisterModal";
+import { RegisterPage } from "@/components/shared/RegisterPage/RegisterPage";
 
 export default function page() {
   return (
     <>
-      <RegisterModal />
+      <RegisterPage />
     </>
   );
 }

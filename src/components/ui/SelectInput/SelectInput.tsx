@@ -14,26 +14,28 @@ interface Props {
   name: string;
   label: string;
   array: Option[];
-  onChange?: (event: any) => void;
+  register: any;
 }
 
 export const SelectInput: React.FC<Props> = ({
   name,
   label,
   array,
-  onChange,
+  register,
 }) => {
   return (
     <>
       <TextField
-        name={name || ""}
         variant="filled"
         select
         label={label || ""}
         defaultValue={""}
-        onChange={(event) => onChange && onChange(event)}
         slotProps={{
-          input: { disableUnderline: true } as Partial<OutlinedInputProps>,
+          input: {
+            disableUnderline: true,
+            ...register,
+            name: name,
+          } as Partial<OutlinedInputProps>,
           select: {
             native: true,
             IconComponent: () => (
