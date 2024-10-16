@@ -9,6 +9,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: auto;
+  }
+  &__icon span {
+    background-image: url("../Assets/Icons/logo.svg");
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    pointer-events: stroke;
+    z-index: -2;
   }
   &__select {
     margin-top: 20px;

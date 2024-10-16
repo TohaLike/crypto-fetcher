@@ -1,0 +1,11 @@
+.icon {
+  display: block;
+  background-image: url("../../../components/shared/Assets/Icons/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: top 50% left 50%;
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  right: 5px;
+  // z-index: -1;
+}

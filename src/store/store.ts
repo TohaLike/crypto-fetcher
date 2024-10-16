@@ -33,9 +33,9 @@ class Store {
     }
   }
 
-  async registration(email: string, password: string, day: string, month: string, year: string) {
+  async registration(data: object) {
     try {
-      const response = await AuthService.registration(email, password, day, month, year);
+      const response = await AuthService.registration(data);
       localStorage.setItem("token", response.data.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
@@ -60,7 +60,7 @@ class Store {
       const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
         withCredentials: true,
       });
-      console.log(response);
+      // console.log(response);
       localStorage.setItem("token", response.data.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);

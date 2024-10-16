@@ -1,16 +1,13 @@
-import AuthService from "@/services/AuthService"
-import { mutate } from "swr"
-import useSWRMutation from "swr/mutation"
+import { API_URL } from "@/http";
+import AuthService from "@/services/AuthService";
+import useSWRImmutable from "swr/immutable";
 
-export const useRegistration = () => {
-  const { trigger: registrationTrigger } = useSWRMutation(["/registration"], (url, { arg }: {arg: object}) => 
-    console.log("@"), {
-      onSuccess: () => {
-        mutate(() => true)
-      }
-    }
-  )
+export const useAuth = () => {
+  const { data: checkAuth, isLoading } = useSWRImmutable([`${API_URL}/refresh`], () => AuthService.checkAuth(), {
+    shouldRetryOnError: false,
+  });
+
   return {
-    registrationTrigger
-  }
-}
+    checkAuth,
+  };
+};

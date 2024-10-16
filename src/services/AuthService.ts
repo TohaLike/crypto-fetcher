@@ -1,19 +1,32 @@
-// import $a from "@/http";
-import axiosWithAuth from "@/http";
+import axiosWithAuth, { API_URL } from "@/http";
 import { AuthResponse } from "@/models/response/AuthResponse";
 import { AxiosResponse } from "axios";
 
 export default class AuthService {
   static async login(email: string, password: string): Promise<AxiosResponse<AuthResponse>> {
-    return axiosWithAuth.post<AuthResponse>("/login", {email, password})
+    return axiosWithAuth.post<AuthResponse>("/login", { email, password });
   }
 
-  static async registration(email: string, password: string, day: string, month:string, year:string): Promise<AxiosResponse<AuthResponse>> {
-    return axiosWithAuth.post<AuthResponse>("/registration", {email, password, day, month, year})
+  static async registration(data: object): Promise<AxiosResponse<AuthResponse>> {
+    const response = await axiosWithAuth.post<AuthResponse>("/registration", data);
+    localStorage.setItem("token", response.data.accessToken);
+    return response;
   }
 
   static async logout(): Promise<void> {
-    return axiosWithAuth.post("/logout")
+    return axiosWithAuth.post("/logout");
+  }
+
+  static async checkAuth() {
+    try {
+      const response = await axiosWithAuth.get<AuthResponse>(`http://localhost:4000/api/refresh`, { withCredentials: true });
+      // console.log(response)
+      localStorage.setItem("token", response.data.accessToken);
+      
+      return response.data
+
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
+    }
   }
 }
-

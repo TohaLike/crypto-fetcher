@@ -1,6 +1,13 @@
 "use client";
 import React from "react";
-import { Box, OutlinedInputProps, TextField } from "@mui/material";
+import selectinput from "./selectinput.module.scss";
+import {
+  Box,
+  InputAdornment,
+  InputBase,
+  OutlinedInputProps,
+  TextField,
+} from "@mui/material";
 import Image from "next/image";
 
 import arrow from "@/components/shared/Assets/Icons/arrow.svg";
@@ -39,9 +46,9 @@ export const SelectInput: React.FC<Props> = ({
           select: {
             native: true,
             IconComponent: () => (
-              <Box sx={{ position: "absolute", top: "18px", right: "5px" }}>
-                <Image src={arrow} alt="arrow" draggable={false} />
-              </Box>
+              <InputAdornment position="end">
+                <span className={selectinput.icon}></span>
+              </InputAdornment>
             ),
           },
         }}
