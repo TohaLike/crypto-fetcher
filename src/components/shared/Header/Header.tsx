@@ -7,19 +7,13 @@ import Image from "next/image";
 
 import logo from "../Assets/Icons/logo.svg";
 
-export const Header: React.FC = ({ }) => {
+export const Header: React.FC = ({}) => {
   return (
     <header className={header.header}>
       <Container>
         <div className={header.container}>
           <div className={header.header__logo}>
-            <Image
-              src={logo}
-              alt="mainLogo"
-              width={32}
-              height={32}
-              draggable={false}
-            />
+            <span></span>
             <Typography variant="h1" fontSize={24} fontFamily={"unset"}>
               Crypto Fetcher
             </Typography>

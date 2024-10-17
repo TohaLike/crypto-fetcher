@@ -4,15 +4,6 @@ import { ActionButton } from "@/components/ui";
 import { RegisterModal } from "../RegisterModal/RegisterModal";
 import { useAuthorized } from "@/hooks/useAuthorized";
 import { redirect, useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
-
-// const RegisterModal = dynamic(
-//   () => import("../RegisterModal/RegisterModal").then((module) => module.RegisterModal),
-//   {
-//     loading: () => <div>load</div>,
-//     ssr: false,
-//   }
-// );
 
 export const RegisterPage: React.FC = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);

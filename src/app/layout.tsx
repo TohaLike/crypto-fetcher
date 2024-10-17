@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import localFont from "next/font/local";
+
+const IBMPlexMono = localFont({
+  src: "./fonts/IBMPlexMonoRegular.ttf",
+  variable: "--font-IBMPlexMono-mono",
+  weight: "100 900",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,9 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <body className={`${IBMPlexMono.className}`}>{children}</body>
     </html>
   );
 }
