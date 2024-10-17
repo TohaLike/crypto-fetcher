@@ -20,11 +20,8 @@ export default class AuthService {
   static async checkAuth() {
     try {
       const response = await axiosWithAuth.get<AuthResponse>(`http://localhost:4000/api/refresh`, { withCredentials: true });
-      // console.log(response)
       localStorage.setItem("token", response.data.accessToken);
-      
       return response.data
-
     } catch (e: any) {
       console.log(e.response?.data?.message);
     }

@@ -1,17 +1,12 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import registermodal from "./registermodal.module.scss";
 import { ActionButton, AuthInput, SelectInput } from "@/components/ui";
 import { Box, Modal, Stack, Typography } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { observer } from "mobx-react-lite";
-import { useRouter } from "next/navigation";
 import { useRegistration } from "@/hooks/useRegistration";
 import { FormProvider, useForm } from "react-hook-form";
 import { registrationSchema } from "./validate";
-import { useAuth } from "@/hooks/useAuth";
-import { stateAauth } from "@/store/store";
-import AuthService from "@/services/AuthService";
 
 const yearArr = Array.from({ length: 100 }, (_, i) => ({
   value: (2024 - i).toString(),
@@ -43,7 +38,9 @@ interface Props {
   onClose: () => void;
 }
 
-export const RegisterModal: React.FC<Props> = observer(({ onClose, onOpen }) => {
+export const RegisterModal: React.FC<Props> = ({ onClose, onOpen }) => {
+  const { registrationTrigger, loading } = useRegistration();
+
   const form = useForm({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
@@ -55,16 +52,8 @@ export const RegisterModal: React.FC<Props> = observer(({ onClose, onOpen }) => 
     },
   });
 
-  const { registrationTrigger, loading } = useRegistration();
-
-  const router = useRouter();
-
   const onSubmit = async (data: object) => {
-    try {
-      await registrationTrigger(data);
-    } catch (e) {
-      console.log(e);
-    }
+    registrationTrigger(data);
   };
 
   return (
@@ -90,19 +79,51 @@ export const RegisterModal: React.FC<Props> = observer(({ onClose, onOpen }) => 
                 <div className={registermodal.modal__icon}>
                   <span></span>
                 </div>
-                <AuthInput label="Email" register={form.register("email")} name="email" />
-                <AuthInput label="Password" register={form.register("password")} name="password" />
+                <AuthInput
+                  type="email"
+                  label="Email"
+                  register={form.register("email")}
+                  name="email"
+                />
+                <AuthInput
+                  type="password"
+                  label="Password"
+                  register={form.register("password")}
+                  name="password"
+                />
                 <div>
                   <Typography variant="body1" fontWeight={"bold"} fontSize={15} mb={"10px"}>
                     Date of birth
                   </Typography>
-                  <Typography variant="body2" fontWeight={"regular"} lineHeight={"normal"} fontSize={15} textAlign={"start"}>
-                    This information will not be publicly available. Please confirm your age, even if this account is intended for a company, pet, etc.
+                  <Typography
+                    variant="body2"
+                    fontWeight={"regular"}
+                    lineHeight={"normal"}
+                    fontSize={15}
+                    textAlign={"start"}
+                  >
+                    This information will not be publicly available. Please confirm your age, even
+                    if this account is intended for a company, pet, etc.
                   </Typography>
                   <div className={registermodal.modal__select}>
-                    <SelectInput name="month" label="Month" array={monthArr} register={form.register("month")} />
-                    <SelectInput name="day" label="Day" array={dayArr} register={form.register("day")} />
-                    <SelectInput name="year" label="Year" array={yearArr} register={form.register("year")} />
+                    <SelectInput
+                      name="month"
+                      label="Month"
+                      array={monthArr}
+                      register={form.register("month")}
+                    />
+                    <SelectInput
+                      name="day"
+                      label="Day"
+                      array={dayArr}
+                      register={form.register("day")}
+                    />
+                    <SelectInput
+                      name="year"
+                      label="Year"
+                      array={yearArr}
+                      register={form.register("year")}
+                    />
                   </div>
                 </div>
               </Stack>
@@ -116,4 +137,4 @@ export const RegisterModal: React.FC<Props> = observer(({ onClose, onOpen }) => 
       </Modal>
     </>
   );
-});
+};

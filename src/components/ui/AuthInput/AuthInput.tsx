@@ -7,12 +7,14 @@ interface Props {
   label: string;
   name: string;
   register: any;
+  type: "password" | "email" | undefined;
 }
 
-export const AuthInput: React.FC<Props> = ({ label, name, register }) => {
+export const AuthInput: React.FC<Props> = ({ label, name, register, type }) => {
   return (
     <>
       <TextField
+        type={type}
         label={label || ""}
         name={name}
         color="primary"

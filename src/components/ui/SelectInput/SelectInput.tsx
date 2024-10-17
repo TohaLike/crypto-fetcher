@@ -1,16 +1,7 @@
 "use client";
 import React from "react";
 import selectinput from "./selectinput.module.scss";
-import {
-  Box,
-  InputAdornment,
-  InputBase,
-  OutlinedInputProps,
-  TextField,
-} from "@mui/material";
-import Image from "next/image";
-
-import arrow from "@/components/shared/Assets/Icons/arrow.svg";
+import { InputAdornment, OutlinedInputProps, TextField } from "@mui/material";
 
 interface Option {
   value: string | number;
@@ -24,12 +15,7 @@ interface Props {
   register: any;
 }
 
-export const SelectInput: React.FC<Props> = ({
-  name,
-  label,
-  array,
-  register,
-}) => {
+export const SelectInput: React.FC<Props> = ({ name, label, array, register }) => {
   return (
     <>
       <TextField
