@@ -3,9 +3,7 @@ import React from "react";
 import header from "./header.module.scss";
 import { Container } from "../Container/Container";
 import { Avatar, Typography } from "@mui/material";
-import Image from "next/image";
-
-import logo from "../Assets/Icons/logo.svg";
+import Link from "next/link";
 
 export const Header: React.FC = ({}) => {
   return (
@@ -19,7 +17,9 @@ export const Header: React.FC = ({}) => {
             </Typography>
           </div>
           <div className={header.avatar}>
-            <Avatar sx={{ width: 40, height: 40, bgcolor: "green" }}>A</Avatar>
+            <Link href={"/profile"}>
+              <Avatar sx={{ width: 40, height: 40, bgcolor: "green" }}>A</Avatar>
+            </Link>
           </div>
         </div>
       </Container>

@@ -15,6 +15,7 @@ export const useAuthorized = () => {
   const isAuthorized: boolean = !!data?.user;
 
   return {
+    userData: data?.user,
     isAuthorized,
     isLoading,
   };

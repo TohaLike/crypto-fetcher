@@ -7,7 +7,7 @@ interface Props {
   label: string;
   name: string;
   register: any;
-  type: "password" | "email" | undefined;
+  type: "password" | "email" | "" | undefined;
 }
 
 export const AuthInput: React.FC<Props> = ({ label, name, register, type }) => {
@@ -20,6 +20,9 @@ export const AuthInput: React.FC<Props> = ({ label, name, register, type }) => {
         color="primary"
         variant="filled"
         slotProps={{
+          htmlInput: {
+            maxLength: 55
+          },    
           input: {
             ...register,
             name: name,

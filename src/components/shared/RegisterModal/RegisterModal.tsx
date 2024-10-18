@@ -44,15 +44,16 @@ export const RegisterModal: React.FC<Props> = ({ onClose, onOpen }) => {
   const form = useForm({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
+      name: "",
       email: "",
-      password: "",
       day: "",
       month: "",
       year: "",
+      password: "",
     },
   });
 
-  const onSubmit = async (data: object) => {
+  const onSubmit = (data: object) => {
     registrationTrigger(data);
   };
 
@@ -79,17 +80,12 @@ export const RegisterModal: React.FC<Props> = ({ onClose, onOpen }) => {
                 <div className={registermodal.modal__icon}>
                   <span></span>
                 </div>
+                <AuthInput type="email" label="Name" register={form.register("name")} name="name" />
                 <AuthInput
-                  type="email"
+                  type=""
                   label="Email"
                   register={form.register("email")}
                   name="email"
-                />
-                <AuthInput
-                  type="password"
-                  label="Password"
-                  register={form.register("password")}
-                  name="password"
                 />
                 <div>
                   <Typography variant="body1" fontWeight={"bold"} fontSize={15} mb={"10px"}>
@@ -123,6 +119,14 @@ export const RegisterModal: React.FC<Props> = ({ onClose, onOpen }) => {
                       label="Year"
                       array={yearArr}
                       register={form.register("year")}
+                    />
+                  </div>
+                  <div className={registermodal.modal__password}>
+                    <AuthInput
+                      type="password"
+                      label="Password"
+                      register={form.register("password")}
+                      name="password"
                     />
                   </div>
                 </div>

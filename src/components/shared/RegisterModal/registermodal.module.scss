@@ -25,7 +25,12 @@
     justify-content: space-between;
     grid-template-columns: 201px 100px 125px;
   }
+
+  &__password {
+    margin-top: 20px;
+  }
+
   &__button {
-    margin-top: 50px;
+    margin-top: 20px;
   }
 }
