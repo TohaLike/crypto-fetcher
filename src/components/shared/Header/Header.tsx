@@ -3,9 +3,12 @@ import React from "react";
 import header from "./header.module.scss";
 import { Container } from "../Container/Container";
 import { Avatar, Typography } from "@mui/material";
+import { useAuthorized } from "@/hooks/useAuthorized";
 import Link from "next/link";
 
 export const Header: React.FC = ({}) => {
+  const { userData, isAuthorized } = useAuthorized();
+
   return (
     <header className={header.header}>
       <Container>
@@ -18,7 +21,7 @@ export const Header: React.FC = ({}) => {
           </div>
           <div className={header.avatar}>
             <Link href={"/profile"}>
-              <Avatar sx={{ width: 40, height: 40, bgcolor: "green" }}>A</Avatar>
+              <Avatar sx={{ width: 40, height: 40, bgcolor: "green" }}>{userData?.name[0]}</Avatar>
             </Link>
           </div>
         </div>

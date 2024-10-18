@@ -80,7 +80,7 @@ export const RegisterModal: React.FC<Props> = ({ onClose, onOpen }) => {
                 <div className={registermodal.modal__icon}>
                   <span></span>
                 </div>
-                <AuthInput type="email" label="Name" register={form.register("name")} name="name" />
+                <AuthInput type="" label="Name" register={form.register("name")} name="name" />
                 <AuthInput
                   type=""
                   label="Email"

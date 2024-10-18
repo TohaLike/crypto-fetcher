@@ -13,7 +13,7 @@ export const useAuthorized = () => {
 
   if (data) localStorage.setItem("token", data.accessToken);
   const isAuthorized: boolean = !!data?.user;
-
+  
   return {
     userData: data?.user,
     isAuthorized,
