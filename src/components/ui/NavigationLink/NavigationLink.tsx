@@ -15,7 +15,7 @@ export const NavigationLink: React.FC<Props> = ({ title, icon, href }) => {
   return (
     <>
       <Link href={href} className={navlink.link}>
-        <ListItemIcon sx={{ minWidth: "24px", mr: "15px", display: "flex", alignItems: "center", }}>
+        <ListItemIcon sx={{ minWidth: "24px", mr: "15px", display: "flex", alignItems: "center" }}>
           {icon}
         </ListItemIcon>
         <ListItemText
@@ -23,7 +23,7 @@ export const NavigationLink: React.FC<Props> = ({ title, icon, href }) => {
           sx={{
             fontFamily: "var(--font-IBMPlexMono-mono)",
             fontSize: "20px",
-            margin: 0
+            margin: 0,
           }}
         >
           {title}
