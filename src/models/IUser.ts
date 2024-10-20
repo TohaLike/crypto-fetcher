@@ -4,4 +4,6 @@ export interface IUser {
   date: object;
   isActivated: boolean;
   id: string;
+  createdAt: string;
+  profileVerification: boolean;
 }
