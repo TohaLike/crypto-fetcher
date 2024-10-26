@@ -5,8 +5,6 @@ import { useAuthorized } from "@/hooks/useAuthorized";
 export const ProfilePage: React.FC = () => {
   const { userData, isAuthorized } = useAuthorized();
   
-  console.log(userData);
-
   return (
     <>
       <h2>{userData?.name}</h2>

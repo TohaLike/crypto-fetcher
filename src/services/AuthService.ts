@@ -19,9 +19,11 @@ export default class AuthService {
 
   static async checkAuth() {
     try {
-      const response = await axiosWithAuth.get<AuthResponse>(`${API_URL}/refresh`, { withCredentials: true });
+      const response = await axiosWithAuth.get<AuthResponse>(`${API_URL}/refresh`, {
+        withCredentials: true,
+      });
       localStorage.setItem("token", response.data.accessToken);
-      return response.data
+      return response.data;
     } catch (e: any) {
       console.log(e.response?.data?.message);
     }

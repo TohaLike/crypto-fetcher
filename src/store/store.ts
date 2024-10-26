@@ -33,6 +33,7 @@ class Store {
     }
   }
 
+
   async registration(data: object) {
     try {
       const response = await AuthService.registration(data);

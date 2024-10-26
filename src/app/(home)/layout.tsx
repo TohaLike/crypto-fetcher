@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Container, Header, Navigation } from "@/components/shared";
+import { Provider } from "./provider";
 import localFont from "next/font/local";
 
 import home from "./home.module.scss";
 
 const IBMPlexMono = localFont({
   src: "../fonts/IBMPlexMonoRegular.ttf",
-  variable: "--font-IBMPlexMono-mono",
+  variable: "--font-IBMPlexMono--",
   weight: "100 900",
 });
 
@@ -21,15 +22,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning={true} >
+    <html lang="en">
       <body className={IBMPlexMono.className}>
-        <Header />
-        <Container>
-          <article className={home.article}>
-            <Navigation />
-            {children}
-          </article>
-        </Container>
+        <Provider>
+          <Header />
+          <Container>
+            <article className={home.article}>
+              <Navigation />
+              {children}
+            </article>
+          </Container>
+        </Provider>
       </body>
     </html>
   );

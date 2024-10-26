@@ -1,19 +1,14 @@
 import MessageService from "@/services/MessageService";
-import { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
 
 export const useMessage = () => {
   const { trigger: messageTrigger, isMutating: loading } = useSWRMutation(
     ["message"],
-    (url, { arg }: { arg: object }) => MessageService.sendMessage(arg),
-    {
-      onSuccess: () => {
-        mutate(() => true);
-      },
-    }
+    (url, { arg }: { arg: object }) => MessageService.sendMessage(arg)
   );
+  
   return {
     messageTrigger,
     loading,
   };
-}
+};

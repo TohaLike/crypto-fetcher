@@ -1,10 +1,7 @@
-import React from "react";
-import MessagePage from "@/components/shared/MessagePage/MessagePage";
+import React from 'react'
 
-export default function pages() {
+export default function page() {
   return (
-    <>
-      <MessagePage />
-    </>
-  );
+    <div>messages chats</div>
+  )
 }

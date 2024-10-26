@@ -21,7 +21,7 @@ export const NavigationLink: React.FC<Props> = ({ title, icon, href }) => {
         <ListItemText
           disableTypography
           sx={{
-            fontFamily: "var(--font-IBMPlexMono-mono)",
+            fontFamily: "var(--font-IBMPlexMono--)",
             fontSize: "20px",
             margin: 0,
           }}
