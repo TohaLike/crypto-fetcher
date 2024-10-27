@@ -4,8 +4,6 @@ import { useAuthorized } from "@/hooks/useAuthorized";
 import { socket } from "@/socket/socket";
 
 export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [isConnected, setIsConnected] = useState(socket.connected);
-
   const { userData } = useAuthorized();
 
   useEffect(() => {

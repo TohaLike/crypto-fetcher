@@ -12,19 +12,12 @@ export default function MessagePage() {
   const { userData } = useAuthorized();
   const { messageTrigger } = useMessage();
 
-  const sendMessage = () => {
-    socket.emit("send__message", { message: message, userId: userData?.id });
-  };
-
   return (
     <>
       <div>
         <ChatInput name="message" label="Message" value={message} onChange={setMessage} />
         <button
-          onClick={async () => {
-            await messageTrigger({ message: message, userId: userData?.id });
-            sendMessage()
-          }}
+          onClick={async () => await messageTrigger({ message: message, userId: userData?.id })}
         >
           Send
         </button>

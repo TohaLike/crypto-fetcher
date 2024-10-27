@@ -12,21 +12,21 @@ export const Header: React.FC = ({}) => {
 
   const { userData } = useAuthorized();
 
-  useEffect(() => {
-    function onConnect() {
-      setIsConnected(true);
-    }
-    function onDisconnect() {
-      setIsConnected(false);
-    }
+  // useEffect(() => {
+  //   function onConnect() {
+  //     setIsConnected(true);
+  //   }
+  //   function onDisconnect() {
+  //     setIsConnected(false);
+  //   }
 
-    socket.on("connect", onConnect);
+  //   socket.on("connect", onConnect);
 
-    return () => {
-      socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
-    }
-  }, []);
+  //   return () => {
+  //     socket.off("connect", onConnect);
+  //     socket.off("disconnect", onDisconnect);
+  //   }
+  // }, []);
 
   return (
     <header className={header.header}>
@@ -40,11 +40,11 @@ export const Header: React.FC = ({}) => {
           </div>
           <div className={header.avatar}>
             <Link href={"/profile"}>
-              <Badge badgeContent={isConnected ? "online" : "no online"} color="primary">
+              {/* <Badge badgeContent={isConnected ? "online" : "no online"} color="primary"> */}
                 <Avatar sx={{ width: 40, height: 40, bgcolor: "green" }}>
                   {userData?.name[0].toUpperCase()}
                 </Avatar>
-              </Badge>
+              {/* </Badge> */}
             </Link>
           </div>
         </div>

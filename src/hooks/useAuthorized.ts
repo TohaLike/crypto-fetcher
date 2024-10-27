@@ -3,7 +3,9 @@ import AuthService from "@/services/AuthService";
 import useSWRImmutable from "swr/immutable";
 
 export const useAuthorized = () => {
-  const { data, isLoading } = useSWRImmutable([`${API_URL}/refresh`], () => AuthService.checkAuth(),
+  const { data, isLoading } = useSWRImmutable(
+    [`${API_URL}/refresh`],
+    () => AuthService.checkAuth(),
     {
       shouldRetryOnError: false,
       onError: (error) => {
@@ -15,8 +17,6 @@ export const useAuthorized = () => {
   );
 
   const isAuthorized: boolean = !!data?.user;
-
-  // console.log(data?.accessToken);
 
   return {
     userData: data?.user,

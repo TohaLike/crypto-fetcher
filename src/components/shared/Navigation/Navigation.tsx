@@ -13,8 +13,8 @@ export const Navigation: React.FC = () => {
       height={"100vw"}
     >
       <NavigationLink title="Home" icon={<HomeIcon />} href="/home" />
-      <NavigationLink title="Profile" icon={<ProfileIcon />} href="profile" />
-      <NavigationLink title="Messages" icon={<MessageIcon />} href="messages" />
+      <NavigationLink title="Profile" icon={<ProfileIcon />} href="/profile" />
+      <NavigationLink title="Messages" icon={<MessageIcon />} href="/messages" />
     </Stack>
   );
 };
