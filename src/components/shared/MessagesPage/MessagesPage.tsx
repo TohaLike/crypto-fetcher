@@ -1,17 +1,23 @@
 "use client";
-import { useAuthorized } from "@/hooks/useAuthorized";
+import React from "react";
 import { useRooms } from "@/hooks/useRooms";
-import SocketService from "@/services/SocketService";
-import React, { useEffect } from "react";
-import { mutate } from "swr";
+import { ChatRoom } from "@/components/ui";
 
 export default function MessagesPage() {
-  const { userData } = useAuthorized();
-  const { rooms, mutateRooms } = useRooms();
+  const { rooms } = useRooms();
+
+  console.log(rooms);
 
   return (
     <>
-      <div>MessagesPage</div>
+      {rooms?.map((room, index) => (
+        <ChatRoom
+          key={"room: " + index}
+          name={room.name + index}
+          date={room.createdAt}
+          roomID={room.id}
+        />
+      ))}
     </>
   );
 }

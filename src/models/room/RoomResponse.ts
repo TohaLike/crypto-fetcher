@@ -3,4 +3,5 @@ export interface RoomResponse {
   name: string;
   createdAt: string;
   ownerId: any;
+  usersId: any;
 }

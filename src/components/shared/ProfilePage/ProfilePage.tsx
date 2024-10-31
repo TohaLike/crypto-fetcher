@@ -9,12 +9,20 @@ export const ProfilePage: React.FC = () => {
 
   return (
     <>
-      <h2>{userData?.name}</h2>
-      <p>{userData?.createdAt}</p>
-      <p>{userData?.email}</p>
-      <p>{isAuthorized}</p>
+      <div>
+        <h2>Имя: {userData?.name}</h2>
+        <p>Создан: {userData?.createdAt}</p>
+        <p>Почта: {userData?.email}</p>
+        <p>Авторизован: {isAuthorized ? "Да" : "Нет"}</p>
 
-      <button onClick={async () => await roomTrigger({name: userData?.name + " room", userId: userData?.id})}>Add room</button>
+        <button
+          onClick={async () =>
+            await roomTrigger({ name: userData?.name + " room", ownerId: userData?.id, userId: "671feddeea39df9953f41b4b" })
+          }
+        >
+          Add room
+        </button>
+      </div>
     </>
   );
 };
