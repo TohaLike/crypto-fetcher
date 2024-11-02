@@ -3,24 +3,31 @@ import React, { useState, useEffect } from "react";
 import { ChatInput } from "@/components/ui/ChatInput/ChatInput";
 import { useAuthorized } from "@/hooks/useAuthorized";
 import { socket } from "@/socket/socket";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { useMessages } from "@/hooks/useMessages";
-import SocketService from "@/services/SocketService";
+import { useRoom } from "@/hooks/useRoom";
 
 export default function MessagePage() {
+  const [roomId, setRoomId] = useState<string>("");
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState<string>("");
 
   const searchParams = useSearchParams();
-  const search = searchParams.get("res");
+  const search = searchParams.get("res")?.split("-")[0];
 
   const { userData } = useAuthorized();
-  const { messagesData, mutate, loading } = useMessages();
+  const { roomTrigger } = useRoom();
+  const { messagesData, loading } = useMessages();
 
   useEffect(() => {
     socket.on("connect", () => console.log("Connected!"));
 
-    socket.emit("join__room", search);
+    socket.on("room__id", (id) => {
+      setRoomId(id);
+      console.log(id);
+    });
+
+    socket.emit("join__room", searchParams.get("res"));
 
     socket.on("send__message", (userName, message) => {
       setMessages([...messages, { userName: userName, message: message }]);
@@ -30,38 +37,39 @@ export default function MessagePage() {
       socket.off("send__message");
       socket.off("join__room");
       socket.off("connect");
-    };
-  }, [socket, messages]);
-
-  useEffect(() => {
-    socket.emit("room__id", search);
-    return () => {
       socket.off("room__id");
     };
-  }, []);
+  }, [socket, messages]);
 
   const sendMessage = (event: any) => {
     event.preventDefault();
     if (message.trim()) {
-      socket.emit("send__message", userData?.name, message, userData?.id, search);
+      socket.emit(
+        "send__message",
+        userData?.name,
+        message,
+        userData?.id,
+        roomId,
+        searchParams.get("res")
+      );
       setMessage("");
     }
   };
 
+  console.log(roomId);
+
   return (
     <>
       <div>
-        {/* <button onClick={async () => await mutate(SocketService.getMessages())}>test</button> */}
-
         <ChatInput name="message" label="Message" value={message} onChange={setMessage} />
         <button onClick={sendMessage}>Send</button>
         <div>
-          {loading
-            ? "Loading..."
+          {!messagesData
+            ? []
             : messagesData?.map((message: any, key: any) => (
                 <div key={key}>
                   <p style={{ color: "white" }}>
-                    {key}: {message.message}
+                    {message.sender}: {message.message}
                   </p>
                 </div>
               ))}
@@ -71,6 +79,18 @@ export default function MessagePage() {
               <p style={{ color: "white" }}>{`${message.userName}: ` + message.message}</p>
             </div>
           ))}
+
+          <button
+            onClick={async () =>
+              await roomTrigger({
+                name: userData?.name + " room",
+                ownerId: userData?.id,
+                userId: search,
+              })
+            }
+          >
+            Add room
+          </button>
         </div>
       </div>
     </>

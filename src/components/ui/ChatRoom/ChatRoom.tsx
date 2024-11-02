@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { ListItem, ListItemAvatar, Avatar, ListItemText } from "@mui/material";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { socket } from "@/socket/socket";
 

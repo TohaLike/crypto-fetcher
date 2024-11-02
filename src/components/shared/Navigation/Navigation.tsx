@@ -3,7 +3,10 @@ import React from "react";
 import { NavigationLink } from "@/components/ui";
 import { Stack } from "@mui/material";
 import { HomeIcon, MessageIcon, ProfileIcon } from "@/components/icons";
+import { useAuthorized } from "@/hooks/useAuthorized";
 export const Navigation: React.FC = () => {
+  const { userData } = useAuthorized();
+
   return (
     <Stack
       direction={"column"}
@@ -13,7 +16,7 @@ export const Navigation: React.FC = () => {
       height={"100vw"}
     >
       <NavigationLink title="Home" icon={<HomeIcon />} href="/home" />
-      <NavigationLink title="Profile" icon={<ProfileIcon />} href="/profile" />
+      <NavigationLink title="Profile" icon={<ProfileIcon />} href={`/${userData?.id}`} />
       <NavigationLink title="Messages" icon={<MessageIcon />} href="/messages" />
     </Stack>
   );

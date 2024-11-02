@@ -16,14 +16,13 @@ export default class SocketService {
     try {
       const response = await axiosWithAuth.get<RoomResponse[]>("/rooms");
       return response.data;
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
     }
   }
 
   static async getMessages(url: any) {
     try {
-      console.log(url)
       const response = await axiosWithAuth.get<MessageResponse[]>(url);
       return response.data;
     } catch (e) {
