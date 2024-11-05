@@ -15,7 +15,7 @@ export const ProfilePage: React.FC = () => {
   const params = useParams();
 
   const redirectToRoom = () => {
-    router.push(`/messages/user?res=${params?.profile}-${userData?.id}`);
+    router.push(`/messages/user?res=${params?.profile}`);
     socket.emit("join__room", params?.profile);
     return;
   };

@@ -12,4 +12,6 @@ export const socket = io("http://localhost:4000", {
   reconnectionDelay: 1000,
   reconnectionDelayMax: 5000,
   timeout: 20000,
+  secure: true,
+  // rejectUnauthorized: false,
 });

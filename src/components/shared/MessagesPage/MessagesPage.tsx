@@ -7,7 +7,6 @@ export default function MessagesPage() {
   const { rooms } = useRooms();
 
   console.log(rooms);
-  
 
   return (
     <>
@@ -16,7 +15,7 @@ export default function MessagesPage() {
           key={"room: " + index}
           name={room.name + index}
           date={room.createdAt}
-          roomID={room.roomId}
+          roomID={room.id}
         />
       ))}
     </>

@@ -9,9 +9,11 @@ export const useMessages = () => {
 
   const url = `/messages/user?res=${search}`
 
-  const { data, mutate, isLoading } = useSWRImmutable([url], () => SocketService.getMessages(url), {
+  const { data, mutate, isLoading } = useSWR([url], () => SocketService.getMessages(url), {
     shouldRetryOnError: true,
-    revalidateOnMount: true,
+    revalidateOnFocus: false,
+    // revalidateOnMount: true,
+    // revalidateOnReconnect: true,
   });
 
   // console.log(search)

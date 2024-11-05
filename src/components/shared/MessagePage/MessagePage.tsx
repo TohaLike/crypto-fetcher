@@ -1,62 +1,55 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { ChatInput } from "@/components/ui/ChatInput/ChatInput";
-import { useAuthorized } from "@/hooks/useAuthorized";
 import { socket } from "@/socket/socket";
-import { useParams, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useMessages } from "@/hooks/useMessages";
 import { useRoom } from "@/hooks/useRoom";
 
 export default function MessagePage() {
-  const [roomId, setRoomId] = useState<string>("");
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState<string>("");
 
   const searchParams = useSearchParams();
-  const search = searchParams.get("res")?.split("-")[0];
+  const search = searchParams.get("res");
+  const router = useRouter();
 
-  const { userData } = useAuthorized();
   const { roomTrigger } = useRoom();
+
   const { messagesData, loading } = useMessages();
 
   useEffect(() => {
     socket.on("connect", () => console.log("Connected!"));
 
-    socket.on("room__id", (id) => {
-      setRoomId(id);
-      console.log(id);
-    });
-
-    socket.emit("join__room", searchParams.get("res"));
+    socket.emit("join__room", search);
 
     socket.on("send__message", (userName, message) => {
       setMessages([...messages, { userName: userName, message: message }]);
     });
 
     return () => {
+      socket.off("connect");
       socket.off("send__message");
       socket.off("join__room");
-      socket.off("connect");
-      socket.off("room__id");
     };
-  }, [socket, messages]);
+
+  }, [socket, messages, messagesData]);
 
   const sendMessage = (event: any) => {
     event.preventDefault();
     if (message.trim()) {
-      socket.emit(
-        "send__message",
-        userData?.name,
-        message,
-        userData?.id,
-        roomId,
-        searchParams.get("res")
-      );
+      socket.emit("send__message", message, search);
       setMessage("");
     }
   };
 
-  console.log(roomId);
+  const createRoom = async () => {
+    const response = await roomTrigger({
+      userId: search,
+    }).then((res) => router.push("/messages/user?res=" + res?.id));
+
+    return response;
+  };
 
   return (
     <>
@@ -80,17 +73,7 @@ export default function MessagePage() {
             </div>
           ))}
 
-          <button
-            onClick={async () =>
-              await roomTrigger({
-                name: userData?.name + " room",
-                ownerId: userData?.id,
-                userId: search,
-              })
-            }
-          >
-            Add room
-          </button>
+          <button onClick={createRoom}>Add room</button>
         </div>
       </div>
     </>
