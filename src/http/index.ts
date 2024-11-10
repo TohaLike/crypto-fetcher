@@ -1,7 +1,7 @@
 import { AuthResponse } from "@/models/response/AuthResponse";
 import axios from "axios";
 
-export const API_URL = `${process.env.SERVER_URL}/api`
+export const API_URL = `https://crypto-fetcher-back-r53h8ork9-antons-projects-5f3e0d01.vercel.app/api`
 
 const axiosWithAuth = axios.create({
   withCredentials: true,
