@@ -1,7 +1,7 @@
 import { AuthResponse } from "@/models/response/AuthResponse";
 import axios from "axios";
 
-export const API_URL = "https://cfb-antons-projects-5f3e0d01.vercel.app/api";
+export const API_URL = "https://cfb-git-main-antons-projects-5f3e0d01.vercel.app/api";
 
 const axiosWithAuth = axios.create({
   withCredentials: true,
