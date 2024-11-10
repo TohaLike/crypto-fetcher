@@ -3,8 +3,6 @@ import axios from "axios";
 
 export const API_URL = `${process.env.SERVER_URL}/api`
 
-console.log(process.env.SERVER_URL)
-
 const axiosWithAuth = axios.create({
   withCredentials: true,
   baseURL: API_URL,
