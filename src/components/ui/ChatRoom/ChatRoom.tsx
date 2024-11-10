@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
-import { ListItem, ListItemAvatar, Avatar, ListItemText } from "@mui/material";
+import { ListItem, ListItemAvatar, Avatar, ListItemText, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { socket } from "@/socket/socket";
 
 interface Props {
   name: string;
-  date: string;
+  latestMessage: string;
   roomID: string;
 }
 
-export const ChatRoom: React.FC<Props> = ({ name, date, roomID }) => {
+export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID }) => {
   const router = useRouter();
 
   const redirectToRoom = () => {
@@ -23,9 +23,16 @@ export const ChatRoom: React.FC<Props> = ({ name, date, roomID }) => {
     <>
       <ListItem onClick={redirectToRoom}>
         <ListItemAvatar>
-          <Avatar></Avatar>
+          <Avatar sx={{ bgcolor: "green" }}>{name[0].toUpperCase()}</Avatar>
         </ListItemAvatar>
-        <ListItemText primary={name} secondary={date} />
+        <ListItemText
+          primary={name}
+          secondary={
+            <Typography variant="body2" style={{ color: "#FFFFFF" }}>
+              {latestMessage}
+            </Typography>
+          }
+        />
       </ListItem>
     </>
   );

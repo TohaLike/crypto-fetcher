@@ -1,8 +1,9 @@
 import SocketService from "@/services/SocketService";
+import useSWR from "swr";
 import useSWRImmutable from "swr/immutable";
 
 export const useRooms = () => {
-  const { data, mutate: mutateRooms } = useSWRImmutable(
+  const { data, mutate: mutateRooms } = useSWR(
     ["rooms"],
     () => SocketService.getAllRooms(),
     {

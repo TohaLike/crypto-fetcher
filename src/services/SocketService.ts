@@ -1,6 +1,7 @@
 import axiosWithAuth from "@/http";
 import { MessageResponse } from "@/models/message/MessageResponse";
 import { RoomResponse } from "@/models/room/RoomResponse";
+import { RoomsResponse } from "@/models/rooms/rooms";
 
 export default class SocketService {
   static async createRoom(data: object) {
@@ -14,7 +15,7 @@ export default class SocketService {
 
   static async getAllRooms() {
     try {
-      const response = await axiosWithAuth.get<RoomResponse[]>("/rooms");
+      const response = await axiosWithAuth.get<RoomsResponse[]>("/rooms");
       return response.data;
     } catch (e: any) {
       console.log(e.response?.data?.message);

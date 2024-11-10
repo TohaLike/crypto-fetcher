@@ -6,16 +6,22 @@ import { ChatRoom } from "@/components/ui";
 export default function MessagesPage() {
   const { rooms } = useRooms();
 
-  console.log(rooms);
+  const sortedChatRooms = rooms?.sort((a, b) => {
+    const dateA = new Date(a?.lastMessage.createdAt);
+    const dateB = new Date(b?.lastMessage.createdAt);
+    return dateB.getTime() - dateA.getTime();
+  });
+
+  // console.log(rooms?.map(e => e.roomId));
 
   return (
     <>
-      {rooms?.map((room, index) => (
+      {sortedChatRooms?.map((room, index) => (
         <ChatRoom
           key={"room: " + index}
-          name={room.name + index}
-          date={room.createdAt}
-          roomID={room.id}
+          name={room.companion.name}
+          latestMessage={room.lastMessage.message}
+          roomID={room.roomId}
         />
       ))}
     </>
