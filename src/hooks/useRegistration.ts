@@ -12,6 +12,7 @@ export const useRegistration = () => {
       },
     }
   );
+  
   return {
     registrationTrigger,
     loading,
