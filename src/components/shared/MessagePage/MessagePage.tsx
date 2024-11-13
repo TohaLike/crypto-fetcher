@@ -18,6 +18,26 @@ export default function MessagePage() {
 
   const { messagesData, loading } = useMessages();
 
+  const sendMessage = (event: any) => {
+    event.preventDefault();
+    if (message.trim()) {
+      socket.emit("send__message", message, search);
+      setMessage("");
+    }
+  };
+
+  const createRoom = async () => {
+    await roomTrigger({
+      userId: search,
+      lastMessage: message,
+    });
+
+    if (message.trim()) {
+      socket.emit("send__message", message, search);
+      setMessage("");
+    }
+  };
+
   useEffect(() => {
     socket.on("connect", () => console.log("Connected!"));
 
@@ -32,34 +52,19 @@ export default function MessagePage() {
       socket.off("send__message");
       socket.off("join__room");
     };
-
-  }, [socket, messages, messagesData]);
-
-  const sendMessage = (event: any) => {
-    event.preventDefault();
-    if (message.trim()) {
-      socket.emit("send__message", message, search);
-      setMessage("");
-    }
-  };
-
-  const createRoom = async () => {
-    const response = await roomTrigger({
-      userId: search,
-    }).then((res) => router.push("/messages/user?res=" + res?.id));
-
-    return response;
-  };
+  }, [socket, messages, messagesData, createRoom]);
 
   return (
     <>
       <div>
+        <div>{messagesData?.roomData.usersId[0].name}</div>
+
         <ChatInput name="message" label="Message" value={message} onChange={setMessage} />
         <button onClick={sendMessage}>Send</button>
         <div>
           {!messagesData
             ? []
-            : messagesData?.map((message: any, key: any) => (
+            : messagesData.messages?.map((message: any, key: any) => (
                 <div key={key}>
                   <p style={{ color: "white" }}>
                     {message.sender}: {message.message}

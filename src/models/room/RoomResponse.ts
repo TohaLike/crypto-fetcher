@@ -1,7 +1,8 @@
 export interface RoomResponse {
-  id: string;
+  _id: string;
   name: string;
   createdAt: string;
   ownerId: any;
-  usersId: any;
+  usersId: [{ _id: string; name: string }];
+  lastMessage: string;
 }

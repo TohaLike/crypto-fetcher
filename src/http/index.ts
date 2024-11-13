@@ -1,7 +1,10 @@
 import { AuthResponse } from "@/models/response/AuthResponse";
 import axios from "axios";
 
-export const API_URL = `https://crypto-fetcher-back.onrender.com/api`
+// export const API_URL = `https://crypto-fetcher-back.onrender.com/api`
+
+
+export const API_URL = `http://localhost:4000/api`
 
 const axiosWithAuth = axios.create({
   withCredentials: true,

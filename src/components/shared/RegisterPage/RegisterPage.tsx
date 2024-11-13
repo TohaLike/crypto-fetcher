@@ -15,7 +15,7 @@ export const RegisterPage: React.FC = () => {
 
   // if (isAuthorized) redirect("/home");
 
-  console.log(userData)
+  // console.log(userData)
 
   return (
     <div>
