@@ -7,12 +7,12 @@ export default function MessagesPage() {
   const { rooms } = useRooms();
 
   const sortedChatRooms = rooms?.sort((a, b) => {
-    const dateA = new Date(a?.createdAt);
-    const dateB = new Date(b?.createdAt);
+    const dateA = new Date(a?.lastMessage?.createdAt);
+    const dateB = new Date(b?.lastMessage?.createdAt);
     return dateB.getTime() - dateA.getTime();
   });
 
-  console.log(rooms?.map(e => e));
+  console.log(rooms?.map((e, i) => e));
 
   return (
     <>
@@ -20,7 +20,7 @@ export default function MessagesPage() {
         <ChatRoom
           key={"room: " + index}
           name={room.usersId[0].name}
-          latestMessage={room.lastMessage}
+          latestMessage={room.lastMessage?.messageText}
           roomID={room.usersId[0]._id}
         />
       ))}

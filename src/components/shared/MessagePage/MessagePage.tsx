@@ -51,7 +51,7 @@ export default function MessagePage() {
       socket.off("send__message");
       socket.off("join__room");
     };
-  }, [socket, messages, messagesData]);
+  }, [socket, messages, messagesData, createRoom]);
 
   return (
     <>

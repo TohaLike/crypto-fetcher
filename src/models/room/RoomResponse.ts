@@ -4,5 +4,5 @@ export interface RoomResponse {
   createdAt: string;
   ownerId: any;
   usersId: [{ _id: string; name: string }];
-  lastMessage: string;
+  lastMessage: { _id: string; messageText: string; createdAt: string };
 }
