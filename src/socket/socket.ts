@@ -11,7 +11,7 @@ export const socket = io("https://crypto-fetcher-back.onrender.com", {
   reconnectionAttempts: Infinity,
   reconnectionDelay: 1000,
   reconnectionDelayMax: 5000,
-  timeout: 200,
+  timeout: 20000,
   secure: true,
   // rejectUnauthorized: false,
 });
