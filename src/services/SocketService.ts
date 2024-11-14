@@ -1,6 +1,6 @@
 import axiosWithAuth from "@/http";
 import { MessageResponse } from "@/models/message/MessageResponse";
-import { MessagePageResponse } from "@/models/messagePage/messagePageResponse";
+import { MessagePageResponse } from "@/models/messagePage/MessagePageResponse";
 import { RoomResponse } from "@/models/room/RoomResponse";
 
 export default class SocketService {
