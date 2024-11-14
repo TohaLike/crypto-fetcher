@@ -12,7 +12,6 @@ export default function MessagePage() {
 
   const searchParams = useSearchParams();
   const search = searchParams.get("res");
-  const router = useRouter();
 
   const { roomTrigger } = useRoom();
 
