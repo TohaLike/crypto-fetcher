@@ -36,18 +36,31 @@ export default function MessagesPage() {
     return dateB.getTime() - dateA.getTime();
   });
 
-  console.log(concatRooms);
+  const sortedChatRoomsServer = rooms?.sort((a, b) => {
+    const dateA = new Date(a?.lastMessage?.createdAt);
+    const dateB = new Date(b?.lastMessage?.createdAt);
+    return dateB.getTime() - dateA.getTime();
+  });
 
   return (
     <>
-      {sortedChatRooms?.map((room, index) => (
-        <ChatRoom
-          key={"room: " + index}
-          name={room.name}
-          latestMessage={room.lastMessage?.messageText}
-          roomID={room.id}
-        />
-      ))}
+      {lastMessage?.length > 0
+        ? sortedChatRooms?.map((room, index) => (
+            <ChatRoom
+              key={"room: " + index}
+              name={room.name}
+              latestMessage={room.lastMessage?.messageText}
+              roomID={room.id}
+            />
+          ))
+        : sortedChatRoomsServer?.map((room, index) => (
+            <ChatRoom
+              key={"room: " + index}
+              name={room.name}
+              latestMessage={room.lastMessage?.messageText}
+              roomID={room.usersId[0]?._id}
+            />
+          ))}
     </>
   );
 }
