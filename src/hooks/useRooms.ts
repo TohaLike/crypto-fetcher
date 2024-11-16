@@ -8,6 +8,7 @@ export const useRooms = () => {
     () => SocketService.getAllRooms(),
     {
       shouldRetryOnError: true,
+      revalidateOnFocus: false,
     }
   );
 

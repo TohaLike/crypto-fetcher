@@ -26,7 +26,7 @@ export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID }) => {
           <Avatar sx={{ bgcolor: "green" }}>{name[0].toUpperCase()}</Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={name}
+          primary={<Typography variant="body1" style={{ color: "#FFFFFF" }} textTransform={"capitalize"}>{name}</Typography>}
           secondary={
             <Typography variant="body2" style={{ color: "#FFFFFF" }}>
               {latestMessage}
