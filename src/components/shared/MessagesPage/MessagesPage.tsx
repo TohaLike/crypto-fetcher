@@ -16,7 +16,7 @@ export default function MessagesPage() {
     socket.on("room__message", (name, message, id, createdAt) => {
       setLastMessage([
         ...lastMessage,
-        { name, lastMessage: { messageText: message }, id, createdAt },
+        { name, lastMessage: { messageText: message, createdAt }, id },
       ]);
     });
 
@@ -31,36 +31,21 @@ export default function MessagesPage() {
   const messagesRooms = Array.from(new Map(concatRooms?.map((item) => [item?.id, item])).values());
 
   const sortedChatRooms = messagesRooms?.sort((a, b) => {
-    const dateA = new Date(a?.createdAt);
-    const dateB = new Date(b?.createdAt);
-    return dateB.getTime() - dateA.getTime();
-  });
-
-  const sortedChatRoomsServer = rooms?.sort((a, b) => {
     const dateA = new Date(a?.lastMessage?.createdAt);
     const dateB = new Date(b?.lastMessage?.createdAt);
     return dateB.getTime() - dateA.getTime();
   });
-
+  
   return (
     <>
-      {lastMessage?.length > 0
-        ? sortedChatRooms?.map((room, index) => (
-            <ChatRoom
-              key={"room: " + index}
-              name={room.name}
-              latestMessage={room.lastMessage?.messageText}
-              roomID={room.id}
-            />
-          ))
-        : sortedChatRoomsServer?.map((room, index) => (
-            <ChatRoom
-              key={"room: " + index}
-              name={room.name}
-              latestMessage={room.lastMessage?.messageText}
-              roomID={room.usersId[0]?._id}
-            />
-          ))}
+      {sortedChatRooms?.map((room, index) => (
+        <ChatRoom
+          key={"room: " + index}
+          name={room.name}
+          latestMessage={room.lastMessage?.messageText}
+          roomID={room.id}
+        />
+      ))}
     </>
   );
 }
