@@ -13,10 +13,10 @@ export default function MessagesPage() {
 
     socket.emit("join__rooms");
 
-    socket.on("room__message", (name, message, id, createdAt) => {
+    socket.on("room__message", (name, message, id, createdAt, usersId) => {
       setLastMessage([
         ...lastMessage,
-        { name, lastMessage: { messageText: message, createdAt }, id },
+        { name, lastMessage: { messageText: message, createdAt }, id, usersId },
       ]);
     });
 
@@ -35,15 +35,15 @@ export default function MessagesPage() {
     const dateB = new Date(b?.lastMessage?.createdAt);
     return dateB.getTime() - dateA.getTime();
   });
-  
+
   return (
     <>
       {sortedChatRooms?.map((room, index) => (
         <ChatRoom
           key={"room: " + index}
-          name={room.name}
+          name={room.usersId[0].name}
           latestMessage={room.lastMessage?.messageText}
-          roomID={room.id}
+          roomID={room.usersId[0]._id}
         />
       ))}
     </>
