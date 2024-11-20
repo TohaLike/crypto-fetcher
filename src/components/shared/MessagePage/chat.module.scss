@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: max-content;
+}
+
+.messages {
+  padding: 50px 0 0 10px;
+  display: flex;
+  overflow: scroll;
+  flex-flow: column-reverse;
+  height: 100vh;
+  // max-width: 860px;
+  width: 100%;
+  
+  &__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+}

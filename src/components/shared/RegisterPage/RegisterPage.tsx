@@ -21,7 +21,16 @@ export const RegisterPage: React.FC = () => {
     <div>
       {!isAuthorized && (
         <div>
-          <ActionButton title="Registration" type="button" onClick={() => setOpenModal(true)} />
+          <ActionButton
+            title="Registration"
+            type="button"
+            onClick={() => setOpenModal(true)}
+            height={"46px"}
+            width={"100%"}
+            bgcolor="#fff"
+            color="#000"
+            hover="#E3E3E3"
+          />
           <RegisterModal onOpen={openModal} onClose={handleClose} />
         </div>
       )}

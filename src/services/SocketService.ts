@@ -25,7 +25,7 @@ export default class SocketService {
 
   static async getMessages(url: any) {
     try {
-      const response = await axiosWithAuth.get<MessagePageResponse>(url);
+      const response = await axiosWithAuth.get<MessageResponse[]>(url);
       return response.data;
     } catch (e) {
       console.log(e);

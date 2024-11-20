@@ -13,7 +13,7 @@ export const Navigation: React.FC = () => {
       spacing={2.5}
       p={"20px 0 0"}
       borderRight={"1px solid #282828"}
-      height={"100vw"}
+      height={"100%"}
     >
       <NavigationLink title="Home" icon={<HomeIcon />} href="/home" />
       <NavigationLink title="Profile" icon={<ProfileIcon />} href={`/${userData?.id}`} />

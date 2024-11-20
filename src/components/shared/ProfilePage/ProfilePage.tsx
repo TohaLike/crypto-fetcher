@@ -9,10 +9,11 @@ import { useParams } from "next/navigation";
 
 export const ProfilePage: React.FC = () => {
   const { userData, isAuthorized } = useAuthorized();
-  const { profileData } = useProfile();
 
   const router = useRouter();
   const params = useParams();
+
+  const { profileData } = useProfile({ params: params?.profile });
 
   const redirectToRoom = () => {
     router.push(`/messages/user?res=${params?.profile}`);
