@@ -1,6 +1,9 @@
 "use client";
-import { Box, Paper, Typography } from "@mui/material";
 import React from "react";
+import moment from "moment";
+import { Box, Paper, Typography } from "@mui/material";
+
+import message from "./message.module.scss";
 
 interface Props {
   userId?: string;
@@ -10,13 +13,7 @@ interface Props {
   profileDataId?: string;
 }
 
-export const Message: React.FC<Props> = ({
-  userName,
-  createdAt,
-  messageText,
-  userId,
-  profileDataId,
-}) => {
+export const Message: React.FC<Props> = ({ createdAt, messageText, userId, profileDataId }) => {
   return (
     <>
       <Box
@@ -30,15 +27,26 @@ export const Message: React.FC<Props> = ({
           sx={{
             bgcolor: profileDataId === userId ? "#545454" : "#1976d2",
             borderRadius: profileDataId === userId ? "16px 16px 16px 0" : "16px 16px 0 16px",
-            padding: "10px",
+            boxSizing: "border-box",
             maxWidth: "60%",
           }}
         >
-          <Typography variant="body1" style={{ color: "#FFFFFF" }}>
+          <Typography
+            variant="body1"
+            sx={{
+              color: "#fff",
+              wordBreak: "break-word",
+              whiteSpace: "pre-wrap",
+              margin: "4px 8px 5px",
+              boxSizing: "border-box",
+              letterHeight: "1.3125px",
+              fontSize: "16px",
+            }}
+          >
             {messageText}
-          </Typography>
-          <Typography variant="body2" style={{ color: "#FFFFFF" }}>
-            {createdAt}
+            <div className={message.time}>
+              <span className={message.time__contaoner}>{moment(createdAt).locale("ru").format("H:mm")}</span>
+            </div>
           </Typography>
         </Paper>
       </Box>

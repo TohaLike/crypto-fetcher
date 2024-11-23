@@ -21,7 +21,7 @@ export const ChatInput: React.FC<Props> = ({ name, label, value, placeholder, on
         label={label}
         value={value}
         multiline
-        maxRows={10}
+        maxRows={8}
         slotProps={{
           input: {
             disableUnderline: true,

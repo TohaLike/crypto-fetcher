@@ -23,7 +23,7 @@ export default class SocketService {
     }
   }
 
-  static async getMessages(url: any) {
+  static async getMessages(url: string) {
     try {
       const response = await axiosWithAuth.get<MessageResponse[]>(url);
       return response.data;

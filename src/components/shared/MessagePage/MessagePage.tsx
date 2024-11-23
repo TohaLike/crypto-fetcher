@@ -5,25 +5,27 @@ import chat from "./chat.module.scss";
 import { ChatInput } from "@/components/ui/ChatInput/ChatInput";
 import { socket } from "@/socket/socket";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMessages } from "@/hooks/useMessages";
 import { useRoom } from "@/hooks/useRoom";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useProfile } from "@/hooks/useProfile";
 import { TypingIcon } from "@/components/icons/Typing/typing";
 import { Box } from "@mui/material";
-import { ActionButton } from "@/components/ui";
+import { ActionButton, Message } from "@/components/ui";
+import { useMessages } from "@/hooks/useMessages";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 
 import SendIcon from "@mui/icons-material/Send";
-import { Message } from "@/components/ui/Message/Message";
+
+interface Props {
+  typing: boolean;
+}
 
 export default function MessagePage() {
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState<string>("");
 
   const [typing, setTyping] = useState<boolean>(false);
-  const [typingVisible, setTypingVisible] = useState<string>("");
-
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [typingVisible, setTypingVisible] = useState<Props>();
 
   const debouncedSearchTerm = useDebounce(message, 2000);
 
@@ -34,7 +36,11 @@ export default function MessagePage() {
 
   const { roomTrigger, isMutating } = useRoom();
 
-  const { messagesData, loading } = useMessages();
+  const { scrollData, setSize, size, ended, isLoading, isValidating } = useMessages({
+    search: search,
+  });
+
+  const { intersectionRef } = useInfiniteScroll({ isValidating, setSize, size, ended });
 
   const sendMessage = (event: any) => {
     event.preventDefault();
@@ -77,12 +83,12 @@ export default function MessagePage() {
     return () => {
       socket.off("join__room");
     };
-  }, [socket, messagesData, isMutating]);
+  }, [socket, isMutating]);
 
   useEffect(() => {
     socket.on("connect", () => console.log("Connected!"));
 
-    messagesEndRef.current?.scrollIntoView();
+    // messagesEndRef.current?.scrollIntoView();
 
     if (typing) socket.emit("typing", search);
 
@@ -101,29 +107,35 @@ export default function MessagePage() {
       socket.off("connect");
       socket.off("send__message");
     };
-  }, [socket, messages, messagesData, isMutating, typing]);
+  }, [socket, messages, isMutating, typing]);
 
   return (
     <>
-      {/* <div>
-          {profileData?.name} {typingVisible ? <TypingIcon /> : ""}
-        </div> */}
-      <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100vh",
+          maxWidth: "860px",
+          width: "100%",
+          margin: "auto",
+        }}
+      >
         <div className={chat.messages}>
           <div className={chat.messages__content}>
-            {!messagesData
-              ? []
-              : messagesData?.map((message: any, key: any) => (
-                  <Message
-                    key={key}
-                    userName={message.userName}
-                    createdAt={message.createdAt}
-                    messageText={message.message}
-                    userId={message.userId}
-                    profileDataId={profileData?.id}
-                  />
-                ))}
-
+            {scrollData
+              ?.flat()
+              .reverse()
+              ?.map((message: any, key: any) => (
+                <Message
+                  key={key}
+                  userName={message.userName}
+                  createdAt={message.createdAt}
+                  messageText={message.message}
+                  userId={message.userId}
+                  profileDataId={profileData?.id}
+                />
+              ))}
             {messages?.map((message, key) => (
               <Message
                 key={key}
@@ -134,11 +146,25 @@ export default function MessagePage() {
                 profileDataId={profileData?.id}
               />
             ))}
-            <div ref={messagesEndRef}></div>
           </div>
+          {isValidating ? (
+            <div className={chat.loader}>
+              <p>Loading...</p>
+            </div>
+          ) : (
+            <div className={chat.loader}>
+              {/* <p>No more messages...</p> */}
+              
+            </div>
+          )}
+          <div ref={intersectionRef}></div>
         </div>
 
-        <div className={chat.container}>
+        {/* <Box>
+          {profileData?.name} {typingVisible?.typing ? <TypingIcon /> : ""}
+        </Box> */}
+
+        <div className={chat.messages__input}>
           <Box
             sx={{
               width: "100%",
@@ -175,7 +201,7 @@ export default function MessagePage() {
             title=""
             variant="contained"
             onClick={sendMessage}
-            disabled={loading}
+            // disabled={loading}
             bgcolor="#6128ff"
             minWidth="45px"
             height="45px"

@@ -1,26 +1,30 @@
 import SocketService from "@/services/SocketService";
-import { useSearchParams } from "next/navigation";
-import useSWR from "swr";
-import useSWRImmutable from "swr/immutable";
+import useSWRInfinite from "swr/infinite";
 
-export const useMessages = () => {
-  const searchParams = useSearchParams();
-  const search = searchParams.get("res");
+export const useMessages = ({ search }: any) => {
+  const getKey = (pageIndex: number, previousPageData: string) => {
+    if (previousPageData && !previousPageData.length) return null;
+    return `/messages/user?res=${search}&page=${pageIndex}&limit=${35}`;
+  };
 
-  const url = `/messages/user?res=${search}`
+  const { data, setSize, size, isValidating, isLoading } = useSWRInfinite(
+    getKey,
+    SocketService.getMessages,
+    {
+      shouldRetryOnError: true,
+      revalidateOnFocus: false,
+      revalidateFirstPage: false,
+    }
+  );
 
-  const { data, mutate, isLoading } = useSWR([url], () => SocketService.getMessages(url), {
-    shouldRetryOnError: true,
-    revalidateOnFocus: false,
-    // revalidateOnMount: true,
-    // revalidateOnReconnect: true,
-  });
-
-  // console.log(search)
+  const ended = data && data[data.length - 1]?.length === 0;
 
   return {
-    messagesData: data,
-    mutate,
-    loading: isLoading
+    scrollData: data,
+    setSize,
+    size,
+    ended,
+    isLoading,
+    isValidating,
   };
 };

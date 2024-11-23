@@ -1,0 +1,18 @@
+.time {
+  display: flex;
+  height: 24px;
+  float: right;
+  direction: rtl;
+  margin-inline-end: 0.1875rem;
+
+  &__contaoner {
+    max-width: max-content;
+    font-style: italic;
+    font-weight: 100;
+    font-size: 12px;
+    float: right;
+    direction: rtl;
+    display: inline-flex;
+    align-items: flex-end;
+  }
+}
