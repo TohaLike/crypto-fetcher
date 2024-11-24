@@ -25,11 +25,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={IBMPlexMono.className}>
         <Provider>
-          {/* <Header /> */}
+          <Header />
           <Container>
             <article className={home.article}>
               <Navigation />
               {children}
+              {/* <div className={home.right}></div> */}
             </article>
           </Container>
         </Provider>

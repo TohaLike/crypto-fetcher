@@ -1,12 +1,14 @@
 .messages {
-  padding: 56px 0 0 10px;
+  padding: 1px 0 0 10px;
   display: flex;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-anchor: none;
   scrollbar-width: thin;
   flex-direction: column-reverse;
   height: 100vh;
   width: 100%;
+  flex: 1 1 0%;
+  position: sticky;
 
   &__content {
     display: flex;
@@ -15,20 +17,17 @@
   }
 
   &__input {
-    margin: 10px 0 0;
+    margin: 10px 0;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     height: max-content;
   }
-}
 
-.loader {
-  p {
-    font-style: italic;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    color: #b3b3b3;
+  &__spacer {
+    height: 55px;
+    &__loader {
+      visibility: hidden;
+    }
   }
 }

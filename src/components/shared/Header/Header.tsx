@@ -21,7 +21,7 @@ export const Header: React.FC = ({}) => {
           </div>
           <div className={header.avatar}>
             <Link href={`/${userData?.id}`}>
-              <Avatar sx={{ width: 40, height: 40, bgcolor: "green" }}>
+              <Avatar sx={{ width: 40, height: 40, bgcolor: "#1976d2" }}>
                 {userData?.name[0].toUpperCase()}
               </Avatar>
             </Link>

@@ -1,4 +1,5 @@
-import { createRef, useCallback, useEffect, useRef } from "react";
+import { useDebounce } from "@uidotdev/usehooks";
+import { createRef, useCallback, useEffect, useRef, useState } from "react";
 
 export const useInfiniteScroll = ({
   isValidating,
@@ -25,10 +26,15 @@ export const useInfiniteScroll = ({
 
   useEffect(() => {
     if (observerLoader.current) observerLoader.current.disconnect();
-    observerLoader.current = new IntersectionObserver(loadMore);
+
+    observerLoader.current = new IntersectionObserver(loadMore, {
+      threshold: 0.1,
+    });
+    
 
     if (intersectionRef.current) observerLoader.current.observe(intersectionRef.current);
-  }, [intersectionRef, loadMore]);
 
+
+  }, [intersectionRef, loadMore]);
   return { intersectionRef };
 };

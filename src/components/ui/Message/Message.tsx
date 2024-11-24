@@ -23,16 +23,19 @@ export const Message: React.FC<Props> = ({ createdAt, messageText, userId, profi
         }}
       >
         <Paper
+          className={message.message}
           elevation={3}
           sx={{
             bgcolor: profileDataId === userId ? "#545454" : "#1976d2",
-            borderRadius: profileDataId === userId ? "16px 16px 16px 0" : "16px 16px 0 16px",
+            // borderRadius: profileDataId === userId ? "16px 16px 16px 0" : "16px 16px 0 16px",
+            borderRadius: "16px",
             boxSizing: "border-box",
             maxWidth: "60%",
           }}
         >
           <Typography
-            variant="body1"
+            variant="h4"
+            fontWeight={400}
             sx={{
               color: "#fff",
               wordBreak: "break-word",
@@ -44,9 +47,12 @@ export const Message: React.FC<Props> = ({ createdAt, messageText, userId, profi
             }}
           >
             {messageText}
-            <div className={message.time}>
-              <span className={message.time__contaoner}>{moment(createdAt).locale("ru").format("H:mm")}</span>
-            </div>
+            <span className={message.message__time}>
+              <span className={message.message__title}>time</span>
+              <span className={message.message__time__container}>
+                {moment(createdAt).locale("ru").format("H:mm")}
+              </span>
+            </span>
           </Typography>
         </Paper>
       </Box>

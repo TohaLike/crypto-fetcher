@@ -14,7 +14,10 @@ import { ActionButton, Message } from "@/components/ui";
 import { useMessages } from "@/hooks/useMessages";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 
+import EmojiPicker from 'emoji-picker-react';
+
 import SendIcon from "@mui/icons-material/Send";
+import { ChatHeader } from "../ChatHeader/ChatHeader";
 
 interface Props {
   typing: boolean;
@@ -36,7 +39,7 @@ export default function MessagePage() {
 
   const { roomTrigger, isMutating } = useRoom();
 
-  const { scrollData, setSize, size, ended, isLoading, isValidating } = useMessages({
+  const { scrollData, setSize, size, ended, isValidating } = useMessages({
     search: search,
   });
 
@@ -46,7 +49,7 @@ export default function MessagePage() {
     event.preventDefault();
 
     if (message.trim()) {
-      socket.emit("send__message", message, search);
+      socket.emit("send__message", message.trim(), search);
       socket.emit("stopped__typing", search);
       setTyping(false);
       setMessage("");
@@ -61,11 +64,11 @@ export default function MessagePage() {
   const createRoom = async () => {
     await roomTrigger({
       userId: search,
-      lastMessage: message,
+      lastMessage: message.trim(),
     });
 
     if (message.trim()) {
-      socket.emit("send__message", message, search);
+      socket.emit("send__message", message.trim(), search);
       socket.emit("stopped__typing", search);
       setTyping(false);
       setMessage("");
@@ -88,8 +91,6 @@ export default function MessagePage() {
   useEffect(() => {
     socket.on("connect", () => console.log("Connected!"));
 
-    // messagesEndRef.current?.scrollIntoView();
-
     if (typing) socket.emit("typing", search);
 
     socket.on("typing", (data) => setTypingVisible(data));
@@ -110,17 +111,19 @@ export default function MessagePage() {
   }, [socket, messages, isMutating, typing]);
 
   return (
-    <>
+    <div>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: "100vh",
-          maxWidth: "860px",
+          height: "calc(100vh - 50px)",
+          // maxWidth: "760px",
           width: "100%",
-          margin: "auto",
+          // margin: "auto",
         }}
       >
+        <ChatHeader userData={profileData} />
+
         <div className={chat.messages}>
           <div className={chat.messages__content}>
             {scrollData
@@ -147,23 +150,11 @@ export default function MessagePage() {
               />
             ))}
           </div>
-          {isValidating ? (
-            <div className={chat.loader}>
-              <p>Loading...</p>
-            </div>
-          ) : (
-            <div className={chat.loader}>
-              {/* <p>No more messages...</p> */}
-              
-            </div>
-          )}
-          <div ref={intersectionRef}></div>
+          <div ref={intersectionRef} className={chat.messages__spacer__loader}></div>
         </div>
-
         {/* <Box>
           {profileData?.name} {typingVisible?.typing ? <TypingIcon /> : ""}
         </Box> */}
-
         <div className={chat.messages__input}>
           <Box
             sx={{
@@ -174,10 +165,12 @@ export default function MessagePage() {
               bgcolor: "#1A1A1A",
               height: "auto",
               borderRadius: "16px",
-              p: "0 16px",
+              p: "0 20px",
               m: "0 10px",
             }}
           >
+                  {/* <EmojiPicker /> */}
+
             {/* <ActionButton
               type="submit"
               title="CR"
@@ -209,6 +202,6 @@ export default function MessagePage() {
           />
         </div>
       </Box>
-    </>
+    </div>
   );
 }

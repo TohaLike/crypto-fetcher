@@ -3,8 +3,8 @@ import useSWRInfinite from "swr/infinite";
 
 export const useMessages = ({ search }: any) => {
   const getKey = (pageIndex: number, previousPageData: string) => {
-    if (previousPageData && !previousPageData.length) return null;
-    return `/messages/user?res=${search}&page=${pageIndex}&limit=${35}`;
+    if (previousPageData && previousPageData.length === 0) return null;
+    return `/messages/user?res=${search}&page=${pageIndex + 1}&limit=${40}`;
   };
 
   const { data, setSize, size, isValidating, isLoading } = useSWRInfinite(
@@ -14,6 +14,7 @@ export const useMessages = ({ search }: any) => {
       shouldRetryOnError: true,
       revalidateOnFocus: false,
       revalidateFirstPage: false,
+      revalidateOnMount: true
     }
   );
 
