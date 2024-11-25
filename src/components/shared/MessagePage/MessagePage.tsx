@@ -5,7 +5,7 @@ import chat from "./chat.module.scss";
 import { ChatInput } from "@/components/ui/ChatInput/ChatInput";
 import { socket } from "@/socket/socket";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useRoom } from "@/hooks/useRoom";
+import { useCreateRoom } from "@/hooks/useCreateRoom";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useProfile } from "@/hooks/useProfile";
 import { TypingIcon } from "@/components/icons/Typing/typing";
@@ -14,10 +14,10 @@ import { ActionButton, Message } from "@/components/ui";
 import { useMessages } from "@/hooks/useMessages";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 
-import EmojiPicker from 'emoji-picker-react';
-
 import SendIcon from "@mui/icons-material/Send";
 import { ChatHeader } from "../ChatHeader/ChatHeader";
+import { EmojiButton } from "@/components/ui/EmojiButton/EmojiButton";
+import { useRoom } from "@/hooks/useRoom";
 
 interface Props {
   typing: boolean;
@@ -26,6 +26,8 @@ interface Props {
 export default function MessagePage() {
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState<string>("");
+
+  const [created, setCreated] = useState<boolean>(false);
 
   const [typing, setTyping] = useState<boolean>(false);
   const [typingVisible, setTypingVisible] = useState<Props>();
@@ -37,13 +39,15 @@ export default function MessagePage() {
 
   const { profileData } = useProfile({ params: search });
 
-  const { roomTrigger, isMutating } = useRoom();
+  const { roomTrigger, data, isMutating } = useCreateRoom();
 
-  const { scrollData, setSize, size, ended, isValidating } = useMessages({
+  const { scrollData, setSize, size, ended, isValidating, isLoading } = useMessages({
     search: search,
   });
 
   const { intersectionRef } = useInfiniteScroll({ isValidating, setSize, size, ended });
+
+  const { dataRoom } = useRoom();
 
   const sendMessage = (event: any) => {
     event.preventDefault();
@@ -68,6 +72,7 @@ export default function MessagePage() {
     });
 
     if (message.trim()) {
+      setCreated(true);
       socket.emit("send__message", message.trim(), search);
       socket.emit("stopped__typing", search);
       setTyping(false);
@@ -110,6 +115,7 @@ export default function MessagePage() {
     };
   }, [socket, messages, isMutating, typing]);
 
+
   return (
     <div>
       <Box
@@ -132,20 +138,20 @@ export default function MessagePage() {
               ?.map((message: any, key: any) => (
                 <Message
                   key={key}
-                  userName={message.userName}
-                  createdAt={message.createdAt}
-                  messageText={message.message}
-                  userId={message.userId}
+                  userName={message?.userName}
+                  createdAt={message?.createdAt}
+                  messageText={message?.message}
+                  userId={message?.userId}
                   profileDataId={profileData?.id}
                 />
               ))}
             {messages?.map((message, key) => (
               <Message
                 key={key}
-                userName={message.userName}
-                createdAt={message.createdAt}
-                messageText={message.message}
-                userId={message.userId}
+                userName={message?.userName}
+                createdAt={message?.createdAt}
+                messageText={message?.message}
+                userId={message?.userId}
                 profileDataId={profileData?.id}
               />
             ))}
@@ -165,21 +171,14 @@ export default function MessagePage() {
               bgcolor: "#1A1A1A",
               height: "auto",
               borderRadius: "16px",
-              p: "0 20px",
+              p: "0 20px 0 15px",
               m: "0 10px",
             }}
           >
-                  {/* <EmojiPicker /> */}
+            <div className={chat.messages__input__emoji}>
+              <EmojiButton />
+            </div>
 
-            {/* <ActionButton
-              type="submit"
-              title="CR"
-              onClick={createRoom}
-              fontSize="14px"
-              minWidth="40px"
-              height="40px"
-              m="0 0 3px"
-            /> */}
             <ChatInput
               name="message"
               placeholder="Message"
@@ -188,18 +187,33 @@ export default function MessagePage() {
               onChange={handleInputChange}
             />
           </Box>
-
-          <ActionButton
-            type="submit"
-            title=""
-            variant="contained"
-            onClick={sendMessage}
-            // disabled={loading}
-            bgcolor="#6128ff"
-            minWidth="45px"
-            height="45px"
-            icon={<SendIcon sx={{ fontSize: "24px", color: "#fff" }} />}
-          />
+          {!dataRoom && !data ? (
+            <ActionButton
+              type="submit"
+              title=""
+              variant="contained"
+              onClick={createRoom}
+              disabled={isLoading}
+              bgcolor="#6128ff"
+              minWidth="45px"
+              height="45px"
+              icon={<SendIcon sx={{ fontSize: "24px", color: "#fff" }} />}
+              // icon={1}
+            />
+          ) : (
+            <ActionButton
+              type="submit"
+              title=""
+              variant="contained"
+              onClick={sendMessage}
+              disabled={isLoading}
+              bgcolor="#6128ff"
+              minWidth="45px"
+              height="45px"
+              icon={<SendIcon sx={{ fontSize: "24px", color: "#fff" }} />}
+              // icon={21}
+            />
+          )}
         </div>
       </Box>
     </div>

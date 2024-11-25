@@ -14,14 +14,14 @@ export const useMessages = ({ search }: any) => {
       shouldRetryOnError: true,
       revalidateOnFocus: false,
       revalidateFirstPage: false,
-      revalidateOnMount: true
+      revalidateOnMount: true,
     }
   );
 
   const ended = data && data[data.length - 1]?.length === 0;
 
   return {
-    scrollData: data,
+    scrollData: data?.some((e: any) => e === "") ? [] : data,
     setSize,
     size,
     ended,

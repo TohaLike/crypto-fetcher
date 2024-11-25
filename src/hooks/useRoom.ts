@@ -1,14 +1,18 @@
 import SocketService from "@/services/SocketService";
-import useSWRMutation from "swr/mutation";
+import { useSearchParams } from "next/navigation";
+import useSWRImmutable from "swr/immutable";
 
 export const useRoom = () => {
-  const { trigger: roomTrigger, isMutating, } = useSWRMutation(
-    ["room"],
-    (url, { arg }: { arg: object }) => SocketService.createRoom(arg)
-  );
 
-  return {
-    roomTrigger,
-    isMutating,
-  };
+  const searchParams = useSearchParams();
+  const search = searchParams.get("res");
+
+  const url = `/room/user?res=${search}`;
+
+  const { data, isLoading } = useSWRImmutable([url], () => SocketService.getRoom(url));
+
+  console.log(data, "!")
+
+
+  return { dataRoom: data, loadRoom: isLoading };
 };

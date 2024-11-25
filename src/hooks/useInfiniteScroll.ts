@@ -36,5 +36,6 @@ export const useInfiniteScroll = ({
 
 
   }, [intersectionRef, loadMore]);
+  
   return { intersectionRef };
 };

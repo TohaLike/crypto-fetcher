@@ -1,15 +1,6 @@
 "use client";
 import React from "react";
-import {
-  AppBar,
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Menu,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Link from "next/link";
 
@@ -23,7 +14,7 @@ export const ChatHeader: React.FC<Props> = ({ userData }) => {
       <AppBar
         position="static"
         sx={{
-          bgcolor: "#282828",
+          bgcolor: "#1A1A1A",
           "&.MuiAppBar-root": {
             maxHeight: "50px",
           },
@@ -45,9 +36,20 @@ export const ChatHeader: React.FC<Props> = ({ userData }) => {
               {userData?.name[0].toUpperCase()}
             </Avatar>
           </IconButton>
-          <Typography variant="h2" fontSize={"18px"} fontWeight={"500"} textTransform={"capitalize"} component="div">
-            {userData?.name}
-          </Typography>
+          <Box display={"flex"} flexDirection={"column"}>
+            <Typography
+              variant="h2"
+              fontSize={"16px"}
+              fontWeight={"500"}
+              textTransform={"capitalize"}
+              component="div"
+            >
+              {userData?.name}
+            </Typography>
+            <Typography variant="body2" fontSize={"12px"} fontWeight={"100"} fontStyle={"italic"}>
+              offline
+            </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

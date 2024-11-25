@@ -8,7 +8,7 @@
   height: 100vh;
   width: 100%;
   flex: 1 1 0%;
-  position: sticky;
+  // position: sticky;
 
   &__content {
     display: flex;
@@ -22,6 +22,9 @@
     align-items: flex-end;
     justify-content: space-between;
     height: max-content;
+    &__emoji {
+      margin-bottom: 11px;
+    }
   }
 
   &__spacer {

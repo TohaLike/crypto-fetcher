@@ -1,6 +1,7 @@
 import axiosWithAuth from "@/http";
 import { MessageResponse } from "@/models/message/MessageResponse";
 import { RoomResponse } from "@/models/room/RoomResponse";
+import { RoomDataResponse } from "@/models/roomData/RoomDataResponse";
 
 export default class SocketService {
   static async createRoom(data: object) {
@@ -25,6 +26,15 @@ export default class SocketService {
   static async getMessages(url: string) {
     try {
       const response = await axiosWithAuth.get<MessageResponse[]>(url);
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  static async getRoom(url: string) {
+    try {
+      const response = await axiosWithAuth.get<RoomDataResponse>(url);
       return response.data;
     } catch (e) {
       console.log(e);
