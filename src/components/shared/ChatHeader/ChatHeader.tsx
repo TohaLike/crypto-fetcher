@@ -5,10 +5,11 @@ import Avatar from "@mui/material/Avatar";
 import Link from "next/link";
 
 interface Props {
-  userData: any;
+  userData?: any;
+  userActivity?: any;
 }
 
-export const ChatHeader: React.FC<Props> = ({ userData }) => {
+export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
   return (
     <Box sx={{ zIndex: 1 }}>
       <AppBar
@@ -47,7 +48,7 @@ export const ChatHeader: React.FC<Props> = ({ userData }) => {
               {userData?.name}
             </Typography>
             <Typography variant="body2" fontSize={"12px"} fontWeight={"100"} fontStyle={"italic"}>
-              offline
+              {userActivity || "offline"}
             </Typography>
           </Box>
         </Toolbar>

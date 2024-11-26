@@ -18,6 +18,8 @@ import SendIcon from "@mui/icons-material/Send";
 import { ChatHeader } from "../ChatHeader/ChatHeader";
 import { EmojiButton } from "@/components/ui/EmojiButton/EmojiButton";
 import { useRoom } from "@/hooks/useRoom";
+import { useDebouncedCallback } from "use-debounce";
+import { set } from "react-hook-form";
 
 interface Props {
   typing: boolean;
@@ -31,8 +33,6 @@ export default function MessagePage() {
 
   const [typing, setTyping] = useState<boolean>(false);
   const [typingVisible, setTypingVisible] = useState<Props>();
-
-  const debouncedSearchTerm = useDebounce(message, 2000);
 
   const searchParams = useSearchParams();
   const search = searchParams.get("res");
@@ -49,20 +49,33 @@ export default function MessagePage() {
 
   const { dataRoom } = useRoom();
 
+  let typingTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const debounce = useDebouncedCallback((value) => {
+    if (value.length <= 0 || value === message || value === "") {
+      setTyping(false);
+      socket.emit("stopped__typing", search);
+    }
+  }, 2000);
+
+  const handleInputChange = (event: any) => {
+    if (typingTimeout.current && typing) clearTimeout(typingTimeout.current);
+    typingTimeout.current = setTimeout(() => setTyping(true), 1000);
+    debounce(event);
+    setMessage(event);
+  };
+
   const sendMessage = (event: any) => {
     event.preventDefault();
 
     if (message.trim()) {
+      if (typingTimeout.current) clearTimeout(typingTimeout.current);
+
       socket.emit("send__message", message.trim(), search);
       socket.emit("stopped__typing", search);
       setTyping(false);
       setMessage("");
     }
-  };
-
-  const handleInputChange = (event: any) => {
-    setMessage(event);
-    setTyping(true);
   };
 
   const createRoom = async () => {
@@ -81,11 +94,6 @@ export default function MessagePage() {
   };
 
   useEffect(() => {
-    setTyping(false);
-    socket.emit("stopped__typing", search);
-  }, [debouncedSearchTerm]);
-
-  useEffect(() => {
     socket.emit("join__room", search);
 
     return () => {
@@ -94,8 +102,6 @@ export default function MessagePage() {
   }, [socket, isMutating]);
 
   useEffect(() => {
-    socket.on("connect", () => console.log("Connected!"));
-
     if (typing) socket.emit("typing", search);
 
     socket.on("typing", (data) => setTypingVisible(data));
@@ -110,11 +116,21 @@ export default function MessagePage() {
     });
 
     return () => {
-      socket.off("connect");
       socket.off("send__message");
+      socket.off("typing");
+      socket.off("stopped__typing");
     };
   }, [socket, messages, isMutating, typing]);
 
+  const test = () => {
+    if (socket.connected) {
+      console.log("disconnect");
+      socket.disconnect();
+    } else {
+      console.log("connect");
+      socket.connect();
+    }
+  };
 
   return (
     <div>
@@ -128,7 +144,10 @@ export default function MessagePage() {
           // margin: "auto",
         }}
       >
-        <ChatHeader userData={profileData} />
+        <ChatHeader
+          userData={profileData}
+          userActivity={typingVisible?.typing ? profileData?.name + " is typing..." : "Online"}
+        />
 
         <div className={chat.messages}>
           <div className={chat.messages__content}>
@@ -158,10 +177,9 @@ export default function MessagePage() {
           </div>
           <div ref={intersectionRef} className={chat.messages__spacer__loader}></div>
         </div>
-        {/* <Box>
-          {profileData?.name} {typingVisible?.typing ? <TypingIcon /> : ""}
-        </Box> */}
+
         <div className={chat.messages__input}>
+          {/* <button onClick={test}>test</button> */}
           <Box
             sx={{
               width: "100%",
