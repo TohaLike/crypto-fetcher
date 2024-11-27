@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { useAuthorized } from "@/hooks/useAuthorized";
-import { useRoom } from "@/hooks/useCreateRoom";
 import { useProfile } from "@/hooks/useProfile";
 import { useRouter } from "next/navigation";
 import { socket } from "@/socket/socket";

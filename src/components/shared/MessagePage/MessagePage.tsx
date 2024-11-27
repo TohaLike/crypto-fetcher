@@ -6,6 +6,7 @@ import { ChatInput } from "@/components/ui/ChatInput/ChatInput";
 import { socket } from "@/socket/socket";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCreateRoom } from "@/hooks/useCreateRoom";
+import { useRoom } from "@/hooks/useRoom";
 import { useProfile } from "@/hooks/useProfile";
 import { Box, Typography } from "@mui/material";
 import { ActionButton, Message } from "@/components/ui";
@@ -13,7 +14,7 @@ import { useMessages } from "@/hooks/useMessages";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { ChatHeader } from "../ChatHeader/ChatHeader";
 import { EmojiButton } from "@/components/ui/EmojiButton/EmojiButton";
-import { useRoom } from "@/hooks/useRoom";
+// import { useRoom } from "@/hooks/useRoom";
 import { useDebouncedCallback } from "use-debounce";
 
 import SendIcon from "@mui/icons-material/Send";
