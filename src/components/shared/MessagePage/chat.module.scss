@@ -1,3 +1,15 @@
+.chat {
+  &__container {
+    position: relative;
+    &__response {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
 .messages {
   padding: 1px 0 0 10px;
   display: flex;

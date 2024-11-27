@@ -7,11 +7,11 @@ export const useMessages = ({ search }: any) => {
     return `/messages/user?res=${search}&page=${pageIndex + 1}&limit=${40}`;
   };
 
-  const { data, setSize, size, isValidating, isLoading } = useSWRInfinite(
+  const { data, setSize, size, isValidating, isLoading, error } = useSWRInfinite(
     getKey,
     SocketService.getMessages,
     {
-      shouldRetryOnError: true,
+      shouldRetryOnError: false,
       revalidateOnFocus: false,
       revalidateFirstPage: false,
       revalidateOnMount: true,

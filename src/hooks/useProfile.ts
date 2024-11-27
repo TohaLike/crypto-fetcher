@@ -5,12 +5,14 @@ import useSWRImmutable from "swr/immutable";
 export const useProfile = ({ params }: any) => {
   const url = `/profile/${params}`;
 
-  const { data, isLoading } = useSWRImmutable([url], () => UserService.getProfile(url), {
+  // console.log(url)
+
+  const { data, isLoading, error } = useSWRImmutable([url], () => UserService.getProfile(url), {
     shouldRetryOnError: true,
   });
 
   return {
     profileData: data,
-    isLoading,
+    profileLoading: isLoading,
   };
 };

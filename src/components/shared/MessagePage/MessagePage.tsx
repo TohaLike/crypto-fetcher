@@ -6,20 +6,19 @@ import { ChatInput } from "@/components/ui/ChatInput/ChatInput";
 import { socket } from "@/socket/socket";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCreateRoom } from "@/hooks/useCreateRoom";
-import { useDebounce } from "@uidotdev/usehooks";
 import { useProfile } from "@/hooks/useProfile";
-import { TypingIcon } from "@/components/icons/Typing/typing";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { ActionButton, Message } from "@/components/ui";
 import { useMessages } from "@/hooks/useMessages";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
-
-import SendIcon from "@mui/icons-material/Send";
 import { ChatHeader } from "../ChatHeader/ChatHeader";
 import { EmojiButton } from "@/components/ui/EmojiButton/EmojiButton";
 import { useRoom } from "@/hooks/useRoom";
 import { useDebouncedCallback } from "use-debounce";
-import { set } from "react-hook-form";
+
+import SendIcon from "@mui/icons-material/Send";
+import CircularProgress from "@mui/material/CircularProgress";
+import Link from "next/link";
 
 interface Props {
   typing: boolean;
@@ -37,7 +36,7 @@ export default function MessagePage() {
   const searchParams = useSearchParams();
   const search = searchParams.get("res");
 
-  const { profileData } = useProfile({ params: search });
+  const { profileData, profileLoading } = useProfile({ params: search });
 
   const { roomTrigger, data, isMutating } = useCreateRoom();
 
@@ -132,16 +131,38 @@ export default function MessagePage() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className={chat.chat__container}>
+        <div className={chat.chat__container__response}>
+          <CircularProgress />
+        </div>
+      </div>
+    );
+  }
+
+  if (!profileData) {
+    return (
+      <div className={chat.chat__container}>
+        <div className={chat.chat__container__response}>
+          <Typography></Typography>
+          <Typography variant="inherit" fontSize={32}>
+            User not found
+          </Typography>
+          <Link href="/messages">Back to Messages</Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className={chat.chat__container}>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           height: "calc(100vh - 50px)",
-          // maxWidth: "760px",
           width: "100%",
-          // margin: "auto",
         }}
       >
         <ChatHeader
@@ -179,7 +200,6 @@ export default function MessagePage() {
         </div>
 
         <div className={chat.messages__input}>
-          {/* <button onClick={test}>test</button> */}
           <Box
             sx={{
               width: "100%",
@@ -216,7 +236,6 @@ export default function MessagePage() {
               minWidth="45px"
               height="45px"
               icon={<SendIcon sx={{ fontSize: "24px", color: "#fff" }} />}
-              // icon={1}
             />
           ) : (
             <ActionButton
@@ -229,7 +248,6 @@ export default function MessagePage() {
               minWidth="45px"
               height="45px"
               icon={<SendIcon sx={{ fontSize: "24px", color: "#fff" }} />}
-              // icon={21}
             />
           )}
         </div>
