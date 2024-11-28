@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 const URL = process.env.NODE_ENV === "production" ? undefined : "http://localhost:4000";
 const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-export const socket = io(process.env.SERVER_URL, {
+export const socket = io(process.env.NEXT_PUBLIC_SERVER_URL, {
   transports: ["websocket", "polling"],
   auth: { token: token },
   withCredentials: true,
