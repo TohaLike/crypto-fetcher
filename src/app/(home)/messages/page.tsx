@@ -1,5 +1,5 @@
-import MessagesPage from "@/components/shared/MessagesPage/MessagesPage";
 import React from "react";
+import MessagesPage from "@/components/shared/RoomsPage/RoomsPage";
 
 export default function page() {
   return (

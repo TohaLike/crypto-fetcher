@@ -9,9 +9,15 @@ export default function MessagesPage() {
   const { rooms } = useRooms();
 
   useEffect(() => {
-    socket.on("connect", () => console.log("Connected!"));
-
     socket.emit("join__rooms");
+
+    return () => {
+      socket.off("join__rooms");
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on("connect", () => console.log("Connected!"));
 
     socket.on("room__message", (name, message, id, createdAt, usersId) => {
       setLastMessage([
@@ -23,7 +29,6 @@ export default function MessagesPage() {
     return () => {
       socket.off("connect");
       socket.off("room__message");
-      socket.off("join__rooms");
     };
   }, [socket, lastMessage, rooms]);
 

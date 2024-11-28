@@ -1,10 +1,9 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import chat from "./chat.module.scss";
-
 import { ChatInput } from "@/components/ui/ChatInput/ChatInput";
 import { socket } from "@/socket/socket";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useCreateRoom } from "@/hooks/useCreateRoom";
 import { useRoom } from "@/hooks/useRoom";
 import { useProfile } from "@/hooks/useProfile";
@@ -14,7 +13,6 @@ import { useMessages } from "@/hooks/useMessages";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { ChatHeader } from "../ChatHeader/ChatHeader";
 import { EmojiButton } from "@/components/ui/EmojiButton/EmojiButton";
-// import { useRoom } from "@/hooks/useRoom";
 import { useDebouncedCallback } from "use-debounce";
 
 import SendIcon from "@mui/icons-material/Send";
@@ -59,8 +57,7 @@ export default function MessagePage() {
   }, 2000);
 
   const handleInputChange = (event: any) => {
-    if (typingTimeout.current && typing) clearTimeout(typingTimeout.current);
-    typingTimeout.current = setTimeout(() => setTyping(true), 1000);
+    setTyping(true);
     debounce(event);
     setMessage(event);
   };
@@ -101,8 +98,15 @@ export default function MessagePage() {
     };
   }, [socket, isMutating]);
 
+  console.log();
+
   useEffect(() => {
-    if (typing) socket.emit("typing", search);
+    socket.on("connection", () => console.log("Connected!"));
+
+    if (typing) {
+      if (typingTimeout.current) clearTimeout(typingTimeout.current);
+      typingTimeout.current = setTimeout(() => socket.emit("typing", search), 1000);
+    }
 
     socket.on("typing", (data) => setTypingVisible(data));
 
@@ -116,6 +120,7 @@ export default function MessagePage() {
     });
 
     return () => {
+      socket.off("connection");
       socket.off("send__message");
       socket.off("typing");
       socket.off("stopped__typing");
@@ -214,6 +219,7 @@ export default function MessagePage() {
               m: "0 10px",
             }}
           >
+            <button onClick={test}>tsst</button>
             <div className={chat.messages__input__emoji}>
               <EmojiButton />
             </div>
