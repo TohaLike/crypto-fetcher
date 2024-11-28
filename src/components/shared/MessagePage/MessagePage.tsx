@@ -169,6 +169,9 @@ export default function MessagePage() {
           flexDirection: "column",
           height: "calc(100vh - 50px)",
           width: "100%",
+          "@media (max-width: 1170px)": {
+            height: "100vh",
+          },
         }}
       >
         <ChatHeader
@@ -219,7 +222,7 @@ export default function MessagePage() {
               m: "0 10px",
             }}
           >
-            <button onClick={test}>tsst</button>
+            {/* <button onClick={test}>tsst</button> */}
             <div className={chat.messages__input__emoji}>
               <EmojiButton />
             </div>

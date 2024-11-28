@@ -24,10 +24,14 @@ export default function RootLayout({
   return (
     <section className={IBMPlexMono.className}>
       <Provider>
-        <Header />
+        <div className={home.header}>
+          <Header />
+        </div>
         <Container>
           <article className={home.article}>
-            <Navigation />
+            <div className={home.navigation}>
+              <Navigation />
+            </div>
             {children}
             {/* <div className={home.right}></div> */}
           </article>
