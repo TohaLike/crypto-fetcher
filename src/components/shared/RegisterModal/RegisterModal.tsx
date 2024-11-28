@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRegistration } from "@/hooks/useRegistration";
 import { FormProvider, useForm } from "react-hook-form";
 import { registrationSchema } from "./validate";
+import { useRouter } from "next/navigation";
 
 const yearArr = Array.from({ length: 100 }, (_, i) => ({
   value: (2024 - i).toString(),
@@ -53,8 +54,13 @@ export const RegisterModal: React.FC<Props> = ({ onClose, onOpen }) => {
     },
   });
 
+  const router = useRouter();
+
   const onSubmit = (data: object) => {
-    registrationTrigger(data);
+    registrationTrigger(data).then(() => {
+      onClose();
+      router.push("/home");
+    });
   };
 
   return (
@@ -81,12 +87,7 @@ export const RegisterModal: React.FC<Props> = ({ onClose, onOpen }) => {
                   <span></span>
                 </div>
                 <AuthInput type="" label="Name" register={form.register("name")} name="name" />
-                <AuthInput
-                  type=""
-                  label="Email"
-                  register={form.register("email")}
-                  name="email"
-                />
+                <AuthInput type="" label="Email" register={form.register("email")} name="email" />
                 <div>
                   <Typography variant="body1" fontWeight={"bold"} fontSize={15} mb={"10px"}>
                     Date of birth
@@ -133,7 +134,15 @@ export const RegisterModal: React.FC<Props> = ({ onClose, onOpen }) => {
               </Stack>
 
               <div className={registermodal.modal__button}>
-                <ActionButton title="Next" type="submit" />
+                <ActionButton
+                  title="Next"
+                  type="submit"
+                  height={"46px"}
+                  width={"100%"}
+                  bgcolor="#fff"
+                  color="#000"
+                  hover="#E3E3E3"
+                />
               </div>
             </form>
           </FormProvider>

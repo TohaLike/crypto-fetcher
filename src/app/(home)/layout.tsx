@@ -22,19 +22,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={IBMPlexMono.className}>
-        <Provider>
-          <Header />
-          <Container>
-            <article className={home.article}>
-              <Navigation />
-              {children}
-              {/* <div className={home.right}></div> */}
-            </article>
-          </Container>
-        </Provider>
-      </body>
-    </html>
+    <section className={IBMPlexMono.className}>
+      <Provider>
+        <Header />
+        <Container>
+          <article className={home.article}>
+            <Navigation />
+            {children}
+            {/* <div className={home.right}></div> */}
+          </article>
+        </Container>
+      </Provider>
+    </section>
   );
 }

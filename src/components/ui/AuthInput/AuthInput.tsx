@@ -14,6 +14,7 @@ export const AuthInput: React.FC<Props> = ({ label, name, register, type }) => {
   return (
     <>
       <TextField
+        autoComplete="on"
         type={type}
         label={label || ""}
         name={name}
@@ -21,8 +22,8 @@ export const AuthInput: React.FC<Props> = ({ label, name, register, type }) => {
         variant="filled"
         slotProps={{
           htmlInput: {
-            maxLength: 55
-          },    
+            maxLength: 55,
+          },
           input: {
             ...register,
             name: name,

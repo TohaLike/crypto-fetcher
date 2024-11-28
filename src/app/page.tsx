@@ -1,4 +1,4 @@
-import { RegisterPage } from "@/components/shared/RegisterPage/RegisterPage";
+import { RegisterPage } from "@/components/shared/AuthPage/AuthPage";
 
 export default function Home() {
   return (

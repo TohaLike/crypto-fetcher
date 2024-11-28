@@ -1,0 +1,36 @@
+.modal {
+  &__container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+  }
+  &__icon span {
+    background-image: url("../Assets/Icons/logo.svg");
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    pointer-events: stroke;
+    z-index: -2;
+  }
+  &__select {
+    margin-top: 20px;
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 201px 100px 125px;
+  }
+
+  &__password {
+    margin-top: 20px;
+  }
+
+  &__button {
+    margin-top: 20px;
+  }
+}

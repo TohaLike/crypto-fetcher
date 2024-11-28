@@ -3,8 +3,8 @@ import { AuthResponse } from "@/models/response/AuthResponse";
 import { AxiosResponse } from "axios";
 
 export default class AuthService {
-  static async login(email: string, password: string): Promise<AxiosResponse<AuthResponse>> {
-    return axiosWithAuth.post<AuthResponse>("/login", { email, password });
+  static async login(data: object): Promise<AxiosResponse<AuthResponse>> {
+    return axiosWithAuth.post<AuthResponse>("/login", data);
   }
 
   static async registration(data: object): Promise<AxiosResponse<AuthResponse>> {

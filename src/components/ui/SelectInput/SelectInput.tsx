@@ -42,6 +42,7 @@ export const SelectInput: React.FC<Props> = ({ name, label, array, register }) =
           width: "100%",
           "& .MuiInputBase-root": {
             color: "#fff",
+            bgcolor: "#000",
           },
           "& label": {
             color: "#7E7E7E",
