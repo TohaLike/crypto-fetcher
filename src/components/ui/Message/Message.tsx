@@ -50,7 +50,7 @@ export const Message: React.FC<Props> = ({ createdAt, messageText, userId, profi
             <span className={message.message__time}>
               <span className={message.message__title}>time</span>
               <span className={message.message__time__container}>
-                {moment(createdAt).locale("ru").format("H:mm")}
+                {moment(createdAt).locale("ru").format("HH:mm")}
               </span>
             </span>
           </Typography>

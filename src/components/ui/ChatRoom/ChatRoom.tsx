@@ -1,8 +1,16 @@
 "use client";
 import React from "react";
-import { ListItem, ListItemAvatar, Avatar, ListItemText, Typography } from "@mui/material";
+import {
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  Typography,
+  Divider,
+  Box,
+} from "@mui/material";
 import { useRouter } from "next/navigation";
-import { socket } from "@/socket/socket";
+import { socket } from "@/socket";
 
 interface Props {
   name: string;
@@ -21,19 +29,35 @@ export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID }) => {
 
   return (
     <>
-      <ListItem onClick={redirectToRoom}>
+      <ListItem onClick={redirectToRoom} sx={{ cursor: "pointer" }}>
         <ListItemAvatar>
-          <Avatar sx={{ bgcolor: "green" }}>{name[0].toUpperCase()}</Avatar>
+          <Avatar sx={{ bgcolor: "#1976d2" }}>{name[0].toUpperCase()}</Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={<Typography variant="body1" style={{ color: "#FFFFFF" }} textTransform={"capitalize"}>{name}</Typography>}
-          secondary={
-            <Typography variant="body2" style={{ color: "#FFFFFF" }}>
-              {latestMessage}
+          primary={
+            <Typography variant="body1" style={{ color: "#FFFFFF" }} textTransform={"capitalize"}>
+              {name}
             </Typography>
+          }
+          secondary={
+            <Box sx={{display: "grid", gridTemplateColumns: "auto"}}>
+              <Typography
+                variant="body2"
+                style={{
+                  color: "#FFFFFF",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxWidth: "500px",
+                }}
+              >
+                {latestMessage}
+              </Typography>
+            </Box>
           }
         />
       </ListItem>
+      <Divider variant="fullWidth" sx={{ "&.MuiDivider-root": { bgcolor: "#282828" } }} />
     </>
   );
 };

@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { useRooms } from "@/hooks/useRooms";
 import { ChatRoom } from "@/components/ui";
-import { socket } from "@/socket/socket";
+import { socket } from "@/socket";
+import { List } from "@mui/material";
 
 export default function MessagesPage() {
   const [lastMessage, setLastMessage] = useState<any[]>([]);
-  
+
   const { rooms } = useRooms();
 
   useEffect(() => {
@@ -20,7 +21,7 @@ export default function MessagesPage() {
     return () => {
       socket.off("room__message");
     };
-  }, [socket, lastMessage, rooms]);
+  }, [lastMessage, rooms]);
 
   const concatRooms = rooms?.concat(lastMessage);
   const messagesRooms = Array.from(new Map(concatRooms?.map((item) => [item?.id, item])).values());
@@ -33,14 +34,14 @@ export default function MessagesPage() {
 
   return (
     <>
-      {sortedChatRooms?.map((room, index) => (
-        <ChatRoom
-          key={"room: " + index}
-          name={room.usersId[0].name}
-          latestMessage={room.lastMessage?.messageText}
-          roomID={room.usersId[0]._id}
-        />
-      ))}
+        {sortedChatRooms?.map((room, index) => (
+          <ChatRoom
+            key={"room: " + index}
+            name={room.usersId[0].name}
+            latestMessage={room.lastMessage?.messageText}
+            roomID={room.usersId[0]._id}
+          />
+        ))}
     </>
   );
 }

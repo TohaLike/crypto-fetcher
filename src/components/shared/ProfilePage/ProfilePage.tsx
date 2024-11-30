@@ -3,7 +3,7 @@ import React from "react";
 import { useAuthorized } from "@/hooks/useAuthorized";
 import { useProfile } from "@/hooks/useProfile";
 import { useRouter } from "next/navigation";
-import { socket } from "@/socket/socket";
+import { socket } from "@/socket";
 import { useParams } from "next/navigation";
 
 export const ProfilePage: React.FC = () => {

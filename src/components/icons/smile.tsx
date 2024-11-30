@@ -4,7 +4,7 @@ import SvgIcon from "@mui/material/SvgIcon";
 
 export const SmileIcon: React.FC = () => {
   return (
-    <SvgIcon>
+    <SvgIcon sx={{color: "#707070"}}>
       <svg
         className="feather feather-smile"
         fill="none"

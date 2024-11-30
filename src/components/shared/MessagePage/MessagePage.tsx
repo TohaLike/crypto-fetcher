@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import chat from "./chat.module.scss";
 import { ChatInput } from "@/components/ui/ChatInput/ChatInput";
-import { socket } from "@/socket/socket";
+import { socket } from "@/socket";
 import { useSearchParams } from "next/navigation";
 import { useCreateRoom } from "@/hooks/useCreateRoom";
 import { useRoom } from "@/hooks/useRoom";
@@ -98,11 +98,7 @@ export default function MessagePage() {
     };
   }, [socket, isMutating]);
 
-  console.log();
-
   useEffect(() => {
-    // socket.on("connection", () => console.log("Connected!"));
-
     if (typing) {
       if (typingTimeout.current) clearTimeout(typingTimeout.current);
       typingTimeout.current = setTimeout(() => socket.emit("typing", search), 1000);
@@ -120,7 +116,6 @@ export default function MessagePage() {
     });
 
     return () => {
-      // socket.off("connection");
       socket.off("send__message");
       socket.off("typing");
       socket.off("stopped__typing");
@@ -222,7 +217,7 @@ export default function MessagePage() {
               m: "0 10px",
             }}
           >
-            <button onClick={test}>tsst</button>
+            {/* <button onClick={test}>tsst</button> */}
             <div className={chat.messages__input__emoji}>
               <EmojiButton />
             </div>
