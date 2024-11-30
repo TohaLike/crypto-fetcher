@@ -101,7 +101,7 @@ export default function MessagePage() {
   console.log();
 
   useEffect(() => {
-    socket.on("connection", () => console.log("Connected!"));
+    // socket.on("connection", () => console.log("Connected!"));
 
     if (typing) {
       if (typingTimeout.current) clearTimeout(typingTimeout.current);
@@ -120,7 +120,7 @@ export default function MessagePage() {
     });
 
     return () => {
-      socket.off("connection");
+      // socket.off("connection");
       socket.off("send__message");
       socket.off("typing");
       socket.off("stopped__typing");
@@ -222,7 +222,7 @@ export default function MessagePage() {
               m: "0 10px",
             }}
           >
-            {/* <button onClick={test}>tsst</button> */}
+            <button onClick={test}>tsst</button>
             <div className={chat.messages__input__emoji}>
               <EmojiButton />
             </div>

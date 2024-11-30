@@ -30,6 +30,7 @@ export const LoginModal: React.FC<Props> = ({ onClose, onOpen }) => {
     loginTrigger(data).then(() => {
       onClose();
       router.push("/home");
+      // window.location.reload();
     });
   };
 

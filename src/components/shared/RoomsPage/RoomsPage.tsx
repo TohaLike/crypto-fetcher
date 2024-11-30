@@ -6,19 +6,10 @@ import { socket } from "@/socket/socket";
 
 export default function MessagesPage() {
   const [lastMessage, setLastMessage] = useState<any[]>([]);
+  
   const { rooms } = useRooms();
 
   useEffect(() => {
-    socket.emit("join__rooms");
-
-    return () => {
-      socket.off("join__rooms");
-    };
-  }, [socket]);
-
-  useEffect(() => {
-    socket.on("connect", () => console.log("Connected!"));
-
     socket.on("room__message", (name, message, id, createdAt, usersId) => {
       setLastMessage([
         ...lastMessage,
@@ -27,7 +18,6 @@ export default function MessagesPage() {
     });
 
     return () => {
-      socket.off("connect");
       socket.off("room__message");
     };
   }, [socket, lastMessage, rooms]);
@@ -38,7 +28,7 @@ export default function MessagesPage() {
   const sortedChatRooms = messagesRooms?.sort((a, b) => {
     const dateA = new Date(a?.lastMessage?.createdAt);
     const dateB = new Date(b?.lastMessage?.createdAt);
-    return dateB.getTime() - dateA.getTime();
+    return dateB?.getTime() - dateA?.getTime();
   });
 
   return (

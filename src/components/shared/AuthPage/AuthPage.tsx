@@ -7,7 +7,7 @@ import { redirect, useRouter } from "next/navigation";
 import { LoginModal } from "../LoginModal/LoginModal";
 import { Box } from "@mui/material";
 
-export const RegisterPage: React.FC = () => {
+export const AuthPage: React.FC = () => {
   const [openRegisterModal, setOpenRegisterModal] = useState<boolean>(false);
   const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
 
