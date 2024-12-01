@@ -214,12 +214,12 @@ export default function MessagePage() {
               height: "auto",
               borderRadius: "16px",
               p: "0 20px 0 15px",
-              m: "0 10px",
+              m: "0 10px 0 0",
             }}
           >
             {/* <button onClick={test}>tsst</button> */}
             <div className={chat.messages__input__emoji}>
-              <EmojiButton />
+              <EmojiButton  setMessage={setMessage}/>
             </div>
 
             <ChatInput

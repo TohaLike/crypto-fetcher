@@ -5,7 +5,11 @@ import { Button } from "@mui/material";
 import { SmileIcon } from "@/components/icons/smile";
 import emojibutton from "./emojibutton.module.scss";
 
-export const EmojiButton: React.FC = () => {
+interface Props {
+  setMessage: (message: any) => void;
+}
+
+export const EmojiButton: React.FC<Props> = ({ setMessage }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -13,12 +17,14 @@ export const EmojiButton: React.FC = () => {
       <div className={emojibutton.container}>
         <EmojiPicker
           open={open}
-          onEmojiClick={() => setOpen(false)}
+          onEmojiClick={(value) => setMessage((prev: any) => prev + value.emoji)}
+          lazyLoadEmojis={true}
           className={emojibutton.container__emoji}
           width={"300px"}
           height={"400px"}
           style={{ position: "absolute", top: "-420px", left: 0 }}
         />
+
         <Button
           onClick={() => setOpen(true)}
           sx={{

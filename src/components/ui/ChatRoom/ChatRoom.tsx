@@ -32,15 +32,15 @@ export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID }) => {
       <ListItem onClick={redirectToRoom} sx={{ cursor: "pointer" }}>
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: "#1976d2" }}>{name[0].toUpperCase()}</Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <Typography variant="body1" style={{ color: "#FFFFFF" }} textTransform={"capitalize"}>
-              {name}
-            </Typography>
-          }
-          secondary={
-            <Box sx={{display: "grid", gridTemplateColumns: "auto"}}>
+        </ListItemAvatar>{" "}
+        <Box sx={{ display: "grid", gridTemplateColumns: "auto" }}>
+          <ListItemText
+            primary={
+              <Typography variant="body1" style={{ color: "#FFFFFF" }} textTransform={"capitalize"}>
+                {name}
+              </Typography>
+            }
+            secondary={
               <Typography
                 variant="body2"
                 style={{
@@ -53,11 +53,11 @@ export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID }) => {
               >
                 {latestMessage}
               </Typography>
-            </Box>
-          }
-        />
+            }
+          />{" "}
+        </Box>
       </ListItem>
-      <Divider variant="fullWidth" sx={{ "&.MuiDivider-root": { bgcolor: "#282828" } }} />
+      <Divider variant="middle" sx={{ "&.MuiDivider-root": { bgcolor: "#282828" } }} />
     </>
   );
 };
