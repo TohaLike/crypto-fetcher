@@ -35,7 +35,7 @@ export default function MessagePage() {
   const searchParams = useSearchParams();
   const search = searchParams.get("res");
 
-  const { profileData, profileLoading } = useProfile({ params: search });
+  const { profileData } = useProfile({ params: search });
 
   const { roomTrigger, data, isMutating } = useCreateRoom();
 
@@ -101,7 +101,7 @@ export default function MessagePage() {
   useEffect(() => {
     if (typing) {
       if (typingTimeout.current) clearTimeout(typingTimeout.current);
-      typingTimeout.current = setTimeout(() => socket.emit("typing", search), 1000);
+      typingTimeout.current = setTimeout(() => socket.emit("typing", search), 500);
     }
 
     socket.on("typing", (data) => setTypingVisible(data));
@@ -158,17 +158,7 @@ export default function MessagePage() {
 
   return (
     <div className={chat.chat__container}>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          height: "calc(100vh - 50px)",
-          width: "100%",
-          "@media (max-width: 1170px)": {
-            height: "100vh",
-          },
-        }}
-      >
+      <div className={chat.chat__container__messages}>
         <ChatHeader
           userData={profileData}
           userActivity={typingVisible?.typing ? profileData?.name + " is typing..." : "Online"}
@@ -219,7 +209,7 @@ export default function MessagePage() {
           >
             {/* <button onClick={test}>tsst</button> */}
             <div className={chat.messages__input__emoji}>
-              <EmojiButton  setMessage={setMessage}/>
+              <EmojiButton setMessage={setMessage} />
             </div>
 
             <ChatInput
@@ -256,7 +246,7 @@ export default function MessagePage() {
             />
           )}
         </div>
-      </Box>
+      </div>
     </div>
   );
 }

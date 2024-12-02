@@ -31,6 +31,15 @@ export const Message: React.FC<Props> = ({ createdAt, messageText, userId, profi
             borderRadius: "16px",
             boxSizing: "border-box",
             maxWidth: "60%",
+            "@media (max-width: 1170px)": {
+              maxWidth: "70%",
+            },
+            "@media (max-width: 600px)": {
+              maxWidth: "80%",
+            },
+            "@media (max-width: 400px)": {
+              maxWidth: "85%",
+            },
           }}
         >
           <Typography

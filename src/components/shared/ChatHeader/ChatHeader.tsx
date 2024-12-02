@@ -4,7 +4,8 @@ import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Link from "next/link";
 import { LinkButton } from "@/components/ui/LinkButton/LinkButton";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { BackIcon } from "@/components/icons/BackIcon";
+
 interface Props {
   userData?: any;
   userActivity?: any;
@@ -22,7 +23,7 @@ export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
           },
         }}
       >
-        <Toolbar variant="dense">
+        <Toolbar variant="dense" sx={{ "&.MuiToolbar-root": { p: 0, boxSizing: "border-box" } }}>
           <IconButton
             LinkComponent={Link}
             href={`/${userData?.id}`}
@@ -35,20 +36,21 @@ export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
             disableTouchRipple
             sx={{
               "&.MuiIconButton-root": {
-                p: 0,
+                paddingRight: 0,
+                boxSizing: "border-box",
               },
             }}
           >
             <LinkButton
-              icon={<ArrowBackIcon />}
+              icon={<BackIcon />}
               title={""}
-              p={"0 5px 0 0"}
-              color={"#fff"}
+              p={"5px 10px 5px 5px"}
+              color={"#707070"}
               minWidth={"24px"}
               minHeight={"24px"}
               bgcolor={"transparent"}
-              hover={"#1A1A1A"}
               href={`/messages`}
+              cursor={"pointer"}
             />
 
             <Avatar sx={{ width: 40, height: 40, bgcolor: "#1976d2" }}>

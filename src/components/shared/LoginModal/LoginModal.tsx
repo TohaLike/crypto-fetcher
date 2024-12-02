@@ -49,6 +49,12 @@ export const LoginModal: React.FC<Props> = ({ onClose, onOpen }) => {
             width: "100%",
             height: "auto",
             borderRadius: "16px",
+            "@media (max-width: 600px)": {
+              padding: "20px 40px",
+            },
+            "@media (max-width: 400px)": {
+              padding: "20px 20px",
+            },
           }}
         >
           <FormProvider {...form}>

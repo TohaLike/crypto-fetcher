@@ -73,7 +73,7 @@ export const EmojiButton: React.FC<Props> = ({ setMessage }) => {
                 minWidth: "24px",
                 minHeight: "24px",
                 borderRadius: "16px",
-                color: "#fff",
+                color: "#707070",
               },
             }}
           >

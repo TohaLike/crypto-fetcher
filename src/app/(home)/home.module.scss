@@ -12,6 +12,10 @@
   border-left: 1px solid #282828;
 }
 
+.mobile {
+  display: none;
+}
+
 @media screen and (max-width: 1170px) {
   .header {
     display: none;
@@ -24,5 +28,9 @@
 
   .navigation {
     display: none;
+  }
+
+  .mobile {
+    display: flex;
   }
 }

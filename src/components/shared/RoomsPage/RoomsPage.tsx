@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useRooms } from "@/hooks/useRooms";
 import { ChatRoom } from "@/components/ui";
 import { socket } from "@/socket";
-import { List } from "@mui/material";
 
 export default function MessagesPage() {
   const [lastMessage, setLastMessage] = useState<any[]>([]);

@@ -34,3 +34,25 @@
     margin-top: 20px;
   }
 }
+
+
+@media (max-width: 600px) {
+  .modal {
+    &__select {
+      grid-template-columns: 50% 50%;
+      justify-content: flex-start;
+      column-gap: 10px;
+      row-gap: 10px;
+    }
+  }
+}
+
+@media (max-width: 475px) {
+  .modal {
+    &__select {
+      grid-template-columns: 100%;
+      column-gap: 10px;
+      row-gap: 10px;
+    }
+  }
+}

@@ -4,6 +4,7 @@ import { Provider } from "./provider";
 import localFont from "next/font/local";
 
 import home from "./home.module.scss";
+import { NavigationMobile } from "@/components/shared/NavigationMobile/NavigationMobile";
 
 const IBMPlexMono = localFont({
   src: "../fonts/IBMPlexMonoRegular.ttf",
