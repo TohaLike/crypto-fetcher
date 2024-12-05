@@ -25,8 +25,6 @@ export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
       >
         <Toolbar variant="dense" sx={{ "&.MuiToolbar-root": { p: 0, boxSizing: "border-box" } }}>
           <IconButton
-            LinkComponent={Link}
-            href={`/${userData?.id}`}
             size="large"
             edge="start"
             color="inherit"
@@ -53,11 +51,22 @@ export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
               cursor={"pointer"}
             />
 
-            <Avatar sx={{ width: 40, height: 40, bgcolor: "#1976d2" }}>
+            <Avatar
+              component={Link}
+              href={`/${userData?.id}`}
+              sx={{ width: 40, height: 40, bgcolor: "#1976d2", textDecoration: "none" }}
+            >
               {userData?.name[0].toUpperCase()}
             </Avatar>
           </IconButton>
-          <Box display={"flex"} flexDirection={"column"} m={"0 0 0 10px"}>
+          <Box
+            display={"flex"}
+            component={Link}
+            href={`/${userData?.id}`}
+            sx={{ textDecoration: "none", color: "inherit" }}
+            flexDirection={"column"}
+            m={"0 0 0 10px"}
+          >
             <Typography
               variant="h2"
               fontSize={"16px"}

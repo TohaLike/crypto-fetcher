@@ -23,7 +23,9 @@ interface Props {
   typing: boolean;
 }
 
-export default function MessagePage() {
+export const MessagePage: React.FC = () => {
+  const [isSocket, setIsSocket] = useState<any>(null);
+
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState<string>("");
 
@@ -39,9 +41,7 @@ export default function MessagePage() {
 
   const { roomTrigger, data, isMutating } = useCreateRoom();
 
-  const { scrollData, setSize, size, ended, isValidating, isLoading } = useMessages({
-    search: search,
-  });
+  const { scrollData, setSize, size, ended, isValidating, isLoading } = useMessages();
 
   const { intersectionRef } = useInfiniteScroll({ isValidating, setSize, size, ended });
 
@@ -122,7 +122,8 @@ export default function MessagePage() {
     };
   }, [socket, messages, isMutating, typing]);
 
-  const test = () => {
+
+  const test = () => { 
     if (socket.connected) {
       console.log("disconnect");
       socket.disconnect();
@@ -207,7 +208,7 @@ export default function MessagePage() {
               m: "0 10px 0 0",
             }}
           >
-            {/* <button onClick={test}>tsst</button> */}
+            <button onClick={test}>tsst</button>
             <div className={chat.messages__input__emoji}>
               <EmojiButton setMessage={setMessage} />
             </div>

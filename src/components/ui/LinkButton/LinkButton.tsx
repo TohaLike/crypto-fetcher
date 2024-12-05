@@ -25,7 +25,7 @@ export const LinkButton: React.FC<Props> = ({
         disableElevation
         disableRipple
         LinkComponent={Link}
-        href={href}
+        href={href || ""}
         sx={{
           width: "100%",
           columnGap: 1,

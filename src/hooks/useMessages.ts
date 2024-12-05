@@ -1,10 +1,15 @@
 import SocketService from "@/services/SocketService";
+import { useSearchParams } from "next/navigation";
 import useSWRInfinite from "swr/infinite";
 
-export const useMessages = ({ search }: any) => {
+export const useMessages = () => {
+  const searchParams = useSearchParams();
+  const search = searchParams.get("res");
+
   const getKey = (pageIndex: number, previousPageData: string) => {
     if (previousPageData && previousPageData.length === 0) return null;
-    return `/messages/user?res=${search}&page=${pageIndex + 1}&limit=${40}`;
+
+    return `/messages/user?res=${search}&page=${pageIndex + 1}`;
   };
 
   const { data, setSize, size, isValidating, isLoading, error } = useSWRInfinite(
@@ -15,8 +20,10 @@ export const useMessages = ({ search }: any) => {
       revalidateOnFocus: false,
       revalidateFirstPage: false,
       revalidateOnMount: true,
+      // revalidateOnReconnect: true,
     }
   );
+
 
   const ended = data && data[data.length - 1]?.length === 0;
 

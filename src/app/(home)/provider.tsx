@@ -9,20 +9,58 @@ export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { userData, isLoading } = useAuthorized();
 
   useEffect(() => {
-    socket.connect();
+    // Подключение
+    socket.on("connect", () => {
+      console.log("recovered?", socket.recovered);
 
-    socket.emit("join__rooms");
+      // setTimeout(() => {
+      //   if (socket.io.engine) {
+      //     // close the low-level connection and trigger a reconnection
+      //     socket.io.engine.close();
+      //   }
+      // }, 10000);
 
-    socket.on("connection", (data: any) => {
-      setConnect(true);
-      console.log(data, "!");
+      socket.emit("join__rooms");
+    });
+
+    // Отключение
+    socket.on("disconnect", (reason) => {
+      console.log("Disconnected from server:", reason);
+      console.log("Reconnecting...", socket.connected);
+
+      if (!socket.connected) setConnect(true);
+    });
+
+    // Попытка переподключения
+    socket.on("reconnect_attempt", (attemptNumber) => {
+      console.log(`Reconnect attempt #${attemptNumber}`);
+    });
+
+    // Успешное переподключение
+    socket.on("reconnect", (attemptNumber) => {
+      console.log(`Successfully reconnected after ${attemptNumber} attempts`);
+    });
+
+    // Ошибка переподключения
+    socket.on("reconnect_error", (error) => {
+      console.error("Reconnect error:", error);
+    });
+
+    // Неудачное переподключение
+    socket.on("reconnect_failed", () => {
+      console.error("Failed to reconnect after all attempts");
     });
 
     return () => {
-      socket.disconnect();
-      socket.off("join__rooms");
+      // Удаляем обработчики при размонтировании компонента
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("reconnect_attempt");
+      socket.off("reconnect");
+      socket.off("reconnect_error");
+      socket.off("reconnect_failed");
     };
-  }, [socket]);
+  }, [connect]);
 
   return (
     <>
