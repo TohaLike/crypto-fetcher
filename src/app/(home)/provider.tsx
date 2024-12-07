@@ -1,70 +1,59 @@
 "use client";
 import { useAuthorized } from "@/hooks/useAuthorized";
 import { socket } from "@/socket";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+
+interface Props {
+  isConnected: boolean;
+  transport: string;
+}
+
+export const SocketContext = createContext<Props | null>(null);
 
 export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [connect, setConnect] = useState<boolean>(false);
-
   const { userData, isLoading } = useAuthorized();
 
-  useEffect(() => {
-    // Подключение
-    socket.on("connect", () => {
-      console.log("recovered?", socket.recovered);
+  const [isConnected, setIsConnected] = useState(false);
+  const [transport, setTransport] = useState("N/A");
 
-      // setTimeout(() => {
-      //   if (socket.io.engine) {
-      //     // close the low-level connection and trigger a reconnection
-      //     socket.io.engine.close();
-      //   }
-      // }, 10000);
+  useEffect(() => {
+    if (socket.connected) {
+      onConnect();
+    }
+
+    function onConnect() {
+      setIsConnected(true);
+      
+      setTransport(socket.io.engine.transport.name);
 
       socket.emit("join__rooms");
-    });
 
-    // Отключение
-    socket.on("disconnect", (reason) => {
-      console.log("Disconnected from server:", reason);
-      console.log("Reconnecting...", socket.connected);
+      console.log("onConnect");
 
-      if (!socket.connected) setConnect(true);
-    });
+      socket.io.engine.on("upgrade", (transport) => {
+        setTransport(transport.name);
+      });
+    }
 
-    // Попытка переподключения
-    socket.on("reconnect_attempt", (attemptNumber) => {
-      console.log(`Reconnect attempt #${attemptNumber}`);
-    });
+    function onDisconnect() {
+      setIsConnected(false);
+      setTransport("N/A");
+    }
 
-    // Успешное переподключение
-    socket.on("reconnect", (attemptNumber) => {
-      console.log(`Successfully reconnected after ${attemptNumber} attempts`);
-    });
-
-    // Ошибка переподключения
-    socket.on("reconnect_error", (error) => {
-      console.error("Reconnect error:", error);
-    });
-
-    // Неудачное переподключение
-    socket.on("reconnect_failed", () => {
-      console.error("Failed to reconnect after all attempts");
-    });
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
 
     return () => {
-      // Удаляем обработчики при размонтировании компонента
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("reconnect_attempt");
-      socket.off("reconnect");
-      socket.off("reconnect_error");
-      socket.off("reconnect_failed");
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
     };
-  }, [connect]);
+  }, []);
 
   return (
     <>
-      <div>{userData && children}</div>
+      <SocketContext.Provider value={{ isConnected, transport }}>
+        {userData && children}
+      </SocketContext.Provider>
     </>
   );
 };

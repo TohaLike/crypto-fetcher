@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import chat from "./chat.module.scss";
 import { ChatInput } from "@/components/ui/ChatInput/ChatInput";
 import { socket } from "@/socket";
@@ -18,33 +18,30 @@ import { useDebouncedCallback } from "use-debounce";
 import SendIcon from "@mui/icons-material/Send";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
+import { SocketContext } from "@/app/(home)/provider";
 
-interface Props {
-  typing: boolean;
-}
+type myKey = {
+  [key: string]: any;
+};
 
 export const MessagePage: React.FC = () => {
+  const { isConnected, transport } = useContext<any>(SocketContext);
+
   const [isSocket, setIsSocket] = useState<any>(null);
 
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState<string>("");
 
-  const [created, setCreated] = useState<boolean>(false);
-
   const [typing, setTyping] = useState<boolean>(false);
-  const [typingVisible, setTypingVisible] = useState<Props>();
+  const [typingVisible, setTypingVisible] = useState<myKey>();
 
   const searchParams = useSearchParams();
   const search = searchParams.get("res");
 
   const { profileData } = useProfile({ params: search });
-
   const { roomTrigger, data, isMutating } = useCreateRoom();
-
   const { scrollData, setSize, size, ended, isValidating, isLoading } = useMessages();
-
   const { intersectionRef } = useInfiniteScroll({ isValidating, setSize, size, ended });
-
   const { dataRoom } = useRoom();
 
   let typingTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -82,7 +79,6 @@ export const MessagePage: React.FC = () => {
     });
 
     if (message.trim()) {
-      setCreated(true);
       socket.emit("send__message", message.trim(), search);
       socket.emit("stopped__typing", search);
       setTyping(false);
@@ -91,12 +87,13 @@ export const MessagePage: React.FC = () => {
   };
 
   useEffect(() => {
-    socket.emit("join__room", search);
+    if (isConnected) socket.emit("join__room", search);
+    console.log("connect", isConnected);
 
     return () => {
       socket.off("join__room");
     };
-  }, [socket, isMutating]);
+  }, [socket, isConnected, isMutating]);
 
   useEffect(() => {
     if (typing) {
@@ -120,10 +117,9 @@ export const MessagePage: React.FC = () => {
       socket.off("typing");
       socket.off("stopped__typing");
     };
-  }, [socket, messages, isMutating, typing]);
+  }, [socket, isConnected, messages, isMutating, typing]);
 
-
-  const test = () => { 
+  const test = () => {
     if (socket.connected) {
       console.log("disconnect");
       socket.disconnect();
@@ -250,4 +246,4 @@ export const MessagePage: React.FC = () => {
       </div>
     </div>
   );
-}
+};

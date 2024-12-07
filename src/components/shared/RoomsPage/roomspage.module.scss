@@ -1,0 +1,11 @@
+.container {
+  position: relative;
+  height: calc(100vh - 50px);
+
+  &__nomessages {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
