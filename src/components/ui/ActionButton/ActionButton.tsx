@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 interface Props {
   variant?: "text" | "outlined" | "contained";
   type: "submit" | "reset" | "button" | undefined;
-  title: string;
+  title: string | React.ReactNode;
   disabled?: boolean;
   bgcolor?: string;
   color?: string;
@@ -52,8 +52,8 @@ export const ActionButton: React.FC<Props> = ({
           },
         }}
       >
-        {title}
         {icon}
+        {title}
       </Button>
     </>
   );

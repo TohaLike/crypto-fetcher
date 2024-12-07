@@ -12,7 +12,7 @@ export default class UserService {
     }
   }
 
-  static fetchUsers(): Promise<AxiosResponse<IUser[]>> {
+  static async getUsers() {
     return axiosWithAuth.get<IUser[]>("/users");
   }
 }

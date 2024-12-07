@@ -158,7 +158,7 @@ export const MessagePage: React.FC = () => {
       <div className={chat.chat__container__messages}>
         <ChatHeader
           userData={profileData}
-          userActivity={typingVisible?.typing ? profileData?.name + " is typing..." : "Online"}
+          userActivity={typingVisible?.typing ? profileData?.name + " is typing..." : "[надо добавить online]"}
         />
 
         <div className={chat.messages}>
@@ -204,7 +204,7 @@ export const MessagePage: React.FC = () => {
               m: "0 10px 0 0",
             }}
           >
-            <button onClick={test}>tsst</button>
+            {/* <button onClick={test}>tsst</button> */}
             <div className={chat.messages__input__emoji}>
               <EmojiButton setMessage={setMessage} />
             </div>
