@@ -16,7 +16,7 @@ export const ImageIcon: React.FC<Props> = ({...props}) => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g clip-path="url(#clip0_72_141)">
+        <g clipPath="url(#clip0_72_141)">
           <path
             d="M11.875 1.875H3.125C2.43464 1.875 1.875 2.43464 1.875 3.125V11.875C1.875 12.5654 2.43464 13.125 3.125 13.125H11.875C12.5654 13.125 13.125 12.5654 13.125 11.875V3.125C13.125 2.43464 12.5654 1.875 11.875 1.875Z"
             stroke="white"

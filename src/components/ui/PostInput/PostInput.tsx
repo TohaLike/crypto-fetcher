@@ -2,9 +2,12 @@
 import React from "react";
 import { Box, TextField } from "@mui/material";
 
-interface Props {}
+interface Props {
+  setText?: (value: string) => void;
+  text?: string;
+}
 
-export const PostInput: React.FC = ({}) => {
+export const PostInput: React.FC<Props> = ({ text, setText }) => {
   return (
     <>
       <Box sx={{ width: "100%", bgcolor: "#0E0E0E" }}>
@@ -15,6 +18,8 @@ export const PostInput: React.FC = ({}) => {
           label=""
           multiline
           color="primary"
+          value={text || ""}
+          onChange={(e) => setText && setText(e.target.value)}
           maxRows={3}
           slotProps={{
             input: {
@@ -38,8 +43,8 @@ export const PostInput: React.FC = ({}) => {
               padding: "0",
             },
             "& .MuiInputBase-input::placeholder": {
-              color: "gray", 
-              fontSize: "20px", 
+              color: "gray",
+              fontSize: "20px",
               fontWeight: "500",
             },
           }}

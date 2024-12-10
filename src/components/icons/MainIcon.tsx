@@ -12,7 +12,7 @@ export const MainIcon: React.FC = () => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g clip-path="url(#clip0_22_2)">
+        <g clipPath="url(#clip0_22_2)">
           <circle cx="16" cy="16" r="15.5" fill="#000000" stroke="white" />
 
           <path d="M16 6L18.5 12H13.5L16 6Z" fill="#4FD1C5" />
@@ -21,10 +21,10 @@ export const MainIcon: React.FC = () => {
           <text
             x="16"
             y="19"
-            text-anchor="middle"
-            font-family="Arial, sans-serif"
-            font-size="8"
-            font-weight="bold"
+            textAnchor="middle"
+            fontFamily="Arial, sans-serif"
+            fontSize="8"
+            fontWeight="bold"
             fill="white"
           >
             CF
