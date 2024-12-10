@@ -1,18 +1,18 @@
 "use client";
-import React, { ChangeEvent, ReactNode, useRef, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
+import addpost from "./addpost.module.scss";
 import { ActionButton, PostImage, PostInput } from "@/components/ui";
-import { Box, Divider } from "@mui/material";
+import { Avatar, Box, Divider } from "@mui/material";
 import { ImageIcon } from "@/components/icons/ImageIcon";
 import { useUpload } from "@/hooks/useUpload";
-import Image from "next/image";
-
-interface Porps {}
+import { useAuthorized } from "@/hooks/useAuthorized";
 
 export const AddPost: React.FC = ({}) => {
   const [text, setText] = useState<string>("");
-  const [files, setFile] = useState<FileList | null | any>();
+  const [files, setFile] = useState<FileList | null | any>(null);
   const [images, setImages] = useState<string[]>([]);
-  const currentForm = useRef<HTMLFormElement | null>(null);
+
+  const { userData } = useAuthorized();
 
   const { uploadTrigger, uploadData } = useUpload();
 
@@ -27,8 +27,6 @@ export const AddPost: React.FC = ({}) => {
   const handleUpload = async (e: any) => {
     e.preventDefault();
 
-    if (files?.length === 0) return;
-
     const formData: FormData = new FormData();
     for (let images of files) {
       formData.append("file", images);
@@ -40,12 +38,12 @@ export const AddPost: React.FC = ({}) => {
 
   const handleRemoveImage = (index: number) => {
     const dt = new DataTransfer();
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      if (index !== i) {
-        dt.items.add(file);
-      }
+      if (index !== i) dt.items.add(file);
     }
+
     setFile(dt.files);
     images.splice(index, 1);
   };
@@ -54,16 +52,15 @@ export const AddPost: React.FC = ({}) => {
     <>
       <form method="post" action="/upload" encType="multipart/form-data">
         <input
-          id="file"
+          className={addpost.input}
+          id="fileButton"
           type="file"
           multiple
           accept="image/*"
           onChange={handleFileChange}
           name="file"
         />
-        {/* <button type="button" onClick={handleUpload}>
-          Add
-        </button> */}
+
         <div>
           <Box
             sx={{
@@ -76,7 +73,10 @@ export const AddPost: React.FC = ({}) => {
               bgcolor: "#0E0E0E",
             }}
           >
-            <PostInput text={text} setText={setText} />
+            <Box display={"flex"} alignItems={"flex-end"} p={"0 0 5px"}> 
+              <Avatar sx={{ bgcolor: "#1976d2", mr: "16px" }}>{userData?.name[0].toUpperCase()}</Avatar>
+              <PostInput text={text} setText={setText} />
+            </Box>
 
             <Divider
               variant="fullWidth"
@@ -99,16 +99,9 @@ export const AddPost: React.FC = ({}) => {
               ))}
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <ActionButton
-                title=""
-                icon={<ImageIcon width={"15px"} height={"15px"} />}
-                onClick={() => {}}
-                type="button"
-                bgcolor="transparent"
-                maxWidth={"15px"}
-                minHeight={"15px"}
-                minWidth={"15px"}
-              />
+              <label htmlFor="fileButton" className={addpost.label}>
+                <ImageIcon width={"15px"} height={"15px"} />
+              </label>
               <ActionButton
                 title="Post"
                 type="submit"
