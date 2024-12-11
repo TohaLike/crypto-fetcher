@@ -1,7 +1,7 @@
 "use client";
 import { useAuthorized } from "@/hooks/useAuthorized";
 import { socket } from "@/socket";
-import { createContext, use, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 interface Props {
   isConnected: boolean;
@@ -24,10 +24,10 @@ export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
     function onConnect() {
       setIsConnected(true);
       setTransport(socket.io.engine.transport.name);
-
+      
       socket.emit("join__rooms");
 
-      console.log("onConnect!!!");
+      console.log("onConnect");
 
       socket.io.engine.on("upgrade", (transport) => {
         setTransport(transport.name);
@@ -47,14 +47,7 @@ export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
       socket.off("disconnect", onDisconnect);
     };
   }, []);
-
-  useEffect(() => {
-    if (isConnected) socket.emit("join__rooms");
-
-    return () => {
-      socket.off("join__rooms");
-    }
-  }, [isConnected]);
+  
 
   return (
     <>
