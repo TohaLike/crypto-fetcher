@@ -2,7 +2,8 @@
 import React from "react";
 import selectinput from "./selectinput.module.scss";
 import { InputAdornment, OutlinedInputProps, TextField } from "@mui/material";
-
+import { ArrowIcon } from "@/components/icons/ArrowIcon";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 interface Option {
   value: string | number;
   label: string;
@@ -31,11 +32,7 @@ export const SelectInput: React.FC<Props> = ({ name, label, array, register }) =
           } as Partial<OutlinedInputProps>,
           select: {
             native: true,
-            IconComponent: () => (
-              <InputAdornment position="end">
-                <span className={selectinput.icon}></span>
-              </InputAdornment>
-            ),
+            IconComponent: (e) => <ArrowIcon className={e.className} />,
           },
         }}
         sx={{
@@ -67,7 +64,7 @@ export const SelectInput: React.FC<Props> = ({ name, label, array, register }) =
         {array.map((option) => (
           <option
             key={option?.value}
-            style={{ color: "#fff", backgroundColor: "#000" }}
+            style={{ color: "#fff", backgroundColor: "#000", scrollbarWidth: "thin" }}
             value={option?.value}
           >
             {option?.label}
