@@ -19,6 +19,7 @@ export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     if (socket.connected) {
       onConnect();
+      socket.emit("join__rooms");
     }
 
     function onConnect() {
@@ -27,6 +28,7 @@ export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
       setTransport(socket.io.engine.transport.name);
 
       console.log("onConnect");
+      socket.emit("join__rooms");
 
       socket.io.engine.on("upgrade", (transport) => {
         setTransport(transport.name);
