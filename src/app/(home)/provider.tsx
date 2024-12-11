@@ -41,12 +41,13 @@ export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
     }
 
     socket.on("connect", onConnect);
-    socket.emit("join__rooms");
     socket.on("disconnect", onDisconnect);
+    socket.emit("join__rooms");
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
+      socket.off("join__rooms");
     };
   }, []);
 
