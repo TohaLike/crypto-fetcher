@@ -40,20 +40,14 @@ export default function MessagesPage() {
   return (
     <>
       <div className={roomspage.container}>
-        {sortedChatRooms.length > 0 ? (
-          sortedChatRooms?.map((room, index) => (
-            <ChatRoom
-              key={"room: " + index}
-              name={room.usersId[0].name}
-              latestMessage={room.lastMessage?.messageText}
-              roomID={room.usersId[0]._id}
-            />
-          ))
-        ) : (
-          <div className={roomspage.container__nomessages}>
-            <LinkButton title="Start a conversation" href="/peoples" bgcolor="transparent" />
-          </div>
-        )}
+        {sortedChatRooms?.map((room, index) => (
+          <ChatRoom
+            key={"room: " + index}
+            name={room.usersId[0].name}
+            latestMessage={room.lastMessage?.messageText}
+            roomID={room.usersId[0]._id}
+          />
+        ))}
       </div>
     </>
   );
