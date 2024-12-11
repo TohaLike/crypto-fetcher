@@ -16,12 +16,13 @@ export default function MessagesPage() {
   const { rooms } = useRooms();
 
   useEffect(() => {
-    socket.on("room__message", (name, message, id, createdAt, usersId) => {
-      setLastMessage([
-        ...lastMessage,
-        { name, lastMessage: { messageText: message, createdAt }, id, usersId },
-      ]);
-    });
+    if (isConnected)
+      socket.on("room__message", (name, message, id, createdAt, usersId) => {
+        setLastMessage([
+          ...lastMessage,
+          { name, lastMessage: { messageText: message, createdAt }, id, usersId },
+        ]);
+      });
 
     return () => {
       socket.off("room__message");
