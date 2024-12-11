@@ -23,15 +23,14 @@ export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
 
     function onConnect() {
       setIsConnected(true);
-      
-      setTransport(socket.io.engine.transport.name);
 
-      socket.emit("join__rooms");
+      setTransport(socket.io.engine.transport.name);
 
       console.log("onConnect");
 
       socket.io.engine.on("upgrade", (transport) => {
         setTransport(transport.name);
+        socket.emit("join__rooms");
       });
     }
 
@@ -42,14 +41,12 @@ export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.emit("join__rooms");
 
     //sca
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.off("join__rooms");
     };
   }, []);
 

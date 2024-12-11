@@ -8,7 +8,6 @@ import { useRegistration } from "@/hooks/useRegistration";
 import { FormProvider, useForm } from "react-hook-form";
 import { registrationSchema } from "./validate";
 import { useRouter } from "next/navigation";
-import { socket } from "@/socket";
 
 const yearArr = Array.from({ length: 100 }, (_, i) => ({
   value: (2024 - i).toString(),
@@ -60,7 +59,6 @@ export const RegisterModal: React.FC<Props> = ({ onClose, onOpen }) => {
   const onSubmit = (data: object) => {
     registrationTrigger(data).then(() => {
       onClose();
-      socket.emit("join__rooms");
       router.push("/home");
     });
   };
