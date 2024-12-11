@@ -36,10 +36,20 @@ export default function MessagesPage() {
     const dateB = new Date(b?.lastMessage?.createdAt);
     return dateB?.getTime() - dateA?.getTime();
   });
+  const test = () => {
+    if (socket.connected) {
+      console.log("disconnect");
+      socket.disconnect();
+    } else {
+      console.log("connect");
+      socket.connect();
+    }
+  };
 
   return (
     <>
       <div className={roomspage.container}>
+        <button onClick={test}>tsst</button>
         {sortedChatRooms.length > 0 ? (
           sortedChatRooms?.map((room, index) => (
             <ChatRoom
