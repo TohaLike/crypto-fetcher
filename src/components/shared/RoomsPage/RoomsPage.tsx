@@ -16,13 +16,12 @@ export default function MessagesPage() {
   const { rooms } = useRooms();
 
   useEffect(() => {
-    if (isConnected)
-      socket.on("room__message", (name, message, id, createdAt, usersId) => {
-        setLastMessage([
-          ...lastMessage,
-          { name, lastMessage: { messageText: message, createdAt }, id, usersId },
-        ]);
-      });
+    socket.on("room__message", (name, message, id, createdAt, usersId) => {
+      setLastMessage([
+        ...lastMessage,
+        { name, lastMessage: { messageText: message, createdAt }, id, usersId },
+      ]);
+    });
 
     return () => {
       socket.off("room__message");
@@ -41,14 +40,20 @@ export default function MessagesPage() {
   return (
     <>
       <div className={roomspage.container}>
-        {sortedChatRooms?.map((room, index) => (
-          <ChatRoom
-            key={"room: " + index}
-            name={room.usersId[0].name}
-            latestMessage={room.lastMessage?.messageText}
-            roomID={room.usersId[0]._id}
-          />
-        ))}
+        {sortedChatRooms.length > 0 ? (
+          sortedChatRooms?.map((room, index) => (
+            <ChatRoom
+              key={"room: " + index}
+              name={room.usersId[0].name}
+              latestMessage={room.lastMessage?.messageText}
+              roomID={room.usersId[0]._id}
+            />
+          ))
+        ) : (
+          <div className={roomspage.container__nomessages}>
+            <LinkButton title="Start a conversation" href="/peoples" bgcolor="transparent" />
+          </div>
+        )}
       </div>
     </>
   );
