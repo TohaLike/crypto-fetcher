@@ -26,7 +26,7 @@ export default function MessagesPage() {
     return () => {
       socket.off("room__message");
     };
-  }, [socket, lastMessage, rooms]);
+  }, [socket, isConnected, lastMessage, rooms]);
 
   const concatRooms = rooms?.concat(lastMessage);
   const messagesRooms = Array.from(new Map(concatRooms?.map((item) => [item?.id, item])).values());
