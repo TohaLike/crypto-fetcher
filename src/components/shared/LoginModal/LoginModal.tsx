@@ -29,8 +29,8 @@ export const LoginModal: React.FC<Props> = ({ onClose, onOpen }) => {
   const onSubmit = (data: object) => {
     loginTrigger(data).then(() => {
       onClose();
-      router.push("/home");
-      // window.location.reload();
+      // router.push("/home");
+      window.location.reload();
     });
   };
 

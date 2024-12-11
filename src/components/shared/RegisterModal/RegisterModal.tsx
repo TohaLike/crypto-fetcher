@@ -59,7 +59,8 @@ export const RegisterModal: React.FC<Props> = ({ onClose, onOpen }) => {
   const onSubmit = (data: object) => {
     registrationTrigger(data).then(() => {
       onClose();
-      router.push("/home");
+      window.location.reload();
+      // router.push("/home");
     });
   };
 
