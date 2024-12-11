@@ -1,10 +1,10 @@
-import ImageService from "@/services/ImageService";
+import PostsService from "@/services/ImageService";
 import useSWRMutation from "swr/mutation";
 
 export const useUpload = () => {
   const { trigger, data, isMutating } = useSWRMutation(
     ["upload"],
-    (url, { arg }: { arg: object }) => ImageService.uploadImage(arg)
+    (url, { arg }: { arg: object }) => PostsService.uploadPost(arg)
   );
 
   return { uploadTrigger: trigger, uploadData: data, uploadMutation: isMutating };

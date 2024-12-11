@@ -11,29 +11,36 @@ type Props = {
   src?: string;
   alt?: string;
   onClick?: (index: any) => void;
+  width?: string | number | any;
+  height?: string | number | any;
 };
 
-export const PostImage: React.FC<Props> = ({ src, alt, onClick }) => {
+export const PostImage: React.FC<Props> = ({ src, alt, onClick, width, height }) => {
   return (
     <>
       <div className={postimage.container}>
         <Image
           src={src || ""}
           alt={alt || ""}
-          width={100}
-          height={100}
-          style={{ objectFit: "cover", borderRadius: "16px" }}
+          width={width || 100}
+          height={height || 100}
+          draggable={false}
+          style={{ objectFit: "cover", borderRadius: "7px" }}
         />
-        <div className={postimage.container__close}>
-          <ActionButton
-            icon={<ClearIcon />}
-            onClick={onClick}
-            type="button"
-            bgcolor="transparent"
-            minWidth={"24px"}
-            minHeight={"24px"}
-          />
-        </div>
+        {onClick && (
+          <div className={postimage.container__close}>
+            <ActionButton
+              icon={<ClearIcon />}
+              onClick={onClick}
+              boxShadow={"0 0 10px blue"}
+              border={"1px solid #000"}
+              type="button"
+              bgcolor="#000"
+              minWidth={"24px"}
+              minHeight={"24px"}
+            />
+          </div>
+        )}
       </div>
     </>
   );

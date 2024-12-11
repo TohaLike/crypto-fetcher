@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.body {
+  margin-top: 11px;
+
+  &__images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 250px));
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+  &__image {
+    margin-top: 10px;
+  }
+}

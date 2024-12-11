@@ -31,7 +31,7 @@ export const AddPost: React.FC = ({}) => {
     for (let images of files) {
       formData.append("file", images);
     }
-    formData.append("description", text);
+    formData.append("description", text.trim());
 
     await uploadTrigger(formData);
   };
