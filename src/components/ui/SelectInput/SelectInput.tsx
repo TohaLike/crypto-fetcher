@@ -63,9 +63,13 @@ export const SelectInput: React.FC<Props> = ({ name, label, array, register }) =
           },
         }}
       >
-        <option key={""} value={""}></option>
+        <option style={{ color: "#fff", backgroundColor: "#000" }} key={""} value={""}></option>
         {array.map((option) => (
-          <option key={option?.value} value={option?.value}>
+          <option
+            key={option?.value}
+            style={{ color: "#fff", backgroundColor: "#000" }}
+            value={option?.value}
+          >
             {option?.label}
           </option>
         ))}
