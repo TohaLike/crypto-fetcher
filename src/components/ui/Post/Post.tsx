@@ -3,6 +3,7 @@ import React from "react";
 import post from "./post.module.scss";
 import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
 import { PostImage } from "../PostImage/PostImage";
+import { timeCreated } from "@/helper/timeCreated";
 
 interface Props {
   owner?: string;
@@ -12,7 +13,18 @@ interface Props {
 }
 
 export const Post: React.FC<Props> = ({ owner, text, createdAt, images }) => {
-  console.log(images);
+  // const cacheImages = async (srcArray: any) => {
+  //   const promises = await srcArray.map((src: any) => {
+  //     return new Promise((resolve, reject) => {
+  //       const image = new Image();
+  //       image.onload = () => resolve(image);
+  //       image.onerror = () => reject();
+  //       image.src = `${process.env.NEXT_PUBLIC_SERVER_URL}/${src.path}`;
+  //     });
+  //   });
+
+  //   await Promise.all(promises);
+  // };
 
   return (
     <>
@@ -20,13 +32,13 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images }) => {
         sx={{
           bgcolor: "#0E0E0E",
           p: "10px",
-          m: "10px",
+          m: "10px 0",
           borderRadius: "16px",
           boxSizing: "border-box",
           width: "auto",
         }}
       >
-        <div>
+        <div className={post.container}>
           <div className={post.header}>
             <ListItemAvatar sx={{ minWidth: "40px", mr: "5px" }}>
               <Avatar sx={{ bgcolor: "#1976d2" }}>{owner && owner[0].toUpperCase()}</Avatar>
@@ -41,7 +53,7 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images }) => {
                     sx={{ color: "#FFFFFF", lineHeight: "normal", fontWeight: "100" }}
                     textTransform={"capitalize"}
                   >
-                    {owner}
+                    {owner} <span className={post.createdAt}>{timeCreated(createdAt)}</span>
                   </Typography>
                 }
                 secondary={
@@ -57,7 +69,7 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images }) => {
                       fontWeight: "100",
                     }}
                   >
-                    [потом добавлю]
+                    @user id
                   </Typography>
                 }
               />
@@ -86,8 +98,11 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images }) => {
                   <PostImage
                     src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${e.path}`}
                     alt={`image-${i}`}
-                    width={250}
-                    height={250}
+                    maxHeight={"250px"}
+                    minHeight={"100%"}
+                    height={"100%"}
+                    width={"100%"}
+                    borderRadius={"16px"}
                   />
                 </div>
               ))}

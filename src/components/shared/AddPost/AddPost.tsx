@@ -28,9 +28,13 @@ export const AddPost: React.FC = ({}) => {
     e.preventDefault();
 
     const formData: FormData = new FormData();
-    for (let images of files) {
-      formData.append("file", images);
+
+    if (files) {
+      for (let images of files) {
+        formData.append("file", images);
+      }
     }
+    
     formData.append("description", text.trim());
 
     await uploadTrigger(formData);
@@ -64,7 +68,7 @@ export const AddPost: React.FC = ({}) => {
         <div>
           <Box
             sx={{
-              m: "10px",
+              m: "10px 0",
               p: "10px",
               boxSizing: "border-box",
               borderRadius: "16px",
@@ -73,8 +77,10 @@ export const AddPost: React.FC = ({}) => {
               bgcolor: "#0E0E0E",
             }}
           >
-            <Box display={"flex"} alignItems={"flex-end"} p={"0 0 5px"}> 
-              <Avatar sx={{ bgcolor: "#1976d2", mr: "16px" }}>{userData?.name[0].toUpperCase()}</Avatar>
+            <Box display={"flex"} alignItems={"flex-end"} p={"0 0 5px"}>
+              <Avatar sx={{ bgcolor: "#1976d2", mr: "16px" }}>
+                {userData?.name[0].toUpperCase()}
+              </Avatar>
               <PostInput text={text} setText={setText} />
             </Box>
 
@@ -89,11 +95,15 @@ export const AddPost: React.FC = ({}) => {
                 gap: "10px",
               }}
             >
-              {images?.map((image, index) => (
+              {images.length > 0 && images?.map((image, index) => (
                 <PostImage
-                  key={index}
+                  key={`image-${index}`}
                   src={image}
-                  alt=""
+                  // rootHeight={100}
+                  // rootWidth={100}
+                  width={"100px"}
+                  height={"100px"}
+                  alt={`image-${index}`}
                   onClick={() => handleRemoveImage(index)}
                 />
               ))}

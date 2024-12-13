@@ -10,8 +10,11 @@ interface Props {
   bgcolor?: string;
   color?: string;
   hover?: string;
+  padding?: string | number;
   onClick?: (action: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   icon?: React.ReactNode;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
   [props: string]: any;
 }
 
@@ -21,10 +24,13 @@ export const ActionButton: React.FC<Props> = ({
   bgcolor,
   color,
   hover,
+  padding,
   title,
   onClick,
   disabled,
   icon,
+  startIcon,
+  endIcon,
   ...props
 }) => {
   return (
@@ -36,6 +42,8 @@ export const ActionButton: React.FC<Props> = ({
         disableRipple
         onClick={onClick}
         type={type}
+        startIcon={startIcon}
+        endIcon={endIcon}
         sx={{
           bgcolor: bgcolor || "primary",
           color: color || "primary",
@@ -45,7 +53,7 @@ export const ActionButton: React.FC<Props> = ({
           borderRadius: "32px",
           ...props,
           "&.MuiButton-root": {
-            p: 0,
+            p: padding || 0,
           },
           "&:hover": {
             bgcolor: hover,

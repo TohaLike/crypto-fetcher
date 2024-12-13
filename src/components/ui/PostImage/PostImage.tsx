@@ -11,21 +11,23 @@ type Props = {
   src?: string;
   alt?: string;
   onClick?: (index: any) => void;
-  width?: string | number | any;
-  height?: string | number | any;
+  rootWidth?: number | null;
+  rootHeight?: number | null;
+  [key: string]: any;
 };
 
-export const PostImage: React.FC<Props> = ({ src, alt, onClick, width, height }) => {
+export const PostImage: React.FC<Props> = ({ src, alt, onClick, rootWidth, rootHeight, ...props }) => {
   return (
     <>
       <div className={postimage.container}>
         <Image
           src={src || ""}
           alt={alt || ""}
-          width={width || 100}
-          height={height || 100}
+          width={rootWidth || 0}
+          height={rootHeight || 0}
+          sizes="100vw"
           draggable={false}
-          style={{ objectFit: "cover", borderRadius: "7px" }}
+          style={{ objectFit: "cover", aspectRatio: "1", ...props }}
         />
         {onClick && (
           <div className={postimage.container__close}>

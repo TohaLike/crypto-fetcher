@@ -47,6 +47,7 @@ export const PostInput: React.FC<Props> = ({ text, setText }) => {
               fontSize: "20px",
               fontWeight: "500",
             },
+           
           }}
         />
       </Box>

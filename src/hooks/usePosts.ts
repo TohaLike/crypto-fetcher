@@ -8,7 +8,7 @@ export const usePosts = () => {
     return `/posts/home?page=${pageIndex + 1}`;
   };
 
-  const { data, isValidating, setSize, size, isLoading } = useSWRInfinite(
+  const { data, isValidating, setSize, size, isLoading, mutate } = useSWRInfinite(
     getKey,
     PostsService.getPosts,
     {
@@ -16,10 +16,11 @@ export const usePosts = () => {
       revalidateOnFocus: false,
       revalidateFirstPage: false,
       revalidateOnMount: true,
+      // refreshInterval: 1000
     }
   );
 
   const ended = data && data[data.length - 1]?.length === 0;
 
-  return { dataPosts: data, setSize, size, isLoading, isValidating, ended };
+  return { dataPosts: data, setSize, size, isLoading, isValidating, ended, mutate };
 };
