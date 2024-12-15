@@ -3,7 +3,6 @@ import axios from "axios";
 
 // export const API_URL = `https://crypto-fetcher-back.onrender.com/api`
 
-
 export const API_URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/api`
 
 const axiosWithAuth = axios.create({

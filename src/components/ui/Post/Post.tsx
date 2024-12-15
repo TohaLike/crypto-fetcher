@@ -6,7 +6,7 @@ import { PostImage } from "../PostImage/PostImage";
 import { timeCreated } from "@/helper/timeCreated";
 
 interface Props {
-  owner?: string;
+  owner?: string | null | undefined;
   text?: string;
   createdAt?: string;
   images?: string[] | any;

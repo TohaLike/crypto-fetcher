@@ -5,6 +5,7 @@ import { useProfile } from "@/hooks/useProfile";
 import { useRouter } from "next/navigation";
 import { socket } from "@/socket";
 import { useParams } from "next/navigation";
+import { useSubscribe } from "@/hooks/useSubscribe";
 
 export const ProfilePage: React.FC = () => {
   const { userData, isAuthorized } = useAuthorized();
@@ -13,10 +14,18 @@ export const ProfilePage: React.FC = () => {
   const params = useParams();
 
   const { profileData } = useProfile({ params: params?.profile });
+  const { triggerSubscribe, subscribeData, mutatingSubscribe } = useSubscribe();
 
   const redirectToRoom = () => {
     router.push(`/messages/user?res=${params?.profile}`);
     socket.emit("join__room", params?.profile);
+    return;
+  };
+
+  const subscribe = async () => {
+    await triggerSubscribe({
+      userId: profileData?.id,
+    });
     return;
   };
 
@@ -38,6 +47,7 @@ export const ProfilePage: React.FC = () => {
           <p>Почта: {profileData?.email}</p>
 
           <button onClick={redirectToRoom}>Начать беседу</button>
+          <button onClick={subscribe}>Добавить в друзья</button>
         </div>
       )}
     </>

@@ -2,7 +2,7 @@ import axiosWithAuth from "@/http";
 import { FileResponse } from "@/models/file/fileResponse";
 import { PostResponse } from "@/models/posts/postsResponse";
 
-export default class PostsService {
+export default class ImageService {
   static async uploadPost(file: any) {
     try {
       const response = await axiosWithAuth.post("/upload", file, {
@@ -20,6 +20,16 @@ export default class PostsService {
       return response.data;
     } catch (e: any) {
       console.log(e.response?.data?.message);
+    }
+  }
+
+  static async loadMore() {
+    try {
+      const response = await axiosWithAuth.get<PostResponse[]>("/loadmore")
+      
+      return response.data
+    } catch (e: any) {
+      console.log(e.response?.data?.message)
     }
   }
 }

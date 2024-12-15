@@ -6,7 +6,7 @@ import { RoomDataResponse } from "@/models/roomData/RoomDataResponse";
 export default class SocketService {
   static async createRoom(data: object) {
     try {
-      console.log(data)
+      console.log(data);
       const response = await axiosWithAuth.post<RoomResponse>("/room", data);
       return response.data;
     } catch (e: any) {
@@ -27,8 +27,8 @@ export default class SocketService {
     try {
       const response = await axiosWithAuth.get<MessageResponse[]>(url);
       return response.data;
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      throw new Error(e.response?.data?.message);
     }
   }
 

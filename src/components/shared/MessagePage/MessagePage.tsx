@@ -27,8 +27,6 @@ type myKey = {
 export const MessagePage: React.FC = () => {
   const { isConnected, transport } = useContext<any>(SocketContext);
 
-  const [isSocket, setIsSocket] = useState<any>(null);
-
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState<string>("");
 
@@ -40,7 +38,7 @@ export const MessagePage: React.FC = () => {
 
   const { profileData } = useProfile({ params: search });
   const { roomTrigger, data, isMutating } = useCreateRoom();
-  const { scrollData, setSize, size, ended, isValidating, isLoading } = useMessages();
+  const { scrollData, setSize, size, ended, isValidating, isLoading, error } = useMessages();
   const { intersectionRef } = useInfiniteScroll({ isValidating, setSize, size, ended });
   const { dataRoom } = useRoom();
 
@@ -158,7 +156,9 @@ export const MessagePage: React.FC = () => {
       <div className={chat.chat__container__messages}>
         <ChatHeader
           userData={profileData}
-          userActivity={typingVisible?.typing ? profileData?.name + " is typing..." : "[надо добавить online]"}
+          userActivity={
+            typingVisible?.typing ? profileData?.name + " is typing..." : "[надо добавить online]"
+          }
         />
 
         <div className={chat.messages}>
@@ -187,7 +187,7 @@ export const MessagePage: React.FC = () => {
               />
             ))}
           </div>
-          <div ref={intersectionRef} className={chat.messages__spacer__loader}></div>
+          <div ref={error ? null : intersectionRef} className={chat.messages__spacer__loader}></div>
         </div>
 
         <div className={chat.messages__input}>

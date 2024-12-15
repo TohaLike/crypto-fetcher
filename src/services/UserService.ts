@@ -15,4 +15,13 @@ export default class UserService {
   static async getUsers() {
     return axiosWithAuth.get<IUser[]>("/users");
   }
+
+  static async SubscribeUser(userId: any) {
+    try {
+      const response = await axiosWithAuth.post("/subscribe", userId);
+      return response.data;
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
+    }
+  }
 }

@@ -9,7 +9,7 @@ export const useMessages = () => {
   const getKey = (pageIndex: number, previousPageData: string) => {
     if (previousPageData && previousPageData.length === 0) return null;
 
-    return `/messages/user?res=${search}&page=${pageIndex + 1}`;
+    return `/messages/user?res=${search}&page=${pageIndex + 1 || ""}`;
   };
 
   const { data, setSize, size, isValidating, isLoading, error } = useSWRInfinite(
@@ -24,7 +24,6 @@ export const useMessages = () => {
     }
   );
 
-
   const ended = data && data[data.length - 1]?.length === 0;
 
   return {
@@ -34,5 +33,6 @@ export const useMessages = () => {
     ended,
     isLoading,
     isValidating,
+    error
   };
 };

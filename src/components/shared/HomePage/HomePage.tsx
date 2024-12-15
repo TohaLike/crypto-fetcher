@@ -6,8 +6,10 @@ import { usePosts } from "@/hooks/usePosts";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { Post } from "@/components/ui/Post/Post";
 import { ActionButton } from "@/components/ui";
+import { useLoadMore } from "@/hooks/useLoadMore";
 
 export const HomePage: React.FC = () => {
+  const { loadMoreData } = useLoadMore();
   const { dataPosts, isLoading, isValidating, setSize, size, ended, mutate } = usePosts();
   const { intersectionRef } = useInfiniteScroll({ isValidating, setSize, size, ended });
 
@@ -30,13 +32,13 @@ export const HomePage: React.FC = () => {
           maxHeight={"30px"}
         />
 
-        {dataPosts?.flat()?.map((e, i) => (
+        {!dataPosts ? "" : dataPosts?.flat()?.map((e, i) => (
           <Post
             key={`post-user-${i}`}
-            owner={e?.owner.name}
+            owner={e?.owner?.name}
             text={e?.text}
             createdAt={e?.createdAt}
-            images={e?.images.flat()}
+            images={e?.images?.flat()}
           />
         ))}
         <div ref={intersectionRef}>end</div>

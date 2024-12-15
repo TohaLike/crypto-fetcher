@@ -1,26 +1,33 @@
-import PostsService from "@/services/ImageService";
+import ImageService from "@/services/ImageService";
 import useSWRInfinite from "swr/infinite";
 
 export const usePosts = () => {
   const getKey = (pageIndex: number, previousPageData: string) => {
-    if (previousPageData && previousPageData.length === 0) return null;
+    if (previousPageData && !previousPageData.length) return null;
 
-    return `/posts/home?page=${pageIndex + 1}`;
+    return `/posts/home?page=${pageIndex + 1 || ""}`;
   };
 
   const { data, isValidating, setSize, size, isLoading, mutate } = useSWRInfinite(
     getKey,
-    PostsService.getPosts,
+    ImageService.getPosts,
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false,
       revalidateFirstPage: false,
       revalidateOnMount: true,
-      // refreshInterval: 1000
     }
   );
 
   const ended = data && data[data.length - 1]?.length === 0;
 
-  return { dataPosts: data, setSize, size, isLoading, isValidating, ended, mutate };
+  return {
+    dataPosts: data?.some((e: any) => e === "") ? [] : data,
+    setSize,
+    size,
+    isLoading,
+    isValidating,
+    ended,
+    mutate,
+  };
 };
