@@ -4,27 +4,30 @@ import addpost from "./addpost.module.scss";
 import { ActionButton, PostImage, PostInput } from "@/components/ui";
 import { Avatar, Box, Divider } from "@mui/material";
 import { ImageIcon } from "@/components/icons/ImageIcon";
-import { useUpload } from "@/hooks/useUpload";
 import { useAuthorized } from "@/hooks/useAuthorized";
+import { useUpload } from "@/hooks/useUpload";
+import { CircularProgress } from "@mui/material";
 
 export const AddPost: React.FC = ({}) => {
   const [text, setText] = useState<string>("");
   const [files, setFile] = useState<FileList | null | any>(null);
   const [images, setImages] = useState<string[]>([]);
+  const [content, setContent] = React.useState("");
+  const { uploadTrigger, uploadData, uploadMutation } = useUpload();
 
   const { userData } = useAuthorized();
-
-  const { uploadTrigger, uploadData } = useUpload();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(e.target.files);
+      setContent(e.target.value);
+      console.log(e.target.value);
       const imagesUrl = Array.from(e.target.files).map((image) => URL.createObjectURL(image));
       setImages(imagesUrl);
     }
   };
 
-  const handleUpload = async (e: any) => {
+  const handleUpload = (e: any) => {
     e.preventDefault();
 
     const formData: FormData = new FormData();
@@ -34,14 +37,19 @@ export const AddPost: React.FC = ({}) => {
         formData.append("file", images);
       }
     }
-    
-    formData.append("description", text.trim());
 
-    await uploadTrigger(formData);
+    if (text.trim()) {
+      formData.append("description", text.trim());
+      uploadTrigger(formData);
+      setContent("");
+      setText("");
+      setImages([]);
+    }
   };
 
   const handleRemoveImage = (index: number) => {
     const dt = new DataTransfer();
+    setContent("");
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
@@ -63,6 +71,7 @@ export const AddPost: React.FC = ({}) => {
           accept="image/*"
           onChange={handleFileChange}
           name="file"
+          value={content}
         />
 
         <div>
@@ -95,25 +104,25 @@ export const AddPost: React.FC = ({}) => {
                 gap: "10px",
               }}
             >
-              {images.length > 0 && images?.map((image, index) => (
-                <PostImage
-                  key={`image-${index}`}
-                  src={image}
-                  // rootHeight={100}
-                  // rootWidth={100}
-                  width={"100px"}
-                  height={"100px"}
-                  alt={`image-${index}`}
-                  onClick={() => handleRemoveImage(index)}
-                />
-              ))}
+              {images.length > 0 &&
+                images?.map((image, index) => (
+                  <PostImage
+                    key={`image-${index}`}
+                    src={image}
+                    width={"100px"}
+                    height={"100px"}
+                    alt={`image-${index}`}
+                    onClick={() => handleRemoveImage(index)}
+                  />
+                ))}
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <label htmlFor="fileButton" className={addpost.label}>
                 <ImageIcon width={"15px"} height={"15px"} />
               </label>
               <ActionButton
-                title="Post"
+                disabled={!uploadMutation ? false : true}
+                title={uploadMutation ? <CircularProgress size={"20px"} sx={{ zIndex: 100 }} /> : "Post"}
                 type="submit"
                 onClick={handleUpload}
                 maxWidth={"70px"}

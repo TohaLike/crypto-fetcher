@@ -7,10 +7,11 @@ import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { Post } from "@/components/ui/Post/Post";
 import { ActionButton } from "@/components/ui";
 import { useLoadMore } from "@/hooks/useLoadMore";
+import { useUpload } from "@/hooks/useUpload";
 
 export const HomePage: React.FC = () => {
   const { loadMoreData } = useLoadMore();
-  const { dataPosts, isLoading, isValidating, setSize, size, ended, mutate } = usePosts();
+  const { dataPosts, isValidating, setSize, mutatePosts, size, ended, error } = usePosts();
   const { intersectionRef } = useInfiniteScroll({ isValidating, setSize, size, ended });
 
   return (
@@ -20,7 +21,7 @@ export const HomePage: React.FC = () => {
 
         <ActionButton
           title="Show posts"
-          onClick={() => mutate()}
+          onClick={mutatePosts}
           type="button"
           width={"100%"}
           bgcolor="#0E0E0E"
@@ -32,16 +33,20 @@ export const HomePage: React.FC = () => {
           maxHeight={"30px"}
         />
 
-        {!dataPosts ? "" : dataPosts?.flat()?.map((e, i) => (
-          <Post
-            key={`post-user-${i}`}
-            owner={e?.owner?.name}
-            text={e?.text}
-            createdAt={e?.createdAt}
-            images={e?.images?.flat()}
-          />
-        ))}
-        <div ref={intersectionRef}>end</div>
+        {dataPosts &&
+          dataPosts
+            ?.flat()
+            ?.map((e, i) => (
+              <Post
+                key={`post-user-${i}`}
+                owner={e?.owner?.name}
+                text={e?.text}
+                createdAt={e?.createdAt}
+                images={e?.images?.flat()}
+              />
+            ))}
+
+        <div ref={error ? null : intersectionRef}>end</div>
       </div>
     </>
   );

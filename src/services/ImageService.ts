@@ -16,10 +16,10 @@ export default class ImageService {
 
   static async getPosts(url: string | any) {
     try {
-      const response = await axiosWithAuth.get<PostResponse[]>(url);
+      const response = await axiosWithAuth.get<PostResponse[] | any>(url);
       return response.data;
     } catch (e: any) {
-      console.log(e.response?.data?.message);
+      throw new Error(e.response?.data?.message);
     }
   }
 

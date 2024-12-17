@@ -55,6 +55,10 @@ export const ActionButton: React.FC<Props> = ({
           "&.MuiButton-root": {
             p: padding || 0,
           },
+          "&:disabled": {
+            backgroundColor: "#fff",
+            color: "#000",
+          },
           "&:hover": {
             bgcolor: hover,
           },

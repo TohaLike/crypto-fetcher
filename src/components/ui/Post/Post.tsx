@@ -81,7 +81,7 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images }) => {
                 variant="body1"
                 sx={{
                   color: "#fff",
-                  lineHeight: "1.03em",
+                  lineHeight: "1.5em",
                   fontWeight: "200",
                   fontSize: "15px",
                   whiteSpace: "pre-wrap",
