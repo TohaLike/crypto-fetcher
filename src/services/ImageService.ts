@@ -23,13 +23,13 @@ export default class ImageService {
     }
   }
 
-  static async loadMore() {
+  static async loadMore(arg: object) {
     try {
-      const response = await axiosWithAuth.get<PostResponse[]>("/loadmore")
-      
-      return response.data
+      const response = await axiosWithAuth.post("/update_subscriptions", { createdAt: arg });
+
+      return response.data;
     } catch (e: any) {
-      console.log(e.response?.data?.message)
+      console.log(e.response?.data?.message);
     }
   }
 }

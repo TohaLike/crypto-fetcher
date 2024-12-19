@@ -8,7 +8,13 @@ import { useAuthorized } from "@/hooks/useAuthorized";
 import { useUpload } from "@/hooks/useUpload";
 import { CircularProgress } from "@mui/material";
 
-export const AddPost: React.FC = ({}) => {
+interface Props {
+  setAddedPost?: React.Dispatch<React.SetStateAction<any>>;
+  addedPost?: any;
+}
+
+
+export const AddPost: React.FC<Props> = ({setAddedPost, addedPost}) => {
   const [text, setText] = useState<string>("");
   const [files, setFile] = useState<FileList | null | any>(null);
   const [images, setImages] = useState<string[]>([]);
@@ -40,7 +46,9 @@ export const AddPost: React.FC = ({}) => {
 
     if (text.trim()) {
       formData.append("description", text.trim());
-      uploadTrigger(formData);
+      uploadTrigger(formData).then((e) => {
+        if (e?.data && setAddedPost) setAddedPost([...addedPost, e.data]);
+      });
       setContent("");
       setText("");
       setImages([]);

@@ -1,16 +1,15 @@
 import ImageService from "@/services/ImageService";
+import useSWR from "swr";
 import useSWRImmutable from "swr/immutable";
+import useSWRMutation from "swr/mutation";
 
 export const useLoadMore = () => {
-  const { data, isValidating, isLoading } = useSWRImmutable(
-    ["loadmore"],
-    () => ImageService.loadMore(),
-    {
-      // refreshInterval: 1000,
-    }
+  const { data, trigger } = useSWRMutation(["update_subscriptions"], (url, { arg }: { arg: object }) =>
+    ImageService.loadMore(arg)
   );
 
   return {
-    loadMoreData: data
-  }
+    triggerLoad: trigger,
+    loadMoreData: data,
+  };
 };
