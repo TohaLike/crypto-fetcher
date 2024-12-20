@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { socket } from "@/socket";
 import { useParams } from "next/navigation";
 import { useSubscribe } from "@/hooks/useSubscribe";
+import { Profile } from "@/components/ui/Profile/Profile";
 
 export const ProfilePage: React.FC = () => {
   const { userData, isAuthorized } = useAuthorized();
@@ -32,12 +33,12 @@ export const ProfilePage: React.FC = () => {
   return (
     <>
       {userData?.id === params?.profile && (
-        <div>
-          <h2>Имя: {profileData?.name}</h2>
-          <p>Создан: {profileData?.createdAt}</p>
-          <p>Почта: {profileData?.email}</p>
-          <p>Авторизован: {isAuthorized ? "Да" : "Нет"}</p>
-        </div>
+        <Profile
+          name={profileData?.name}
+          email={profileData?.email}
+          isAuthorized={isAuthorized}
+          profileData={profileData}
+        />
       )}
 
       {userData?.id !== params?.profile && (

@@ -13,23 +13,21 @@ interface Props {
   addedPost?: any;
 }
 
-
 export const AddPost: React.FC<Props> = ({setAddedPost, addedPost}) => {
   const [text, setText] = useState<string>("");
-  const [files, setFile] = useState<FileList | null | any>(null);
+  const [files, setFile] = useState<FileList | null | any>([]);
   const [images, setImages] = useState<string[]>([]);
   const [content, setContent] = React.useState("");
   const { uploadTrigger, uploadData, uploadMutation } = useUpload();
-
   const { userData } = useAuthorized();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFile(e.target.files);
+    if (e.target.files ) {   
+      const imagesUrl = Array.from(e.target.files)
+      setFile([...files, ...imagesUrl]);
       setContent(e.target.value);
-      console.log(e.target.value);
-      const imagesUrl = Array.from(e.target.files).map((image) => URL.createObjectURL(image));
-      setImages(imagesUrl);
+      const visibleImages = Array.from(e.target.files).map((image) => URL.createObjectURL(image));
+      setImages([...images, ...visibleImages]);
     }
   };
 
@@ -52,6 +50,7 @@ export const AddPost: React.FC<Props> = ({setAddedPost, addedPost}) => {
       setContent("");
       setText("");
       setImages([]);
+      setFile([]);
     }
   };
 

@@ -17,8 +17,11 @@ export const HomePage: React.FC = () => {
     setUpdated(loadMoreData);
   }, [loadMoreData]);
 
-  const loadPosts = () => {
-    mutatePosts().then(() => setUpdated(0));
+  const loadPosts = async () => {
+    await mutatePosts().then(() => {
+      setAddedPost([]);
+      setUpdated(0);
+    });
   };
 
   const concatData = addedPost.concat(dataPosts?.flat());
