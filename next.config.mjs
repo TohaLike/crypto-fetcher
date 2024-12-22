@@ -12,29 +12,12 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  // images: {
-  //   remotePatterns: [
-  //     {
-  //       protocol: 'http',
-  //       hostname: 'localhost',
-  //       port: '4000',
-  //       // pathname: '/account123/**',
-  //     },
-  //   ],
-  // },
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: '195.133.73.86',
-        port: '4000',
-        // pathname: '/images/**',
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '4000',
-        // pathname: '/images/**',
+        protocol: process.env.NEXT_PUBLIC_PROTOCOL,
+        hostname: process.env.NEXT_PUBLIC_HOSTNAME,
+        port:  process.env.NEXT_PUBLIC_PORT,
       },
     ],
   },
