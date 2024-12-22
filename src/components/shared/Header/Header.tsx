@@ -35,7 +35,7 @@ export const Header: React.FC = ({}) => {
           </Box>
           <div className={header.avatar}>
             <Link href={`/${userData?.id}`}>
-              {userData?.options?.image ? (
+              {userData?.options?.image?.length > 0 ? (
                 <Image
                   src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData.options?.image[0]?.path}`}
                   alt="avatar"

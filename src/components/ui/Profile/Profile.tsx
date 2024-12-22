@@ -10,7 +10,6 @@ import { ActionButton } from "../ActionButton/ActionButton";
 import { useUploadOptions } from "@/hooks/useUploadOptions";
 import { AddPost } from "@/components/shared/AddPost/AddPost";
 import { useLogout } from "@/hooks/useLogout";
-import { useRouter } from "next/navigation";
 
 import LogoutIcon from "@mui/icons-material/Logout";
 
@@ -59,8 +58,6 @@ export const Profile: React.FC<Props> = ({
   const { triggerUploadOptions, dataOptions } = useUploadOptions();
   const { logoutTrigger } = useLogout();
 
-  const router = useRouter();
-
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
@@ -76,7 +73,9 @@ export const Profile: React.FC<Props> = ({
 
     if (file) {
       formData.append("file", file);
-      await triggerUploadOptions(formData);
+      await triggerUploadOptions(formData).then((e) => {
+        window.location.reload();
+      });
       setFile(null);
       setImage("");
       setContent("");
@@ -127,13 +126,22 @@ export const Profile: React.FC<Props> = ({
                   <div className={profile.user__profile__photo}>
                     <label htmlFor="fileButton" className={profile.user__profile__upload}>
                       {!options?.image[0]?.path ? (
-                        <AddPhotoAlternateIcon sx={{ width: 50, height: 50 }} />
+                        <div
+                          className={profile.user__profile__upload__icon}
+                          style={{
+                            backgroundColor: `#${(options?.defaultColor || "1976d2") + "99"}`,
+                          }}
+                        >
+                          <AddPhotoAlternateIcon sx={{ width: 50, height: 50 }} />
+                        </div>
                       ) : (
                         <PostImage
                           src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0].path}`}
                           alt={`image-profile`}
                           rootHeight={200}
                           rootWidth={200}
+                          minWidth={200}
+                          minHeight={200}
                         />
                       )}
                     </label>

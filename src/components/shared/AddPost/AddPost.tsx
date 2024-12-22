@@ -20,7 +20,7 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
   const [files, setFile] = useState<FileList | null | any>([]);
   const [images, setImages] = useState<string[]>([]);
   const [content, setContent] = React.useState("");
-  const { uploadTrigger, uploadData, uploadMutation } = useUpload();
+  const { uploadTrigger, uploadData, uploadMutation, error } = useUpload();
 
   const { userData } = useContext<any>(SocketContext);
 
@@ -45,7 +45,7 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
       }
     }
 
-    if (text.trim()) {
+    if (text.trim() && !error) {
       formData.append("description", text.trim());
       uploadTrigger(formData).then((e) => {
         if (e?.data && setAddedPost) setAddedPost([...addedPost, e.data]);
@@ -103,10 +103,15 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
                   alt="avatar"
                   width={40}
                   height={40}
-                  style={{ objectFit: "cover", minWidth: "40px", borderRadius: "50%", marginRight: "16px" }}
+                  style={{
+                    objectFit: "cover",
+                    minWidth: "40px",
+                    borderRadius: "50%",
+                    marginRight: "16px",
+                  }}
                 />
               ) : (
-                <Avatar sx={{ bgcolor: "#1976d2", mr: "16px" }}>
+                <Avatar sx={{ bgcolor: `#${userData?.options?.defaultColor || "1976d2"}`, mr: "16px" }}>
                   {userData?.name[0].toUpperCase()}
                 </Avatar>
               )}
