@@ -15,7 +15,7 @@ export const PeoplesPage: React.FC = () => {
         }}
       >
         {usersData?.map((item, index) => (
-          <ProfileItem key={`user-profile-${index}`} name={item.name} userID={item.id} />
+          <ProfileItem key={`user-profile-${index}`} name={item.name} userID={item.id} options={item.options} />
         ))}
       </Box>
     </>

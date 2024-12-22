@@ -24,4 +24,15 @@ export default class UserService {
       console.log(e.response?.data?.message);
     }
   }
+
+  static async UploadOptions(file: any) {
+    try {
+      const response = await axiosWithAuth.post("/upload_options", file, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      return response.data;
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
+    }
+  }
 }

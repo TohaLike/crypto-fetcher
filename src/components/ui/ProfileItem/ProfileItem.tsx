@@ -16,9 +16,10 @@ import { MessageRoomIcon } from "@/components/icons/MessageRoomIcon";
 interface Props {
   name: string;
   userID: string;
+  options?: any;
 }
 
-export const ProfileItem: React.FC<Props> = ({ name, userID }) => {
+export const ProfileItem: React.FC<Props> = ({ name, userID, options }) => {
   const router = useRouter();
 
   const redirectToUserProfile = (event: any) => {
@@ -33,15 +34,33 @@ export const ProfileItem: React.FC<Props> = ({ name, userID }) => {
     return;
   };
 
+  console.log(options);
+
   return (
     <>
       <ListItem onClick={redirectToUserProfile} sx={{ cursor: "pointer" }}>
         <ListItemAvatar>
-          <Avatar
-            sx={{ bgcolor: "#1976d2", height: "54px", width: "54px", mr: "15px", fontSize: "24px" }}
-          >
-            {name[0].toUpperCase()}
-          </Avatar>
+          {options?.image ? (
+            <img
+              src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0].path}`}
+              alt="avatar"
+              width={54}
+              height={54}
+              style={{ objectFit: "cover", borderRadius: "50%", marginRight: "15px" }}
+            />
+          ) : (
+            <Avatar
+              sx={{
+                bgcolor: `#${options?.defaultColor ? options?.defaultColor : "1976d2"}`,
+                height: "54px",
+                width: "54px",
+                mr: "15px",
+                fontSize: "24px",
+              }}
+            >
+              {name[0].toUpperCase()}
+            </Avatar>
+          )}
         </ListItemAvatar>{" "}
         <Box sx={{ display: "grid", gridTemplateColumns: "auto" }}>
           <ListItemText

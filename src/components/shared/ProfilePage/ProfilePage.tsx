@@ -7,6 +7,7 @@ import { socket } from "@/socket";
 import { useParams } from "next/navigation";
 import { useSubscribe } from "@/hooks/useSubscribe";
 import { Profile } from "@/components/ui/Profile/Profile";
+import { useUserPosts } from "@/hooks/useUserPosts";
 
 export const ProfilePage: React.FC = () => {
   const { userData, isAuthorized } = useAuthorized();
@@ -14,8 +15,9 @@ export const ProfilePage: React.FC = () => {
   const router = useRouter();
   const params = useParams();
 
-  const { profileData } = useProfile({ params: params?.profile });
+  const { profileData, mutateProfile } = useProfile({ params: params?.profile });
   const { triggerSubscribe, subscribeData, mutatingSubscribe } = useSubscribe();
+  const { postsData, isLoadingPosts } = useUserPosts({ userId: params?.profile });
 
   const redirectToRoom = () => {
     router.push(`/messages/user?res=${params?.profile}`);
@@ -38,6 +40,9 @@ export const ProfilePage: React.FC = () => {
           email={profileData?.email}
           isAuthorized={isAuthorized}
           profileData={profileData}
+          posts={postsData}
+          options={profileData?.options}
+          mutateProfile={mutateProfile}
         />
       )}
 

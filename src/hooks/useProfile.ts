@@ -7,12 +7,13 @@ export const useProfile = ({ params }: any) => {
 
   // console.log(url)
 
-  const { data, isLoading, error } = useSWRImmutable([url], () => UserService.getProfile(url), {
+  const { data, isLoading, error, mutate } = useSWRImmutable([url], () => UserService.getProfile(url), {
     shouldRetryOnError: true,
   });
 
   return {
     profileData: data,
     profileLoading: isLoading,
+    mutateProfile: mutate,
   };
 };

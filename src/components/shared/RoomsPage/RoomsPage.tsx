@@ -44,9 +44,10 @@ export default function MessagesPage() {
           sortedChatRooms?.map((room, index) => (
             <ChatRoom
               key={"room: " + index}
-              name={room.usersId[0].name}
+              name={room.usersId[0]?.name}
               latestMessage={room.lastMessage?.messageText}
-              roomID={room.usersId[0]._id}
+              roomID={room.usersId[0]?._id}
+              image={room.usersId[0]?.options?.image}
             />
           ))
         ) : (

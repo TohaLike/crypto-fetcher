@@ -13,19 +13,6 @@ interface Props {
 }
 
 export const Post: React.FC<Props> = ({ owner, text, createdAt, images }) => {
-  // const cacheImages = async (srcArray: any) => {
-  //   const promises = await srcArray.map((src: any) => {
-  //     return new Promise((resolve, reject) => {
-  //       const image = new Image();
-  //       image.onload = () => resolve(image);
-  //       image.onerror = () => reject();
-  //       image.src = `${process.env.NEXT_PUBLIC_SERVER_URL}/${src.path}`;
-  //     });
-  //   });
-
-  //   await Promise.all(promises);
-  // };
-
   return (
     <>
       <ListItem
@@ -112,3 +99,18 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images }) => {
     </>
   );
 };
+
+
+
+  // const cacheImages = async (srcArray: any) => {
+  //   const promises = await srcArray.map((src: any) => {
+  //     return new Promise((resolve, reject) => {
+  //       const image = new Image();
+  //       image.onload = () => resolve(image);
+  //       image.onerror = () => reject();
+  //       image.src = `${process.env.NEXT_PUBLIC_SERVER_URL}/${src.path}`;
+  //     });
+  //   });
+
+  //   await Promise.all(promises);
+  // };

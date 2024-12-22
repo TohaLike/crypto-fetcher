@@ -32,4 +32,14 @@ export default class ImageService {
       console.log(e.response?.data?.message);
     }
   }
+
+  static async getUserPosts(url: string | any) {
+    try {
+      const response = await axiosWithAuth.get<PostResponse[]>(url);
+
+      return response.data;
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
+    }
+  }
 }
