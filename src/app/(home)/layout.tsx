@@ -26,7 +26,7 @@ export default function RootLayout({
     <section className={IBMPlexMono.className}>
       <Provider>
         <div className={home.header}>
-          {/* <Header /> */}
+          <Header />
         </div>
         <Container>
           <article className={home.article}>
