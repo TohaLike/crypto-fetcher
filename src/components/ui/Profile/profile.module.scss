@@ -13,6 +13,7 @@
       border-radius: 16px;
       padding: 10px;
       width: 100%;
+      position: relative;
     }
 
     &__photo {
@@ -61,7 +62,11 @@
   }
 }
 
-
+.logout {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
 
 .modal__photo {
   max-width: 200px;

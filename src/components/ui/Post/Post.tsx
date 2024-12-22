@@ -15,7 +15,6 @@ interface Props {
 }
 
 export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options }) => {
-  console.log(options);
   return (
     <>
       <ListItem
@@ -40,7 +39,7 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options 
                   style={{ objectFit: "cover", borderRadius: "50%" }}
                 />
               ) : (
-                <Avatar sx={{ bgcolor: `#${options.defaultColor || "1976d2"}` }}>
+                <Avatar sx={{ bgcolor: `#${options?.defaultColor || "1976d2"}` }}>
                   {owner && owner[0].toUpperCase()}
                 </Avatar>
               )}

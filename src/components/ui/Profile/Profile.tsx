@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, InputHTMLAttributes, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import profile from "./profile.module.scss";
 import { Avatar, Box, Button, Modal, Typography } from "@mui/material";
 import { Post } from "../Post/Post";
@@ -9,6 +9,10 @@ import { useUpload } from "@/hooks/useUpload";
 import { ActionButton } from "../ActionButton/ActionButton";
 import { useUploadOptions } from "@/hooks/useUploadOptions";
 import { AddPost } from "@/components/shared/AddPost/AddPost";
+import { useLogout } from "@/hooks/useLogout";
+import { useRouter } from "next/navigation";
+
+import LogoutIcon from "@mui/icons-material/Logout";
 
 interface Props {
   name?: string;
@@ -53,6 +57,9 @@ export const Profile: React.FC<Props> = ({
   const [loadNewImage, setLoadNewImage] = useState<any>([]);
 
   const { triggerUploadOptions, dataOptions } = useUploadOptions();
+  const { logoutTrigger } = useLogout();
+
+  const router = useRouter();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -76,8 +83,6 @@ export const Profile: React.FC<Props> = ({
     }
   };
 
-  // console.log(loadNewImage);
-
   return (
     <>
       <Box
@@ -91,7 +96,6 @@ export const Profile: React.FC<Props> = ({
           m: "auto",
         }}
       >
-        {/* <button onClick={() => mutateProfile()}>test</button> */}
         <form method="post" action="/upload_options" encType="multipart/form-data">
           <input
             className={profile.input}
@@ -158,6 +162,20 @@ export const Profile: React.FC<Props> = ({
                     >
                       Subscriptions
                     </Typography>
+                  </div>
+                  <div className={profile.logout}>
+                    <ActionButton
+                      icon={<LogoutIcon />}
+                      onClick={async () => {
+                        await logoutTrigger().then(() => {
+                          window.location.replace("/");
+                        });
+                      }}
+                      type="button"
+                      minWidth={"30px"}
+                      minHeight={"30px"}
+                      bgcolor="transparent"
+                    />
                   </div>
                 </div>
               </>
