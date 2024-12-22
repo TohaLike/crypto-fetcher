@@ -97,9 +97,9 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
             }}
           >
             <Box display={"flex"} alignItems={"flex-end"} p={"0 0 5px"}>
-              {userData.options.image.length > 0 ? (
+              {userData?.options?.image?.length > 0 ? (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData.options.image[0].path}`}
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData?.options?.image[0]?.path}`}
                   alt="avatar"
                   width={40}
                   height={40}
