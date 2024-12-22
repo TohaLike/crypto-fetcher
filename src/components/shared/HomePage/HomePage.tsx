@@ -60,6 +60,7 @@ export const HomePage: React.FC = () => {
               text={e?.text}
               createdAt={e?.createdAt}
               images={e?.images?.flat()}
+              options={e?.owner?.options}
             />
           ))}
 

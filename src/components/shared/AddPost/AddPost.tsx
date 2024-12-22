@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useContext, useState } from "react";
 import addpost from "./addpost.module.scss";
 import { ActionButton, PostImage, PostInput } from "@/components/ui";
 import { Avatar, Box, Divider } from "@mui/material";
@@ -7,23 +7,26 @@ import { ImageIcon } from "@/components/icons/ImageIcon";
 import { useAuthorized } from "@/hooks/useAuthorized";
 import { useUpload } from "@/hooks/useUpload";
 import { CircularProgress } from "@mui/material";
+import { SocketContext } from "@/app/(home)/provider";
+import Image from "next/image";
 
 interface Props {
   setAddedPost?: React.Dispatch<React.SetStateAction<any>>;
   addedPost?: any;
 }
 
-export const AddPost: React.FC<Props> = ({setAddedPost, addedPost}) => {
+export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
   const [text, setText] = useState<string>("");
   const [files, setFile] = useState<FileList | null | any>([]);
   const [images, setImages] = useState<string[]>([]);
   const [content, setContent] = React.useState("");
   const { uploadTrigger, uploadData, uploadMutation } = useUpload();
-  const { userData } = useAuthorized();
+
+  const { userData } = useContext<any>(SocketContext);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files ) {   
-      const imagesUrl = Array.from(e.target.files)
+    if (e.target.files) {
+      const imagesUrl = Array.from(e.target.files);
       setFile([...files, ...imagesUrl]);
       setContent(e.target.value);
       const visibleImages = Array.from(e.target.files).map((image) => URL.createObjectURL(image));
@@ -94,9 +97,19 @@ export const AddPost: React.FC<Props> = ({setAddedPost, addedPost}) => {
             }}
           >
             <Box display={"flex"} alignItems={"flex-end"} p={"0 0 5px"}>
-              <Avatar sx={{ bgcolor: "#1976d2", mr: "16px" }}>
-                {userData?.name[0].toUpperCase()}
-              </Avatar>
+              {userData.options.image.length > 0 ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData.options.image[0].path}`}
+                  alt="avatar"
+                  width={40}
+                  height={40}
+                  style={{ objectFit: "cover", minWidth: "40px", borderRadius: "50%", marginRight: "16px" }}
+                />
+              ) : (
+                <Avatar sx={{ bgcolor: "#1976d2", mr: "16px" }}>
+                  {userData?.name[0].toUpperCase()}
+                </Avatar>
+              )}
               <PostInput text={text} setText={setText} />
             </Box>
 
@@ -129,7 +142,9 @@ export const AddPost: React.FC<Props> = ({setAddedPost, addedPost}) => {
               </label>
               <ActionButton
                 disabled={!uploadMutation ? false : true}
-                title={uploadMutation ? <CircularProgress size={"20px"} sx={{ zIndex: 100 }} /> : "Post"}
+                title={
+                  uploadMutation ? <CircularProgress size={"20px"} sx={{ zIndex: 100 }} /> : "Post"
+                }
                 type="submit"
                 onClick={handleUpload}
                 maxWidth={"70px"}

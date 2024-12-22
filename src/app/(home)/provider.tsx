@@ -6,6 +6,7 @@ import { createContext, useEffect, useState } from "react";
 interface Props {
   isConnected: boolean;
   transport: string;
+  userData: any;
 }
 
 export const SocketContext = createContext<Props | null>(null);
@@ -51,7 +52,7 @@ export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      <SocketContext.Provider value={{ isConnected, transport }}>
+      <SocketContext.Provider value={{ isConnected, transport, userData }}>
         {userData && children}
       </SocketContext.Provider>
     </>

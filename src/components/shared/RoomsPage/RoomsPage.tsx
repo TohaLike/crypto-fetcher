@@ -47,7 +47,7 @@ export default function MessagesPage() {
               name={room.usersId[0]?.name}
               latestMessage={room.lastMessage?.messageText}
               roomID={room.usersId[0]?._id}
-              image={room.usersId[0]?.options?.image}
+              options={room.usersId[0]?.options}
             />
           ))
         ) : (

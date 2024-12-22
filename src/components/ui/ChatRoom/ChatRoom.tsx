@@ -17,10 +17,10 @@ interface Props {
   name: string;
   latestMessage: string;
   roomID: string;
-  image?: any;
+  options?: any;
 }
 
-export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID, image }) => {
+export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID, options }) => {
   const router = useRouter();
 
   const redirectToRoom = () => {
@@ -29,13 +29,15 @@ export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID, image }
     return;
   };
 
+  console.log(options)
+
   return (
     <>
       <ListItem onClick={redirectToRoom} sx={{ cursor: "pointer" }}>
         <ListItemAvatar>
-          {image ? (
+          {options?.image?.length > 0 ? (
             <Image
-              src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${image[0].path}`}
+              src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options.image[0]?.path}`}
               alt="avatar"
               width={50}
               height={50}
@@ -43,7 +45,13 @@ export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID, image }
               style={{ objectFit: "cover", borderRadius: "50%" }}
             />
           ) : (
-            <Avatar sx={{ bgcolor: "#1976d2", width: "50px", height: "50px" }}>
+            <Avatar
+              sx={{
+                bgcolor: `#${options?.defaultColor || "1976d2"}`,
+                width: "50px",
+                height: "50px",
+              }}
+            >
               {name && name[0]?.toUpperCase()}
             </Avatar>
           )}

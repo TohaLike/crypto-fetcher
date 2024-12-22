@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { useAuthorized } from "@/hooks/useAuthorized";
 import { useProfile } from "@/hooks/useProfile";
 import { useRouter } from "next/navigation";
@@ -8,9 +8,10 @@ import { useParams } from "next/navigation";
 import { useSubscribe } from "@/hooks/useSubscribe";
 import { Profile } from "@/components/ui/Profile/Profile";
 import { useUserPosts } from "@/hooks/useUserPosts";
+import { SocketContext } from "@/app/(home)/provider";
 
 export const ProfilePage: React.FC = () => {
-  const { userData, isAuthorized } = useAuthorized();
+  const { userData } = useContext<any>(SocketContext);
 
   const router = useRouter();
   const params = useParams();
@@ -38,7 +39,7 @@ export const ProfilePage: React.FC = () => {
         <Profile
           name={profileData?.name}
           email={profileData?.email}
-          isAuthorized={isAuthorized}
+          isAuthorized={userData.isActivated}
           profileData={profileData}
           posts={postsData}
           options={profileData?.options}

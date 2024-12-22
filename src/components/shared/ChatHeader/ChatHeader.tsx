@@ -5,6 +5,7 @@ import Avatar from "@mui/material/Avatar";
 import Link from "next/link";
 import { LinkButton } from "@/components/ui/LinkButton/LinkButton";
 import { BackIcon } from "@/components/icons/BackIcon";
+import Image from "next/image";
 
 interface Props {
   userData?: any;
@@ -50,14 +51,28 @@ export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
               href={`/messages`}
               cursor={"pointer"}
             />
-
-            <Avatar
-              component={Link}
-              href={`/${userData?.id}`}
-              sx={{ width: 40, height: 40, bgcolor: "#1976d2", textDecoration: "none" }}
-            >
-              {userData?.name[0].toUpperCase()}
-            </Avatar>
+            {userData.options?.image?.length > 0 ? (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData.options.image[0].path}`}
+                alt="avatar"
+                width={40}
+                height={40}
+                style={{ objectFit: "cover", borderRadius: "50%" }}
+              />
+            ) : (
+              <Avatar
+                component={Link}
+                href={`/${userData?.id}`}
+                sx={{
+                  width: 40,
+                  height: 40,
+                  bgcolor: `#${userData?.options?.defaultColor || "1976d2"}`,
+                  textDecoration: "none",
+                }}
+              >
+                {userData?.name[0].toUpperCase()}
+              </Avatar>
+            )}
           </IconButton>
           <Box
             display={"flex"}

@@ -76,7 +76,7 @@ export const Profile: React.FC<Props> = ({
     }
   };
 
-  console.log(loadNewImage);
+  // console.log(loadNewImage);
 
   return (
     <>
@@ -91,7 +91,7 @@ export const Profile: React.FC<Props> = ({
           m: "auto",
         }}
       >
-        <button onClick={() => mutateProfile()}>test</button>
+        {/* <button onClick={() => mutateProfile()}>test</button> */}
         <form method="post" action="/upload_options" encType="multipart/form-data">
           <input
             className={profile.input}
@@ -176,6 +176,7 @@ export const Profile: React.FC<Props> = ({
                 text={post.text}
                 createdAt={post.createdAt}
                 images={post.images}
+                options={post.owner.options}
               />
             ))}
         </div>

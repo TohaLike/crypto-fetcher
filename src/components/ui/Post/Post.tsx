@@ -4,15 +4,18 @@ import post from "./post.module.scss";
 import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
 import { PostImage } from "../PostImage/PostImage";
 import { timeCreated } from "@/helper/timeCreated";
+import Image from "next/image";
 
 interface Props {
   owner?: string | null | undefined;
   text?: string;
   createdAt?: string;
   images?: string[] | any;
+  options?: any;
 }
 
-export const Post: React.FC<Props> = ({ owner, text, createdAt, images }) => {
+export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options }) => {
+  console.log(options);
   return (
     <>
       <ListItem
@@ -28,7 +31,19 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images }) => {
         <div className={post.container}>
           <div className={post.header}>
             <ListItemAvatar sx={{ minWidth: "40px", mr: "5px" }}>
-              <Avatar sx={{ bgcolor: "#1976d2" }}>{owner && owner[0].toUpperCase()}</Avatar>
+              {options?.image ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0].path}`}
+                  alt="avatar"
+                  width={40}
+                  height={40}
+                  style={{ objectFit: "cover", borderRadius: "50%" }}
+                />
+              ) : (
+                <Avatar sx={{ bgcolor: `#${options.defaultColor || "1976d2"}` }}>
+                  {owner && owner[0].toUpperCase()}
+                </Avatar>
+              )}
             </ListItemAvatar>
 
             <Box sx={{ display: "grid", gridTemplateColumns: "auto" }}>
@@ -100,17 +115,15 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images }) => {
   );
 };
 
+// const cacheImages = async (srcArray: any) => {
+//   const promises = await srcArray.map((src: any) => {
+//     return new Promise((resolve, reject) => {
+//       const image = new Image();
+//       image.onload = () => resolve(image);
+//       image.onerror = () => reject();
+//       image.src = `${process.env.NEXT_PUBLIC_SERVER_URL}/${src.path}`;
+//     });
+//   });
 
-
-  // const cacheImages = async (srcArray: any) => {
-  //   const promises = await srcArray.map((src: any) => {
-  //     return new Promise((resolve, reject) => {
-  //       const image = new Image();
-  //       image.onload = () => resolve(image);
-  //       image.onerror = () => reject();
-  //       image.src = `${process.env.NEXT_PUBLIC_SERVER_URL}/${src.path}`;
-  //     });
-  //   });
-
-  //   await Promise.all(promises);
-  // };
+//   await Promise.all(promises);
+// };

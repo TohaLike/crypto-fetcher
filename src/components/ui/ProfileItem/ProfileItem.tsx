@@ -34,15 +34,13 @@ export const ProfileItem: React.FC<Props> = ({ name, userID, options }) => {
     return;
   };
 
-  console.log(options);
-
   return (
     <>
       <ListItem onClick={redirectToUserProfile} sx={{ cursor: "pointer" }}>
         <ListItemAvatar>
-          {options?.image ? (
+          {options?.image.length > 0 ? (
             <img
-              src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0].path}`}
+              src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]?.path}`}
               alt="avatar"
               width={54}
               height={54}
