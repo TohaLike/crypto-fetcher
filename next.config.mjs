@@ -23,17 +23,16 @@ const nextConfig = {
   //   ],
   // },
   images: {
-    // domains: ['http://localhost:4000', 'http://195.133.73.86:3000/'], // Указываем разрешенные домены для внешних изображений
+    domains: [process.env.NEXT_PUBLIC_SERVER_URL], // Указываем разрешенные домены для внешних изображений
     remotePatterns: [
-      // {
-      //   protocol: 'http',
-      //   hostname: 'localhost',
-      //   port: '4000',
-      //   pathname: '/images/**',
-      // },
       {
         protocol: 'http',
-        hostname: '195.133.73.86',
+        hostname: "195.133.73.86:4000",
+        // pathname: '/images/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
         port: '4000',
         // pathname: '/images/**',
       },
