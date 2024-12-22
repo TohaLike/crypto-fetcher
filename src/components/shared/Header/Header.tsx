@@ -48,7 +48,7 @@ export const Header: React.FC = ({}) => {
                   sx={{
                     width: 40,
                     height: 40,
-                    bgcolor: `#${userData.options.defaultColor || "1976d2"}`,
+                    bgcolor: `#${userData?.options?.defaultColor || "1976d2"}`,
                   }}
                 >
                   {userData?.name[0].toUpperCase()}
