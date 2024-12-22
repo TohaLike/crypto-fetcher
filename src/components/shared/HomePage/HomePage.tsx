@@ -35,7 +35,7 @@ export const HomePage: React.FC = () => {
   return (
     <>
       <div className={homepage.container}>
-        <AddPost setAddedPost={setAddedPost} addedPost={addedPost} />
+        {/* <AddPost setAddedPost={setAddedPost} addedPost={addedPost} />
 
         {updated > 0 && (
           <ActionButton
@@ -62,7 +62,7 @@ export const HomePage: React.FC = () => {
               images={e?.images?.flat()}
               options={e?.owner?.options}
             />
-          ))}
+          ))} */}
 
         <div ref={error ? null : intersectionRef}>end</div>
       </div>
