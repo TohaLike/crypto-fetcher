@@ -8,7 +8,7 @@ export const useRegistration = () => {
     (url, { arg }: { arg: object }) => AuthService.registration(arg),
     {
       onSuccess: () => {
-        mutate(() => true);
+        window.location.reload();
       },
     }
   );

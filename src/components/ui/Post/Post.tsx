@@ -30,7 +30,7 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options 
         <div className={post.container}>
           <div className={post.header}>
             <ListItemAvatar sx={{ minWidth: "40px", mr: "5px" }}>
-              {options?.image ? (
+              {options?.image?.length > 0 ? (
                 <Image
                   src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]?.path}`}
                   alt="avatar"
