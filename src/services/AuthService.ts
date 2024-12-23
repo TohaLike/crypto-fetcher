@@ -3,8 +3,11 @@ import { AuthResponse } from "@/models/response/AuthResponse";
 import { AxiosResponse } from "axios";
 
 export default class AuthService {
-  static async login(data: object): Promise<AxiosResponse<AuthResponse>> {
-    return axiosWithAuth.post<AuthResponse>("/login", data);
+  static async login(data: object) {
+    const response = await axiosWithAuth.post<AuthResponse>("/login", data);
+    localStorage.setItem("token", response.data.accessToken);
+    
+    return response.data
   }
 
   static async registration(data: object): Promise<AxiosResponse<AuthResponse>> {
