@@ -1,12 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import userprofile from "./userprofile.module.scss";
-import { Avatar, Box, Typography } from "@mui/material";
-import { ActionButton, Post, PostImage } from "@/components/ui";
+import { Box, Typography } from "@mui/material";
+import { ActionButton, FriendsChip, Post, PostImage } from "@/components/ui";
 import { useSubscribe } from "@/hooks/useSubscribe";
 import { useParams, useRouter } from "next/navigation";
 import { socket } from "@/socket";
-import Link from "next/link";
 import { useSubscribeNews } from "@/hooks/useSubscribeNews";
 
 interface Props {
@@ -17,6 +16,7 @@ interface Props {
   options?: any;
   subscribers?: any;
   checkSubscribe?: string;
+  following?: any;
 }
 
 function ProfileButton({ onClick, title, type, disabled }: any) {
@@ -48,6 +48,7 @@ export const UserProfile: React.FC<Props> = ({
   options,
   subscribers,
   checkSubscribe,
+  following,
 }) => {
   const [sub, setSub] = useState<boolean>(false);
 
@@ -68,20 +69,20 @@ export const UserProfile: React.FC<Props> = ({
     }).then((e) => {
       setSub(true);
     });
-    // await triggerNews({
-    //   userId: userId,
-    // });
+    await triggerNews({
+      userId: userId,
+    });
     return;
   };
 
   function AddFriend() {
-    if (sub || checkSubscribe) return <ProfileButton title="Вы подписаны" type="button" disabled={true} />
+    if (sub || checkSubscribe)
+      return <ProfileButton title="Вы подписаны" type="button" disabled={true} />;
 
-    return (
-      <ProfileButton title={"Добавить в друзья"} type="button" onClick={subscribe} />
-    );
+    return <ProfileButton title={"Добавить в друзья"} type="button" onClick={subscribe} />;
   }
-  console.log(subscribeData?.checkSubscribe);
+
+  // console.log(following?.newsFrom);
 
   return (
     <>
@@ -136,46 +137,22 @@ export const UserProfile: React.FC<Props> = ({
                 {email}
               </Typography>
             </div>
-            <Box component={Link} href={`${userId}/subscriptions`} sx={{ textDecoration: "none" }}>
-              {subscribers && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    border: "1px solid #282828",
-                    borderRadius: "50px",
-                    p: "5px",
-                    gap: "5px",
-                    width: "max-content",
-                  }}
-                >
-                  {subscribers?.map((e: any, i: number) => (
-                    <div key={`users-${i}-${e.name}-${e.email}`}>
-                      <Avatar
-                        sx={{
-                          bgcolor: `#${e.options?.defaultColor || "1976d2"}`,
-                          width: "30px",
-                          height: "30px",
-                          border: "1px solid #282828",
-                          fontSize: "14px",
-                        }}
-                      >
-                        {e.name[0]?.toUpperCase()}
-                      </Avatar>
-                    </div>
-                  ))}
-                  <Typography
-                    variant="h2"
-                    fontSize={"16px"}
-                    fontFamily={"unset"}
-                    fontStyle={"italic"}
-                    sx={{ color: "#00EAFF" }}
-                  >
-                    Subs
-                  </Typography>
-                </Box>
-              )}
+
+            <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
+              <FriendsChip
+                title={"Followers"}
+                path={"subscriptions"}
+                subscribers={subscribers}
+                userId={userId}
+              />
+              <FriendsChip
+                title={"Following"}
+                path={"subscriptions"}
+                subscribers={following?.newsFrom}
+                userId={userId}
+              />
             </Box>
+
             <Box sx={{ display: "flex", gap: "5px" }}>
               <ProfileButton title="Написать сообщение" type="button" onClick={redirectToRoom} />
               <AddFriend />

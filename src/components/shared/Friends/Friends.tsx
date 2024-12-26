@@ -1,5 +1,5 @@
 "use client";
-import { ProfileItem } from "@/components/ui/ProfileItem/ProfileItem";
+import { AddFriendItem } from "@/components/ui";
 import { useSubscription } from "@/hooks/useSubscription";
 
 export const Friends: React.FC = () => {
@@ -8,7 +8,7 @@ export const Friends: React.FC = () => {
   return (
     <div>
       {subscribtionsData?.subscribers?.map((item: any, index: number) => (
-        <ProfileItem
+        <AddFriendItem
           key={`user-profile-${index}`}
           name={item.name}
           userID={item._id}

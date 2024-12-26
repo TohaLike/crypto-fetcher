@@ -14,6 +14,7 @@ interface Props {
   onClick?: (action: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   icon?: React.ReactNode;
   startIcon?: React.ReactNode;
+  borderRadius?: string | number;
   endIcon?: React.ReactNode;
   [props: string]: any;
 }
@@ -31,6 +32,7 @@ export const ActionButton: React.FC<Props> = ({
   icon,
   startIcon,
   endIcon,
+  borderRadius,
   ...props
 }) => {
   return (
@@ -50,7 +52,7 @@ export const ActionButton: React.FC<Props> = ({
           fontSize: "17px",
           fontWeight: "bold",
           textTransform: "unset",
-          borderRadius: "32px",
+          borderRadius: borderRadius || "32px",
           ...props,
           "&.MuiButton-root": {
             p: padding || 0,

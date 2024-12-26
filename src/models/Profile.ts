@@ -9,4 +9,5 @@ export interface Profile {
   options: any;
   subscribers: any;
   checkSubscribe: any;
+  following: any;
 }

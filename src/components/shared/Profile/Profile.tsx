@@ -1,16 +1,13 @@
 "use client";
 import React, { ChangeEvent, useState } from "react";
 import profile from "./profile.module.scss";
-import { Avatar, Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { useUpload } from "@/hooks/useUpload";
 import { useUploadOptions } from "@/hooks/useUploadOptions";
 import { AddPost } from "@/components/shared/AddPost/AddPost";
 import { useLogout } from "@/hooks/useLogout";
-import { ActionButton, Post, PostImage } from "@/components/ui";
-
+import { ActionButton, FriendsChip, Post, PostImage } from "@/components/ui";
 import LogoutIcon from "@mui/icons-material/Logout";
-import Link from "next/link";
 
 interface Props {
   userId?: string;
@@ -19,6 +16,7 @@ interface Props {
   posts?: any;
   options?: any;
   subscribers?: any;
+  following?: any;
 }
 
 function ProfileButton({ onClick, title, type, mutateProfile }: any) {
@@ -39,7 +37,15 @@ function ProfileButton({ onClick, title, type, mutateProfile }: any) {
   );
 }
 
-export const Profile: React.FC<Props> = ({ userId, name, email, subscribers, posts, options }) => {
+export const Profile: React.FC<Props> = ({
+  userId,
+  name,
+  email,
+  subscribers,
+  posts,
+  options,
+  following,
+}) => {
   const [file, setFile] = useState<File | null>(null);
   const [image, setImage] = useState<string>("");
   const [content, setContent] = useState<string>("");
@@ -151,51 +157,22 @@ export const Profile: React.FC<Props> = ({ userId, name, email, subscribers, pos
                       {email}
                     </Typography>
                   </div>
-                  <Box
-                    component={Link}
-                    href={`${userId}/subscriptions`}
-                    className={profile.subscriptions}
-                    sx={{ textDecoration: "none" }}
-                  >
-                    {subscribers && (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          border: "1px solid #282828",
-                          borderRadius: "50px",
-                          p: "5px",
-                          gap: "5px",
-                          width: "max-content",
-                        }}
-                      >
-                        {subscribers?.map((e: any, i: number) => (
-                          <div key={`users-${i}-${e.name}-${e.email}`}>
-                            <Avatar
-                              sx={{
-                                bgcolor: `#${e.options?.defaultColor || "1976d2"}`,
-                                width: "30px",
-                                height: "30px",
-                                border: "1px solid #282828",
-                                fontSize: "14px",
-                              }}
-                            >
-                              {e.name[0]?.toUpperCase()}
-                            </Avatar>
-                          </div>
-                        ))}
-                        <Typography
-                          variant="h2"
-                          fontSize={"16px"}
-                          fontFamily={"unset"}
-                          fontStyle={"italic"}
-                          sx={{ color: "#00EAFF" }}
-                        >
-                          Subs
-                        </Typography>
-                      </Box>
-                    )}
+
+                  <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                    <FriendsChip
+                      title={"Followers"}
+                      path={"followers"}
+                      subscribers={subscribers}
+                      userId={userId}
+                    />
+                    <FriendsChip
+                      title={"Following"}
+                      path={"following"}
+                      subscribers={following?.newsFrom}
+                      userId={userId}
+                    />
                   </Box>
+
                   <div className={profile.logout}>
                     <ActionButton
                       icon={<LogoutIcon />}
