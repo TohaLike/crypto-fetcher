@@ -7,3 +7,6 @@ export { ChatRoom } from "./ChatRoom/ChatRoom";
 export { Message } from "./Message/Message";
 export { PostInput } from "@/components/ui/PostInput/PostInput";
 export { PostImage } from "@/components/ui/PostImage/PostImage";
+export { Post } from "@/components/ui/Post/Post";
+export { LinkButton } from "@/components/ui/LinkButton/LinkButton";
+

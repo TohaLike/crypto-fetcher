@@ -1,11 +1,11 @@
 import axiosWithAuth from "@/http";
 import { IUser } from "@/models/IUser";
-import { AxiosResponse } from "axios";
+import { Profile } from "@/models/Profile";
 
 export default class UserService {
   static async getProfile(url: any) {
     try {
-      const response = await axiosWithAuth.get<IUser>(url);
+      const response = await axiosWithAuth.get<Profile>(url);
       return response.data;
     } catch (e) {
       console.log(e);
@@ -13,12 +13,51 @@ export default class UserService {
   }
 
   static async getUsers() {
-    return axiosWithAuth.get<IUser[]>("/users");
+    return axiosWithAuth.get<Profile[]>("/users");
+  }
+
+  static async getFriends(url: string) {
+    try {
+      const response = await axiosWithAuth.get(url);
+
+      return response.data;
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
+    }
+  }
+
+  static async getSubscriptions(url: string) {
+    try {
+      const response = await axiosWithAuth.get(url);
+
+      return response.data
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
+    }
+  }
+
+  static async acceptFriend(data: any) {
+    try {
+      const response = await axiosWithAuth.post("/friends/accept", data);
+
+      return response.data
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
+    }
   }
 
   static async SubscribeUser(userId: any) {
     try {
       const response = await axiosWithAuth.post("/subscribe", userId);
+      return response.data;
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
+    }
+  }
+
+  static async SubscribeNews(userId: any) {
+    try {
+      const response = await axiosWithAuth.post("/subscribe/news", userId);
       return response.data;
     } catch (e: any) {
       console.log(e.response?.data?.message);

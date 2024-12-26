@@ -6,56 +6,44 @@ import { useRouter } from "next/navigation";
 import { socket } from "@/socket";
 import { useParams } from "next/navigation";
 import { useSubscribe } from "@/hooks/useSubscribe";
-import { Profile } from "@/components/ui/Profile/Profile";
+import { Profile } from "@/components/shared/Profile/Profile";
 import { useUserPosts } from "@/hooks/useUserPosts";
 import { SocketContext } from "@/app/(home)/provider";
+import { UserProfile } from "@/components/shared/UserProfile/UserProfile";
 
 export const ProfilePage: React.FC = () => {
   const { userData } = useContext<any>(SocketContext);
 
-  const router = useRouter();
   const params = useParams();
 
   const { profileData, mutateProfile } = useProfile({ params: params?.profile });
-  const { triggerSubscribe, subscribeData, mutatingSubscribe } = useSubscribe();
   const { postsData, isLoadingPosts } = useUserPosts({ userId: params?.profile });
 
-  const redirectToRoom = () => {
-    router.push(`/messages/user?res=${params?.profile}`);
-    socket.emit("join__room", params?.profile);
-    return;
-  };
-
-  const subscribe = async () => {
-    await triggerSubscribe({
-      userId: profileData?.id,
-    });
-    return;
-  };
+  console.log(profileData?.checkSubscribe)
 
   return (
     <>
       {userData?.id === params?.profile && (
         <Profile
+          userId={userData?.id}
           name={profileData?.name}
           email={profileData?.email}
-          isAuthorized={userData.isActivated}
-          profileData={profileData}
           posts={postsData}
           options={profileData?.options}
-          mutateProfile={mutateProfile}
+          subscribers={userData?.subscribers?.subscribers}
         />
       )}
 
       {userData?.id !== params?.profile && (
-        <div>
-          <h2>Имя: {profileData?.name}</h2>
-          <p>Создан: {profileData?.createdAt}</p>
-          <p>Почта: {profileData?.email}</p>
-
-          <button onClick={redirectToRoom}>Начать беседу</button>
-          <button onClick={subscribe}>Добавить в друзья</button>
-        </div>
+        <UserProfile
+          userId={profileData?.id}
+          name={profileData?.name}
+          email={profileData?.email}
+          posts={postsData}
+          options={profileData?.options}
+          subscribers={profileData?.subscribers?.subscribers}
+          checkSubscribe={profileData?.checkSubscribe}
+        />
       )}
     </>
   );

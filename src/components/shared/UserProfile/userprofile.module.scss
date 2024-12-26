@@ -1,0 +1,96 @@
+.input[type="file"] {
+  display: none;
+}
+
+.user {
+  &__profile {
+    &__info {
+      display: flex;
+      align-items: center;
+      column-gap: 10px;
+      background-color: #0e0e0e;
+      border-radius: 16px;
+      padding: 10px;
+      width: 100%;
+      position: relative;
+    }
+
+    &__photo {
+      display: flex;
+      box-sizing: border-box;
+      // justify-content: center;
+      border-radius: 200px;
+      overflow: hidden;
+      max-width: 200px;
+      max-height: 200px;
+      user-select: none;
+    }
+
+    &__avatar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    &__surname {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      row-gap: 10px;
+      width: 100%;
+    }
+
+    &__upload {
+      cursor: pointer;
+      transition: 0.2s;
+      border-radius: 50%;
+      // padding: 5px;
+      box-sizing: border-box;
+      min-width: 52px;
+      min-height: 52px;
+      &__icon {
+        height: 200px;
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+      }
+    }
+
+    &__upload:hover {
+      background-color: #0e0e0e21;
+    }
+
+    &__buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 10px;
+    }
+  }
+}
+
+.users {
+  
+}
+
+.logout {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.modal__photo {
+  max-width: 200px;
+  min-height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.subscriptions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}

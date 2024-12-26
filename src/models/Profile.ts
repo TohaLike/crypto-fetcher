@@ -1,4 +1,4 @@
-export interface IUser {
+export interface Profile {
   name: string;
   email: string;
   date: object;
@@ -6,4 +6,7 @@ export interface IUser {
   id: string;
   createdAt: string;
   profileVerification: boolean;
+  options: any;
+  subscribers: any;
+  checkSubscribe: any;
 }

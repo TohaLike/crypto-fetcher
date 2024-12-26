@@ -34,7 +34,7 @@ export default class ImageService {
     }
   }
 
-  static async getUserPosts(url: string | any) {
+  static async getUserPosts(url: string) {
     try {
       const response = await axiosWithAuth.get<PostResponse[]>(url);
 

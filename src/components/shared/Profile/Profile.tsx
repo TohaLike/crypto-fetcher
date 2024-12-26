@@ -2,25 +2,23 @@
 import React, { ChangeEvent, useState } from "react";
 import profile from "./profile.module.scss";
 import { Avatar, Box, Button, Modal, Typography } from "@mui/material";
-import { Post } from "../Post/Post";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { PostImage } from "../PostImage/PostImage";
 import { useUpload } from "@/hooks/useUpload";
-import { ActionButton } from "../ActionButton/ActionButton";
 import { useUploadOptions } from "@/hooks/useUploadOptions";
 import { AddPost } from "@/components/shared/AddPost/AddPost";
 import { useLogout } from "@/hooks/useLogout";
+import { ActionButton, Post, PostImage } from "@/components/ui";
 
 import LogoutIcon from "@mui/icons-material/Logout";
+import Link from "next/link";
 
 interface Props {
+  userId?: string;
   name?: string;
   email?: string;
-  isAuthorized?: boolean;
-  profileData?: any;
   posts?: any;
   options?: any;
-  mutateProfile?: any;
+  subscribers?: any;
 }
 
 function ProfileButton({ onClick, title, type, mutateProfile }: any) {
@@ -41,15 +39,7 @@ function ProfileButton({ onClick, title, type, mutateProfile }: any) {
   );
 }
 
-export const Profile: React.FC<Props> = ({
-  name,
-  email,
-  isAuthorized,
-  profileData,
-  posts,
-  options,
-  mutateProfile,
-}) => {
+export const Profile: React.FC<Props> = ({ userId, name, email, subscribers, posts, options }) => {
   const [file, setFile] = useState<File | null>(null);
   const [image, setImage] = useState<string>("");
   const [content, setContent] = useState<string>("");
@@ -161,16 +151,51 @@ export const Profile: React.FC<Props> = ({
                       {email}
                     </Typography>
                   </div>
-                  <div className={profile.subscriptions}>
-                    <Typography
-                      variant="h2"
-                      fontSize={"16px"}
-                      fontFamily={"unset"}
-                      textAlign={"center"}
-                    >
-                      Subscriptions
-                    </Typography>
-                  </div>
+                  <Box
+                    component={Link}
+                    href={`${userId}/subscriptions`}
+                    className={profile.subscriptions}
+                    sx={{ textDecoration: "none" }}
+                  >
+                    {subscribers && (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          border: "1px solid #282828",
+                          borderRadius: "50px",
+                          p: "5px",
+                          gap: "5px",
+                          width: "max-content",
+                        }}
+                      >
+                        {subscribers?.map((e: any, i: number) => (
+                          <div key={`users-${i}-${e.name}-${e.email}`}>
+                            <Avatar
+                              sx={{
+                                bgcolor: `#${e.options?.defaultColor || "1976d2"}`,
+                                width: "30px",
+                                height: "30px",
+                                border: "1px solid #282828",
+                                fontSize: "14px",
+                              }}
+                            >
+                              {e.name[0]?.toUpperCase()}
+                            </Avatar>
+                          </div>
+                        ))}
+                        <Typography
+                          variant="h2"
+                          fontSize={"16px"}
+                          fontFamily={"unset"}
+                          fontStyle={"italic"}
+                          sx={{ color: "#00EAFF" }}
+                        >
+                          Subs
+                        </Typography>
+                      </Box>
+                    )}
+                  </Box>
                   <div className={profile.logout}>
                     <ActionButton
                       icon={<LogoutIcon />}

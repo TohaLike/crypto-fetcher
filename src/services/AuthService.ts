@@ -1,6 +1,6 @@
 import axiosWithAuth, { API_URL } from "@/http";
 import { AuthResponse } from "@/models/response/AuthResponse";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export default class AuthService {
   static async login(data: object) {
@@ -22,7 +22,7 @@ export default class AuthService {
 
   static async checkAuth() {
     try {
-      const response = await axiosWithAuth.get<AuthResponse>(`${API_URL}/refresh`, {
+      const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
         withCredentials: true,
       });
       localStorage.setItem("token", response.data.accessToken);

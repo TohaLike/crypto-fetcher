@@ -11,7 +11,7 @@ import Image from "next/image";
 export const Header: React.FC = ({}) => {
   const { userData } = useContext<any>(SocketContext);
 
-  console.log(userData);
+  // console.log(userData);
 
   return (
     <header className={header.header}>

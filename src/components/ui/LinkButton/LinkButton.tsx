@@ -8,6 +8,7 @@ interface Props {
   href: string;
   bgcolor?: string;
   hover?: string;
+  padding?: string | number;
   [key: string]: any;
 }
 export const LinkButton: React.FC<Props> = ({
@@ -17,6 +18,7 @@ export const LinkButton: React.FC<Props> = ({
   hover,
   icon,
   href,
+  padding,
   ...props
 }) => {
   return (
@@ -32,6 +34,9 @@ export const LinkButton: React.FC<Props> = ({
           backgroundColor: bgcolor || "#1976d2",
           "&:hover": {
             bgcolor: hover,
+          },
+          "&.MuiButton-root": {
+            p: padding || 0,
           },
           ...props,
         }}
