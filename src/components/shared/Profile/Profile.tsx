@@ -8,6 +8,7 @@ import { AddPost } from "@/components/shared/AddPost/AddPost";
 import { useLogout } from "@/hooks/useLogout";
 import { ActionButton, FriendsChip, Post, PostImage } from "@/components/ui";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { PostResponse } from "@/models/posts/postsResponse";
 
 interface Props {
   userId?: string;
@@ -51,6 +52,17 @@ export const Profile: React.FC<Props> = ({
   const [content, setContent] = useState<string>("");
   const [loadNewImage, setLoadNewImage] = useState<any>([]);
 
+  const [addedPost, setAddedPost] = useState<PostResponse[] | any>([]);
+
+  const concatData = addedPost.concat(posts);
+
+  const sorted = concatData.sort((a: any, b: any) => {
+    const dateA = new Date(a?.createdAt);
+    const dateB = new Date(b?.createdAt);
+    return dateB.getTime() - dateA.getTime();
+  });
+
+  
   const { triggerUploadOptions, dataOptions } = useUploadOptions();
   const { logoutTrigger } = useLogout();
 
@@ -94,7 +106,7 @@ export const Profile: React.FC<Props> = ({
         <form method="post" action="/upload_options" encType="multipart/form-data">
           <input
             className={profile.input}
-            id="fileButton"
+            id="mainImageButton"
             type="file"
             accept="image/*"
             onChange={handleFileChange}
@@ -111,7 +123,7 @@ export const Profile: React.FC<Props> = ({
                 <div className={profile.user__profile__buttons}>
                   <ProfileButton type="submit" title="Save Image" onClick={uploadImage} />
                   <ProfileButton type="submit" title="Cancel" onClick={() => setFile(null)} />
-                  <label htmlFor="fileButton" className={profile.user__profile__change}>
+                  <label htmlFor="mainImageButton" className={profile.user__profile__change}>
                     Change image
                   </label>
                 </div>
@@ -120,7 +132,7 @@ export const Profile: React.FC<Props> = ({
               <>
                 <div className={profile.user__profile__avatar}>
                   <div className={profile.user__profile__photo}>
-                    <label htmlFor="fileButton" className={profile.user__profile__upload}>
+                    <label htmlFor="mainImageButton" className={profile.user__profile__upload}>
                       {!options?.image[0]?.path ? (
                         <div
                           className={profile.user__profile__upload__icon}
@@ -193,11 +205,11 @@ export const Profile: React.FC<Props> = ({
           </div>
         </form>
 
-        <AddPost />
+        <AddPost setAddedPost={setAddedPost} addedPost={addedPost} />
 
         <div>
           {posts &&
-            posts.map((post: any, index: number) => (
+            sorted.map((post: any, index: number) => (
               <Post
                 key={index}
                 owner={post.owner.name}
