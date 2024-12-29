@@ -11,8 +11,6 @@ import Image from "next/image";
 export const Header: React.FC = ({}) => {
   const { userData } = useContext<any>(SocketContext);
 
-  // console.log(userData);
-
   return (
     <header className={header.header}>
       <Container>
@@ -47,7 +45,7 @@ export const Header: React.FC = ({}) => {
                 </Avatar>
               ) : (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData?.options?.image[0]}`}
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData?.options?.image[0]?.path}`}
                   alt="avatar"
                   width={40}
                   height={40}

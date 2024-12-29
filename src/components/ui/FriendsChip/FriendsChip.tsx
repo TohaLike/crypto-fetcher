@@ -48,7 +48,7 @@ export const FriendsChip: React.FC<Props> = ({ title, path, subscribers, userId 
                   </Avatar>
                 ) : (
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${e.options?.image[0]}`}
+                    src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${e.options?.image[0]?.path}`}
                     alt="avatar"
                     width={30}
                     height={30}

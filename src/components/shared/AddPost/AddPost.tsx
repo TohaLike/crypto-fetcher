@@ -105,7 +105,7 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
                 </Avatar>
               ) : (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData?.options?.image[0]}`}
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData?.options?.image[0]?.path}`}
                   alt="avatar"
                   width={40}
                   height={40}

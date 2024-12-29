@@ -36,7 +36,7 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options 
                 </Avatar>
               ) : (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]}`}
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]?.path}`}
                   alt="avatar"
                   width={40}
                   height={40}
@@ -97,7 +97,7 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options 
               images.map((e: any, i: number) => (
                 <div key={`image-${i}`} className={post.body__image}>
                   <PostImage
-                    src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${e}`}
+                    src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${e[0]?.path}`}
                     alt={`image-${i}`}
                     maxHeight={"250px"}
                     minHeight={"100%"}

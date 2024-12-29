@@ -120,7 +120,7 @@ export const ProfileItem: React.FC<Props> = ({ name, userID, options, subscriber
               </Avatar>
             ) : (
               <Image
-                src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]}`}
+                src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]?.path}`}
                 alt="avatar"
                 width={54}
                 height={54}

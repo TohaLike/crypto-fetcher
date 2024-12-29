@@ -135,7 +135,7 @@ export const UserProfile: React.FC<Props> = ({
                 </div>
               ) : (
                 <PostImage
-                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]}`}
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]?.path}`}
                   alt={`image-userprofile`}
                   rootHeight={200}
                   rootWidth={200}

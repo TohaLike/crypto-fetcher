@@ -66,11 +66,11 @@ export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
               </Avatar>
             ) : (
               <Image
-                src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData.options.image[0]}`}
+                src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData?.options?.image[0]?.path}`}
                 alt="avatar"
                 width={40}
                 height={40}
-                style={{ objectFit: "cover", borderRadius: "50%" }}
+                style={{ objectFit: "cover", borderRadius: "50%", minWidth: "40px" }}
               />
             )}
           </IconButton>
