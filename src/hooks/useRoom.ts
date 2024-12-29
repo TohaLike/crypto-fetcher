@@ -10,11 +10,8 @@ export const useRoom = () => {
 
   const { data, isLoading } = useSWRImmutable([url], () => SocketService.getRoom(url), {
     shouldRetryOnError: true,
-    
+    revalidateOnMount: true,
   });
-
-  // console.log(data, "!")
-
 
   return { dataRoom: data, loadRoom: isLoading };
 };
