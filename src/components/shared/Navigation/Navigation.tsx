@@ -36,7 +36,7 @@ export const Navigation: React.FC = () => {
         <NavigationLink title="Messages" icon={<MessageIcon />} href="/messages" />
       </Stack>
 
-      {pathname === "/messages/user" && (
+      {pathname !== "/messages/user" && (
         <Box
           sx={{
             display: "none",
