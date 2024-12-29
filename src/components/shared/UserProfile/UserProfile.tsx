@@ -38,7 +38,8 @@ function ProfileButton({ onClick, title, type, disabled }: any) {
       bgcolor="#fff"
       color="#000"
       padding={"0 10px"}
-      maxWidth={"170px"}
+      minWidth={"130px"}
+      maxWidth={"130px"}
     />
   );
 }
@@ -82,9 +83,9 @@ export const UserProfile: React.FC<Props> = ({
 
   function AddFriend() {
     if (sub || checkSubscribe)
-      return <ProfileButton title="Вы подписаны" type="button" disabled={true} />;
+      return <ProfileButton title="Following" type="button" disabled={true} />;
 
-    return <ProfileButton title={"Добавить в друзья"} type="button" onClick={subscribe} />;
+    return <ProfileButton title={"Follow"} type="button" onClick={subscribe} />;
   }
 
   function Posts() {
@@ -176,7 +177,7 @@ export const UserProfile: React.FC<Props> = ({
             </Box>
 
             <Box sx={{ display: "flex", gap: "5px" }}>
-              <ProfileButton title="Написать сообщение" type="button" onClick={redirectToRoom} />
+              <ProfileButton title="Send message" type="button" onClick={redirectToRoom} />
               <AddFriend />
             </Box>
           </div>
