@@ -1,12 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import userprofile from "./userprofile.module.scss";
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { ActionButton, FriendsChip, Post, PostImage } from "@/components/ui";
 import { useSubscribe } from "@/hooks/useSubscribe";
 import { useParams, useRouter } from "next/navigation";
 import { socket } from "@/socket";
 import { useSubscribeNews } from "@/hooks/useSubscribeNews";
+import { PostSkeleton } from "@/components/skeletons/PostSkeleton";
 
 interface Props {
   userId?: string;
@@ -17,6 +18,8 @@ interface Props {
   subscribers?: any;
   checkSubscribe?: string;
   following?: any;
+  profileLoading?: boolean;
+  postLoading?: boolean;
 }
 
 function ProfileButton({ onClick, title, type, disabled }: any) {
@@ -49,6 +52,8 @@ export const UserProfile: React.FC<Props> = ({
   subscribers,
   checkSubscribe,
   following,
+  profileLoading,
+  postLoading,
 }) => {
   const [sub, setSub] = useState<boolean>(false);
 
@@ -80,6 +85,23 @@ export const UserProfile: React.FC<Props> = ({
       return <ProfileButton title="Вы подписаны" type="button" disabled={true} />;
 
     return <ProfileButton title={"Добавить в друзья"} type="button" onClick={subscribe} />;
+  }
+
+  function Posts() {
+    if (postLoading) return <PostSkeleton />;
+    // {posts &&
+    // }
+
+    return posts?.map((post: any, index: number) => (
+      <Post
+        key={index}
+        owner={post.owner.name}
+        text={post.text}
+        createdAt={post.createdAt}
+        images={post.images}
+        options={post.owner.options}
+      />
+    ));
   }
 
   // console.log(following?.newsFrom);
@@ -160,7 +182,7 @@ export const UserProfile: React.FC<Props> = ({
           </div>
         </div>
         <div>
-          {posts &&
+          {/* {posts &&
             posts.map((post: any, index: number) => (
               <Post
                 key={index}
@@ -170,7 +192,8 @@ export const UserProfile: React.FC<Props> = ({
                 images={post.images}
                 options={post.owner.options}
               />
-            ))}
+            ))} */}
+          <Posts />
         </div>
       </Box>
     </>

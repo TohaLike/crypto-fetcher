@@ -47,7 +47,7 @@ export const Header: React.FC = ({}) => {
                 </Avatar>
               ) : (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData.options?.image[0]}`}
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData?.options?.image[0]}`}
                   alt="avatar"
                   width={40}
                   height={40}

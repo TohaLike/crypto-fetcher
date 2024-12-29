@@ -2,9 +2,13 @@
 import React from "react";
 import SvgIcon from "@mui/material/SvgIcon";
 
-export const ProfileIcon: React.FC = () => {
+type Props = {
+  [key: string]: any;
+};
+
+export const ProfileIcon: React.FC<Props> = ({ ...props }) => {
   return (
-    <SvgIcon>
+    <SvgIcon sx={{ ...props }}>
       <svg
         width="24"
         height="24"
@@ -29,4 +33,4 @@ export const ProfileIcon: React.FC = () => {
       </svg>
     </SvgIcon>
   );
-}
+};

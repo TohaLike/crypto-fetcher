@@ -30,9 +30,7 @@ export default function RootLayout({
         </div>
         <Container>
           <article className={home.article}>
-            <div className={home.navigation}>
-              <Navigation />
-            </div>
+            <Navigation />
             {children}
             {/* <div className={home.right}></div> */}
           </article>

@@ -51,15 +51,7 @@ export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
               href={`/messages`}
               cursor={"pointer"}
             />
-            {userData.options?.image?.length > 0 ? (
-              <Image
-                src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData.options.image[0].path}`}
-                alt="avatar"
-                width={40}
-                height={40}
-                style={{ objectFit: "cover", borderRadius: "50%" }}
-              />
-            ) : (
+            {userData.options?.image?.length <= 0 ? (
               <Avatar
                 component={Link}
                 href={`/${userData?.id}`}
@@ -72,6 +64,14 @@ export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
               >
                 {userData?.name[0].toUpperCase()}
               </Avatar>
+            ) : (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData.options.image[0]}`}
+                alt="avatar"
+                width={40}
+                height={40}
+                style={{ objectFit: "cover", borderRadius: "50%" }}
+              />
             )}
           </IconButton>
           <Box

@@ -40,6 +40,8 @@ export const ProfilePage: React.FC = () => {
           subscribers={profileData?.subscribers?.subscribers}
           checkSubscribe={profileData?.checkSubscribe}
           following={profileData?.following}
+          profileLoading={profileLoading}
+          postLoading={isLoadingPosts}
         />
       )}
     </>

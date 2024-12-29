@@ -10,7 +10,7 @@
     &__messages {
       display: flex;
       flex-direction: column;
-      height: calc(100vh - 55px);
+      height: calc(100dvb - 55px);
       width: 100%;
     }
   }
@@ -23,7 +23,7 @@
   overflow-anchor: none;
   scrollbar-width: thin;
   flex-direction: column-reverse;
-  height: 100vh;
+  height: 100dvb;
   width: 100%;
   flex: 1 1 0%;
 
@@ -53,13 +53,28 @@
 }
 
 
-// @media (max-width: 1170px) {
-//   .chat {
-//     &__container {
-//       &__messages {
-//         height: 100vh;
-//         height: 100dvh;
-//       }
-//     }
-//   }
-// }
+@media (max-width: 1170px) {
+  // .chat {
+  //   &__container {
+  //     &__messages {
+  //       height: calc(100vh - 200px);
+  //       width: 100%;
+  //     }
+  //   }
+  // }
+  // .messages {
+  //   &__input {
+  //     position: fixed;
+  //     bottom: 50px;
+  //     left: 0;
+  //     right: 0;
+  //   }
+  
+  //   &__spacer {
+  //     height: 55px;
+  //     &__loader {
+  //       visibility: hidden;
+  //     }
+  //   }
+  // }
+}

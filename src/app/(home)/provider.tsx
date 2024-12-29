@@ -53,7 +53,8 @@ export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <>
       <SocketContext.Provider value={{ isConnected, transport, userData }}>
-        {userData && children}
+        {/* {userData && children} */}
+        {children}
       </SocketContext.Provider>
     </>
   );
