@@ -12,7 +12,7 @@ export const ProfilePage: React.FC = () => {
 
   const params = useParams();
 
-  const { profileData, mutateProfile } = useProfile({ params: params?.profile });
+  const { profileData, mutateProfile, profileLoading } = useProfile({ params: params?.profile });
   const { postsData, isLoadingPosts } = useUserPosts({ userId: params?.profile });
 
   return (
@@ -26,6 +26,7 @@ export const ProfilePage: React.FC = () => {
           options={profileData?.options}
           subscribers={profileData?.subscribers?.subscribers}
           following={profileData?.following}
+          profileLoading={profileLoading}
         />
       )}
 

@@ -34,20 +34,7 @@ export const FriendsChip: React.FC<Props> = ({ title, path, subscribers, userId 
                 key={`users-${i}-${e.name}-${e.email}`}
                 style={{ display: "flex", alignItems: "center" }}
               >
-                {e?.options?.image?.length > 0 ? (
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${e.options?.image[0]?.path}`}
-                    alt="avatar"
-                    width={30}
-                    height={30}
-                    style={{
-                      objectFit: "cover",
-                      borderRadius: "50%",
-                      maxHeight: "30px",
-                      maxWidth: "30px",
-                    }}
-                  />
-                ) : (
+                {e?.options?.image?.length <= 0 ? (
                   <Avatar
                     sx={{
                       bgcolor: `#${e.options?.defaultColor || "1976d2"}`,
@@ -59,6 +46,19 @@ export const FriendsChip: React.FC<Props> = ({ title, path, subscribers, userId 
                   >
                     {e.name[0]?.toUpperCase()}
                   </Avatar>
+                ) : (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${e.options?.image[0]}`}
+                    alt="avatar"
+                    width={30}
+                    height={30}
+                    style={{
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                      maxHeight: "30px",
+                      maxWidth: "30px",
+                    }}
+                  />
                 )}
               </div>
             ))

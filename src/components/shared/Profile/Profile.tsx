@@ -18,6 +18,7 @@ interface Props {
   options?: any;
   subscribers?: any;
   following?: any;
+  profileLoading?: boolean;
 }
 
 function ProfileButton({ onClick, title, type, mutateProfile }: any) {
@@ -46,6 +47,7 @@ export const Profile: React.FC<Props> = ({
   posts,
   options,
   following,
+  profileLoading,
 }) => {
   const [file, setFile] = useState<File | null>(null);
   const [image, setImage] = useState<string>("");
@@ -62,7 +64,6 @@ export const Profile: React.FC<Props> = ({
     return dateB.getTime() - dateA.getTime();
   });
 
-  
   const { triggerUploadOptions, dataOptions } = useUploadOptions();
   const { logoutTrigger } = useLogout();
 
@@ -133,7 +134,7 @@ export const Profile: React.FC<Props> = ({
                 <div className={profile.user__profile__avatar}>
                   <div className={profile.user__profile__photo}>
                     <label htmlFor="mainImageButton" className={profile.user__profile__upload}>
-                      {!options?.image[0]?.path ? (
+                      {options?.image?.length <= 0 ? (
                         <div
                           className={profile.user__profile__upload__icon}
                           style={{
@@ -144,7 +145,7 @@ export const Profile: React.FC<Props> = ({
                         </div>
                       ) : (
                         <PostImage
-                          src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0].path}`}
+                          src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]}`}
                           alt={`image-profile`}
                           rootHeight={200}
                           rootWidth={200}

@@ -100,7 +100,7 @@ export const UserProfile: React.FC<Props> = ({
         <div className={userprofile.user__profile__info}>
           <div className={userprofile.user__profile__avatar}>
             <div className={userprofile.user__profile__photo}>
-              {!options?.image[0]?.path ? (
+              {options?.image?.length <= 0 ? (
                 <div
                   className={userprofile.user__profile__upload__icon}
                   style={{
@@ -113,7 +113,7 @@ export const UserProfile: React.FC<Props> = ({
                 </div>
               ) : (
                 <PostImage
-                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0].path}`}
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]}`}
                   alt={`image-userprofile`}
                   rootHeight={200}
                   rootWidth={200}
@@ -141,13 +141,13 @@ export const UserProfile: React.FC<Props> = ({
             <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
               <FriendsChip
                 title={"Followers"}
-                path={"subscriptions"}
+                path={"followers"}
                 subscribers={subscribers}
                 userId={userId}
               />
               <FriendsChip
                 title={"Following"}
-                path={"subscriptions"}
+                path={"following"}
                 subscribers={following?.newsFrom}
                 userId={userId}
               />

@@ -1,7 +1,10 @@
-import React from 'react'
+import React from "react";
+import { FollowingPage } from "@/components/shared/FollowingPage/FollowingPage";
 
 export default function page() {
   return (
-    <div>page</div>
-  )
+    <div>
+      <FollowingPage />
+    </div>
+  );
 }

@@ -97,9 +97,15 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
             }}
           >
             <Box display={"flex"} alignItems={"flex-end"} p={"0 0 5px"}>
-              {userData?.options?.image?.length > 0 ? (
+              {userData?.options?.image?.length <= 0 ? (
+                <Avatar
+                  sx={{ bgcolor: `#${userData?.options?.defaultColor || "1976d2"}`, mr: "16px" }}
+                >
+                  {userData?.name[0].toUpperCase()}
+                </Avatar>
+              ) : (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData?.options?.image[0]?.path}`}
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData?.options?.image[0]}`}
                   alt="avatar"
                   width={40}
                   height={40}
@@ -110,10 +116,6 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
                     marginRight: "16px",
                   }}
                 />
-              ) : (
-                <Avatar sx={{ bgcolor: `#${userData?.options?.defaultColor || "1976d2"}`, mr: "16px" }}>
-                  {userData?.name[0].toUpperCase()}
-                </Avatar>
               )}
               <PostInput text={text} setText={setText} />
             </Box>

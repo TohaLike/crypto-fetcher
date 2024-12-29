@@ -35,15 +35,7 @@ export const Header: React.FC = ({}) => {
           </Box>
           <div className={header.avatar}>
             <Link href={`/${userData?.id}`}>
-              {userData?.options?.image?.length > 0 ? (
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData.options?.image[0]?.path}`}
-                  alt="avatar"
-                  width={40}
-                  height={40}
-                  style={{ objectFit: "cover", borderRadius: "50%", marginRight: "15px" }}
-                />
-              ) : (
+              {userData?.options?.image?.length <= 0 ? (
                 <Avatar
                   sx={{
                     width: 40,
@@ -53,6 +45,14 @@ export const Header: React.FC = ({}) => {
                 >
                   {userData?.name[0].toUpperCase()}
                 </Avatar>
+              ) : (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${userData.options?.image[0]}`}
+                  alt="avatar"
+                  width={40}
+                  height={40}
+                  style={{ objectFit: "cover", borderRadius: "50%", marginRight: "15px" }}
+                />
               )}
             </Link>
           </div>

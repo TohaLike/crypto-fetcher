@@ -1,10 +1,14 @@
 "use client";
-import { ProfileItem } from "@/components/ui/ProfileItem/ProfileItem";
-import { useProfiles } from "@/hooks/useProfiles";
-import { Box } from "@mui/material";
 import React from "react";
-export const PeoplesPage: React.FC = () => {
-  const { usersData } = useProfiles();
+import { useFollowing } from "@/hooks/useFriends";
+import { useParams } from "next/navigation";
+import { ProfileItem } from "@/components/ui/ProfileItem/ProfileItem";
+import { Box } from "@mui/material";
+
+export const FollowingPage: React.FC = () => {
+  const params = useParams();
+
+  const { dataFriends } = useFollowing({ userId: params?.profile });
 
   return (
     <>
@@ -14,11 +18,11 @@ export const PeoplesPage: React.FC = () => {
           overflowY: "auto",
         }}
       >
-        {usersData?.map((item, index) => (
+        {dataFriends?.newsFrom?.map((item: any, index: number) => (
           <ProfileItem
             key={`user-profile-${index}`}
             name={item.name}
-            userID={item.id}
+            userID={item._id}
             options={item.options}
             subscribers={item.subscribers}
           />

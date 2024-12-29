@@ -1,5 +1,4 @@
 import UserService from "@/services/UserService";
-import { useParams, useSearchParams } from "next/navigation";
 import useSWRImmutable from "swr/immutable";
 
 export const useProfile = ({ params }: any) => {
@@ -7,6 +6,7 @@ export const useProfile = ({ params }: any) => {
 
   const { data, isLoading, error, mutate } = useSWRImmutable([url], () => UserService.getProfile(url), {
     shouldRetryOnError: true,
+    revalidateOnMount: true,
   });
 
   return {

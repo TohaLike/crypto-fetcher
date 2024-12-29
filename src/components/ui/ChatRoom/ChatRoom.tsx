@@ -29,7 +29,7 @@ export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID, options
     return;
   };
 
-  console.log(options)
+  // console.log(options)
 
   return (
     <>
