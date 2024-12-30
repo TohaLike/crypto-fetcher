@@ -61,19 +61,21 @@ export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
       window.location.replace("/");
     });
   };
+  
+  if (isLoading) {
+    return "loading";
+  }
 
   if (!userData) {
     return (
       <Box
         sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
       >
-        <Button variant="contained" onClick={redirect}>Login</Button>
+        <Button variant="contained" onClick={redirect}>
+          Login
+        </Button>
       </Box>
     );
-  }
-
-  if (isLoading) {
-    return "loading"
   }
 
   return (
