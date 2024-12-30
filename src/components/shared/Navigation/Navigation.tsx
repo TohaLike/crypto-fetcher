@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { NavigationLink } from "@/components/ui";
 import { BottomNavigation, BottomNavigationAction, Box, Stack } from "@mui/material";
-import { HomeIcon, MessageIcon, ProfileIcon } from "@/components/icons";
+import { HomeIcon, MessageIcon, PeoplesIcon, ProfileIcon } from "@/components/icons";
 import { SocketContext } from "@/app/(home)/provider";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -34,6 +34,7 @@ export const Navigation: React.FC = () => {
         <NavigationLink title="Home" icon={<HomeIcon />} href="/home" />
         <NavigationLink title="Profile" icon={<ProfileIcon />} href={`/${userData?.id}`} />
         <NavigationLink title="Messages" icon={<MessageIcon />} href="/messages" />
+        <NavigationLink title="Peoples" icon={<PeoplesIcon />} href="/messages" />
       </Stack>
 
       {pathname !== "/messages/user" && (
@@ -64,8 +65,11 @@ export const Navigation: React.FC = () => {
               href="/home"
               sx={{
                 color: "#fff",
+                "&.Mui-selected": {
+                  color: "#00EAFF",
+                },
               }}
-              icon={<HomeIcon />}
+              icon={<HomeIcon color={value === "/home" && "#00EAFF"} />}
             />
             <BottomNavigationAction
               label="Profile"
@@ -74,8 +78,11 @@ export const Navigation: React.FC = () => {
               href={`/${userData?.id}`}
               sx={{
                 color: "#fff",
+                "&.Mui-selected": {
+                  color: "#00EAFF",
+                },
               }}
-              icon={<ProfileIcon color={"#000"} />}
+              icon={<ProfileIcon color={value === `/${userData?.id}` && "#00EAFF"} />}
             />
             <BottomNavigationAction
               label="Messages"
@@ -84,11 +91,24 @@ export const Navigation: React.FC = () => {
               value="/messages"
               sx={{
                 color: "#fff",
-                // "&.Mui-selected": {
-                //   color: "red",
-                // },
+                "&.Mui-selected": {
+                  color: "#00EAFF",
+                },
               }}
-              icon={<MessageIcon />}
+              icon={<MessageIcon color={value === "/messages" && "#00EAFF"} />}
+            />
+            <BottomNavigationAction
+              label="Peoples"
+              LinkComponent={Link}
+              href="/peoples"
+              value="/peoples"
+              sx={{
+                color: "#fff",
+                "&.Mui-selected": {
+                  color: "#00EAFF",
+                },
+              }}
+              icon={<PeoplesIcon color={value === "/peoples" && "#00EAFF"} />}
             />
             {/* <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} /> */}
           </BottomNavigation>
