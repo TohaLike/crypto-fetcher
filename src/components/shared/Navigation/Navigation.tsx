@@ -84,9 +84,9 @@ export const Navigation: React.FC = () => {
               value="/messages"
               sx={{
                 color: "#fff",
-                "&.Mui-selected": {
-                  color: "red",
-                },
+                // "&.Mui-selected": {
+                //   color: "red",
+                // },
               }}
               icon={<MessageIcon />}
             />

@@ -90,8 +90,6 @@ export const UserProfile: React.FC<Props> = ({
 
   function Posts() {
     if (postLoading) return <PostSkeleton />;
-    // {posts &&
-    // }
 
     return posts?.map((post: any, index: number) => (
       <Post
@@ -99,13 +97,11 @@ export const UserProfile: React.FC<Props> = ({
         owner={post.owner.name}
         text={post.text}
         createdAt={post.createdAt}
-        images={post.images}
+        images={post.images[0]}
         options={post.owner.options}
       />
     ));
   }
-
-  // console.log(following?.newsFrom);
 
   return (
     <>
@@ -183,17 +179,6 @@ export const UserProfile: React.FC<Props> = ({
           </div>
         </div>
         <div>
-          {/* {posts &&
-            posts.map((post: any, index: number) => (
-              <Post
-                key={index}
-                owner={post.owner.name}
-                text={post.text}
-                createdAt={post.createdAt}
-                images={post.images}
-                options={post.owner.options}
-              />
-            ))} */}
           <Posts />
         </div>
       </Box>

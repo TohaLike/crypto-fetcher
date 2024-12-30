@@ -216,7 +216,7 @@ export const Profile: React.FC<Props> = ({
                 owner={post.owner.name}
                 text={post.text}
                 createdAt={post.createdAt}
-                images={post.images}
+                images={post.images[0]}
                 options={post.owner.options}
               />
             ))}

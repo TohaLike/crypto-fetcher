@@ -244,9 +244,9 @@ export const MessagePage: React.FC = () => {
           )}
         </div>
       </div>
-      <div style={{minHeight: "760px"}}>
+      {/* <div style={{minHeight: "760px"}}>
         test
-      </div>
+      </div> */}
     </div>
   );
 };

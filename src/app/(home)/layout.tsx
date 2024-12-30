@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Container, Header, Navigation } from "@/components/shared";
 import { Provider } from "./provider";
 import localFont from "next/font/local";
-
 import home from "./home.module.scss";
-import { NavigationMobile } from "@/components/shared/NavigationMobile/NavigationMobile";
 
 const IBMPlexMono = localFont({
   src: "../fonts/IBMPlexMonoRegular.ttf",
@@ -30,7 +28,7 @@ export default function RootLayout({
         </div>
         <Container>
           <article className={home.article}>
-            <Navigation />
+              <Navigation />
             {children}
             {/* <div className={home.right}></div> */}
           </article>

@@ -72,16 +72,6 @@
   }
 }
 
-.users {
-  
-}
-
-.logout {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-}
-
 .modal__photo {
   max-width: 200px;
   min-height: 200px;
@@ -94,6 +84,7 @@
   display: flex;
   justify-content: flex-start;
 }
+
 
 
 @media (max-width: 700px) {
