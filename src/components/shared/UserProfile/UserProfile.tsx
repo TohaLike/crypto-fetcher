@@ -114,6 +114,10 @@ export const UserProfile: React.FC<Props> = ({
           maxWidth: "700px",
           width: "100%",
           m: "auto",
+          "@media (max-width: 1170px)": {
+            height: "100vh",
+            pb: "110px"
+          },
         }}
       >
         <div className={userprofile.user__profile__info}>

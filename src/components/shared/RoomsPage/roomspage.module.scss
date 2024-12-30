@@ -10,3 +10,13 @@
     transform: translate(-50%, -50%);
   }
 }
+
+
+
+
+@media (max-width: 1170px) {
+  .container {
+    height: 100vh;
+    padding-bottom: 110px;
+  }  
+}

@@ -16,6 +16,10 @@ export const FollowingPage: React.FC = () => {
         sx={{
           height: "calc(100vh - 50px)",
           overflowY: "auto",
+          "@media (max-width: 1170px)": {
+            height: "100vh",
+            pb: "110px"
+          },
         }}
       >
         {dataFriends?.newsFrom?.map((item: any, index: number) => (
