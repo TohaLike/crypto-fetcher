@@ -34,7 +34,7 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
     }
   };
 
-  const handleUpload = (e: any) => {
+  const handleUpload = async (e: any) => {
     e.preventDefault();
 
     const formData: FormData = new FormData();
@@ -45,9 +45,9 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
       }
     }
 
-    if (text.trim() && !error) {
+    if (text.trim()) {
       formData.append("description", text.trim());
-      uploadTrigger(formData).then((e) => {
+      await uploadTrigger(formData).then((e) => {
         if (e?.data && setAddedPost) setAddedPost([...addedPost, e.data]);
       });
       setContent("");

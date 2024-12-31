@@ -3,15 +3,15 @@ import React from "react";
 import { Skeleton } from "@mui/material";
 
 const POST_SKELETON = [
-  { height: "100px" },
-  { height: "300px" },
-  { height: "300px" },
-  { height: "100px" },
+  { height: "220px" },
+  { height: "106px" },
+  { height: "200px" },
+  { height: "150px" },
   { height: "300px" },
   { height: "300px" },
 ];
 
-export const PostSkeleton: React.FC = () => {
+export const ProfileSkeleton: React.FC = () => {
   return (
     <>
       {POST_SKELETON.map((e: any, i: number) => (

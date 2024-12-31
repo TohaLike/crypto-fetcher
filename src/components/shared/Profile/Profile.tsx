@@ -9,6 +9,7 @@ import { useLogout } from "@/hooks/useLogout";
 import { ActionButton, FriendsChip, Post, PostImage } from "@/components/ui";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { PostResponse } from "@/models/posts/postsResponse";
+import { ProfileSkeleton } from "@/components/skeletons";
 
 interface Props {
   userId?: string;
@@ -19,6 +20,7 @@ interface Props {
   subscribers?: any;
   following?: any;
   profileLoading?: boolean;
+  postLoading?: boolean;
 }
 
 function ProfileButton({ onClick, title, type, mutateProfile }: any) {
@@ -48,6 +50,7 @@ export const Profile: React.FC<Props> = ({
   options,
   following,
   profileLoading,
+  postLoading,
 }) => {
   const [file, setFile] = useState<File | null>(null);
   const [image, setImage] = useState<string>("");
@@ -58,7 +61,7 @@ export const Profile: React.FC<Props> = ({
 
   const concatData = addedPost.concat(posts);
 
-  const sorted = concatData.sort((a: any, b: any) => {
+  const sorted = concatData.flat().sort((a: any, b: any) => {
     const dateA = new Date(a?.createdAt);
     const dateB = new Date(b?.createdAt);
     return dateB.getTime() - dateA.getTime();
@@ -91,6 +94,26 @@ export const Profile: React.FC<Props> = ({
     }
   };
 
+  if (profileLoading && postLoading)
+    return (
+      <Box sx={{p: "0 10px"}}>
+        <ProfileSkeleton />
+      </Box>
+    );
+
+  function Posts() {
+    return posts?.map((post: any, index: number) => (
+      <Post
+        key={index}
+        owner={post.owner.name}
+        text={post.text}
+        createdAt={post.createdAt}
+        images={post.images[0]}
+        options={post.owner.options}
+      />
+    ));
+  }
+
   return (
     <>
       <Box
@@ -104,7 +127,7 @@ export const Profile: React.FC<Props> = ({
           m: "auto",
           "@media (max-width: 1170px)": {
             height: "100vh",
-            pb: "110px"
+            pb: "110px",
           },
         }}
       >
@@ -213,17 +236,7 @@ export const Profile: React.FC<Props> = ({
         <AddPost setAddedPost={setAddedPost} addedPost={addedPost} />
 
         <div>
-          {posts &&
-            sorted.map((post: any, index: number) => (
-              <Post
-                key={index}
-                owner={post.owner.name}
-                text={post.text}
-                createdAt={post.createdAt}
-                images={post.images[0]}
-                options={post.owner.options}
-              />
-            ))}
+          <Posts />
         </div>
       </Box>
     </>

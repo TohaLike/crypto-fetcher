@@ -7,7 +7,7 @@ import { useSubscribe } from "@/hooks/useSubscribe";
 import { useParams, useRouter } from "next/navigation";
 import { socket } from "@/socket";
 import { useSubscribeNews } from "@/hooks/useSubscribeNews";
-import { PostSkeleton } from "@/components/skeletons/PostSkeleton";
+import { ProfileSkeleton } from "@/components/skeletons";
 
 interface Props {
   userId?: string;
@@ -88,9 +88,14 @@ export const UserProfile: React.FC<Props> = ({
     return <ProfileButton title={"Follow"} type="button" onClick={subscribe} />;
   }
 
-  function Posts() {
-    if (postLoading) return <PostSkeleton />;
+  if (profileLoading && postLoading)
+    return (
+      <Box sx={{ p: "0 10px" }}>
+        <ProfileSkeleton />
+      </Box>
+    );
 
+  function Posts() {
     return posts?.map((post: any, index: number) => (
       <Post
         key={index}
@@ -116,7 +121,7 @@ export const UserProfile: React.FC<Props> = ({
           m: "auto",
           "@media (max-width: 1170px)": {
             height: "100vh",
-            pb: "110px"
+            pb: "110px",
           },
         }}
       >

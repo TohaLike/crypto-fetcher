@@ -27,6 +27,7 @@ export const ProfilePage: React.FC = () => {
           subscribers={profileData?.subscribers?.subscribers}
           following={profileData?.following}
           profileLoading={profileLoading}
+          postLoading={isLoadingPosts}
         />
       )}
 

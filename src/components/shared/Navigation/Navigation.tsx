@@ -34,7 +34,7 @@ export const Navigation: React.FC = () => {
         <NavigationLink title="Home" icon={<HomeIcon />} href="/home" />
         <NavigationLink title="Profile" icon={<ProfileIcon />} href={`/${userData?.id}`} />
         <NavigationLink title="Messages" icon={<MessageIcon />} href="/messages" />
-        <NavigationLink title="Peoples" icon={<PeoplesIcon />} href="/messages" />
+        <NavigationLink title="Peoples" icon={<PeoplesIcon />} href="/peoples" />
       </Stack>
 
       {pathname !== "/messages/user" && (

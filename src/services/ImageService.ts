@@ -10,7 +10,7 @@ export default class ImageService {
       });
       return response;
     } catch (e: any) {
-      console.log(e.response?.data?.message);
+      // console.log(e.response?.data?.message);
       throw new Error(e.response?.data?.message);
     }
   }

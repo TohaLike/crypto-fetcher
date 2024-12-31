@@ -1,6 +1,4 @@
 import ImageService from "@/services/ImageService";
-import { useParams } from "next/navigation";
-import useSWR from "swr";
 import useSWRImmutable from "swr/immutable";
 
 export const useUserPosts = ({ userId }: any) => {
@@ -8,8 +6,7 @@ export const useUserPosts = ({ userId }: any) => {
 
   const { data, isLoading } = useSWRImmutable([url], () => ImageService.getUserPosts(url), {
     shouldRetryOnError: true,
-    // revalidateOnMount: true,
-    revalidateOnFocus: false,
+    revalidateOnMount: true,
   });
 
   return {

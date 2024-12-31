@@ -86,6 +86,7 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options 
                   fontWeight: "200",
                   fontSize: "15px",
                   whiteSpace: "pre-wrap",
+                  overflowWrap: "break-word",
                 }}
               >
                 {text || ""}
