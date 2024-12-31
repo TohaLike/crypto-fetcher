@@ -94,7 +94,7 @@ export const Profile: React.FC<Props> = ({
     }
   };
 
-  if (!profileLoading && postLoading)
+  if (profileLoading || postLoading)
     return (
       <Box sx={{ p: "0 10px" }}>
         <ProfileSkeleton />
