@@ -5,7 +5,6 @@ import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography } from 
 import { PostImage } from "../PostImage/PostImage";
 import { timeCreated } from "@/helper/timeCreated";
 import Image from "next/image";
-import Link from "next/link";
 
 interface Props {
   owner?: string | null | undefined;
@@ -52,8 +51,6 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options 
                 sx={{ m: 0 }}
                 primary={
                   <Typography
-                    component={Link}
-                    href={`/${owner}`}
                     variant="body1"
                     sx={{ color: "#FFFFFF", lineHeight: "normal", fontWeight: "100" }}
                     textTransform={"capitalize"}
