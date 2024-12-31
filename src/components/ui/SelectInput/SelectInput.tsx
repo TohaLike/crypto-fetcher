@@ -17,6 +17,7 @@ interface Props {
 }
 
 export const SelectInput: React.FC<Props> = ({ name, label, array, register }) => {
+  // console.log(register);
   return (
     <>
       <TextField

@@ -133,7 +133,7 @@ export const ProfileItem: React.FC<Props> = ({ name, userID, options, subscriber
               primary={
                 <Typography
                   variant="inherit"
-                  style={{ color: "#FFFFFF", fontSize: "18px" }}
+                  sx={{ color: "#FFFFFF", fontSize: "18px", whiteSpace: "nowrap" }}
                   textTransform={"capitalize"}
                 >
                   {name}

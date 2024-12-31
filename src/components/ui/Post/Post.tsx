@@ -5,6 +5,7 @@ import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography } from 
 import { PostImage } from "../PostImage/PostImage";
 import { timeCreated } from "@/helper/timeCreated";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
   owner?: string | null | undefined;
@@ -19,7 +20,8 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options 
     <>
       <ListItem
         sx={{
-          bgcolor: "#0E0E0E",
+          // bgcolor: "#0E0E0E",
+          border: "1px solid #282828",
           p: "10px",
           m: "10px 0",
           borderRadius: "16px",
@@ -32,7 +34,7 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options 
             <ListItemAvatar sx={{ minWidth: "40px", mr: "5px" }}>
               {options?.image?.length <= 0 ? (
                 <Avatar sx={{ bgcolor: `#${options?.defaultColor || "1976d2"}` }}>
-                  {owner && owner[0].toUpperCase()}
+                  {owner && owner[0]?.toUpperCase()}
                 </Avatar>
               ) : (
                 <Image
@@ -50,6 +52,8 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options 
                 sx={{ m: 0 }}
                 primary={
                   <Typography
+                    component={Link}
+                    href={`/${owner}`}
                     variant="body1"
                     sx={{ color: "#FFFFFF", lineHeight: "normal", fontWeight: "100" }}
                     textTransform={"capitalize"}

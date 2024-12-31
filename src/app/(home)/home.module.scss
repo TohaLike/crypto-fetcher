@@ -1,7 +1,6 @@
 .article {
   display: grid;
   grid-template-columns: 250px auto 250px;
-  // grid-template-columns: 250px 1fr;
   width: 100%;
   height: calc(100vh - 50px);
   box-sizing: border-box;
@@ -9,7 +8,7 @@
 
 .right {
   padding-left: 10px;
-  box-sizing: border-box;
+  // box-sizing: border-box;
   border-left: 1px solid #282828;
 }
 
@@ -18,18 +17,10 @@
 }
 
 @media screen and (max-width: 1170px) {
-  // .header {
-  //   display: none;
-  // }
-
   .article {
     grid-template-columns: auto;
     height: 100vh;
   }
-
-  // .navigation {
-  //   display: none;
-  // }
 
   .mobile {
     display: flex;

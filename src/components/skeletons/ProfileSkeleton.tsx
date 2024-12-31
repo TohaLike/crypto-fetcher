@@ -8,7 +8,7 @@ const POST_SKELETON = [
   { height: "200px" },
   { height: "150px" },
   { height: "300px" },
-  { height: "300px" },
+  { height: "200px" },
 ];
 
 export const ProfileSkeleton: React.FC = () => {

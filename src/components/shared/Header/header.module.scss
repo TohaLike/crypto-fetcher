@@ -5,7 +5,8 @@
 }
 
 .header {
-  background-color: #0e0e0e;
+  // background-color: #0e0e0e;
+  border-bottom: 1px solid #282828;
   &__logo {
     display: flex;
     align-items: center;

@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const registrationSchema = z.object({
-  name: z.string().min(1, { message: "Введите имя" }).max(55, { message: "Слишком длинное имя" }),
-  email: z.string().email({ message: "Некорректная почта" }),
+  name: z.string().min(1, { message: "Введите имя" }).max(64, { message: "Слишком длинное имя" }),
+  email: z.string().email({ message: "Некорректная почта" }).max(254, {message: ""}),
   day: z.string().min(1, { message: "Укажите день" }),
   month: z.string().min(1, { message: "Укажите месяц" }),
   year: z.string().min(1, { message: "Укажите год" }),

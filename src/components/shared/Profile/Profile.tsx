@@ -94,22 +94,22 @@ export const Profile: React.FC<Props> = ({
     }
   };
 
-  if (profileLoading && postLoading)
+  if (!profileLoading && postLoading)
     return (
-      <Box sx={{p: "0 10px"}}>
+      <Box sx={{ p: "0 10px" }}>
         <ProfileSkeleton />
       </Box>
     );
 
   function Posts() {
-    return posts?.map((post: any, index: number) => (
+    return sorted?.map((post: any, index: number) => (
       <Post
         key={index}
-        owner={post.owner.name}
-        text={post.text}
-        createdAt={post.createdAt}
-        images={post.images[0]}
-        options={post.owner.options}
+        owner={post?.owner?.name}
+        text={post?.text}
+        createdAt={post?.createdAt}
+        images={post?.images?.flat()}
+        options={post?.owner?.options}
       />
     ));
   }
@@ -184,8 +184,24 @@ export const Profile: React.FC<Props> = ({
                   </div>
                 </div>
                 <div className={profile.user__profile__surname}>
-                  <div>
-                    <Typography variant="h2" fontSize={"36px"} fontFamily={"unset"}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "5px",
+                      maxWidth: "430px",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography
+                      variant="h2"
+                      fontSize={"36px"}
+                      fontFamily={"unset"}
+                      whiteSpace={"nowrap"}
+                      overflow={"hidden"}
+                      textOverflow={"ellipsis"}
+                      sx={{ "@media (max-width: 700px)": { textAlign: "center" } }}
+                    >
                       {name}
                     </Typography>
                     <Typography
@@ -193,11 +209,14 @@ export const Profile: React.FC<Props> = ({
                       fontSize={"16px"}
                       fontWeight={"100"}
                       fontFamily={"unset"}
+                      whiteSpace={"nowrap"}
+                      overflow={"hidden"}
+                      textOverflow={"ellipsis"}
+                      sx={{ "@media (max-width: 700px)": { textAlign: "center" } }}
                     >
                       {email}
                     </Typography>
-                  </div>
-
+                  </Box>
                   <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
                     <FriendsChip
                       title={"Followers"}

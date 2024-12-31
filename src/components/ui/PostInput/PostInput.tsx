@@ -31,7 +31,7 @@ export const PostInput: React.FC<Props> = ({ text, setText }) => {
             width: "100%",
             overflow: "hidden",
             "& .MuiFilledInput-root": {
-              bgcolor: "#0E0E0E",
+              bgcolor: "#000",
               color: "#fff",
               fontSize: "20px",
               fontWeight: "500",
@@ -47,7 +47,9 @@ export const PostInput: React.FC<Props> = ({ text, setText }) => {
               fontSize: "20px",
               fontWeight: "500",
             },
-           
+            "&:hover": {
+              bgcolor: "transparent"
+            }
           }}
         />
       </Box>

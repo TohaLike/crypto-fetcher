@@ -99,11 +99,11 @@ export const UserProfile: React.FC<Props> = ({
     return posts?.map((post: any, index: number) => (
       <Post
         key={index}
-        owner={post.owner.name}
-        text={post.text}
-        createdAt={post.createdAt}
-        images={post.images[0]}
-        options={post.owner.options}
+        owner={post?.owner?.name}
+        text={post?.text}
+        createdAt={post?.createdAt}
+        images={post?.images[0]}
+        options={post?.owner?.options}
       />
     ));
   }
@@ -152,8 +152,15 @@ export const UserProfile: React.FC<Props> = ({
             </div>
           </div>
           <div className={userprofile.user__profile__surname}>
-            <div>
-              <Typography variant="h2" fontSize={"36px"} fontFamily={"unset"}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "5px", maxWidth: "430px", width: "100%" }}>
+              <Typography
+                variant="h2"
+                fontSize={"36px"}
+                fontFamily={"unset"}
+                whiteSpace={"nowrap"}
+                overflow={"hidden"}
+                textOverflow={"ellipsis"}
+              >
                 {name}
               </Typography>
               <Typography
@@ -161,10 +168,13 @@ export const UserProfile: React.FC<Props> = ({
                 fontSize={"16px"}
                 fontWeight={"100"}
                 fontFamily={"unset"}
+                whiteSpace={"nowrap"}
+                overflow={"hidden"}
+                textOverflow={"ellipsis"}
               >
                 {email}
               </Typography>
-            </div>
+            </Box>
 
             <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
               <FriendsChip
