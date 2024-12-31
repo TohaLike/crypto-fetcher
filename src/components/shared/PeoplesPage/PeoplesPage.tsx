@@ -1,10 +1,15 @@
 "use client";
+import { ProfileItemsSkeleton } from "@/components/skeletons";
 import { ProfileItem } from "@/components/ui/ProfileItem/ProfileItem";
 import { useProfiles } from "@/hooks/useProfiles";
 import { Box } from "@mui/material";
 import React from "react";
 export const PeoplesPage: React.FC = () => {
-  const { usersData } = useProfiles();
+  const { usersData, loadingUsers } = useProfiles();
+
+
+  if (loadingUsers) return <ProfileItemsSkeleton />;
+
 
   return (
     <>
