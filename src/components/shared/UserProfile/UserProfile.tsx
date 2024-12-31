@@ -88,7 +88,7 @@ export const UserProfile: React.FC<Props> = ({
     return <ProfileButton title={"Follow"} type="button" onClick={subscribe} />;
   }
 
-  if (profileLoading && postLoading)
+  if (profileLoading)
     return (
       <Box sx={{ p: "0 10px" }}>
         <ProfileSkeleton />
