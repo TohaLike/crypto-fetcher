@@ -1,21 +1,14 @@
 "use client";
 import React, { useContext, useState } from "react";
-import {
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-  Typography,
-  Divider,
-  Box,
-} from "@mui/material";
+import { ListItem, ListItemAvatar, Avatar, ListItemText, Typography, Box } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { ActionButton } from "../ActionButton/ActionButton";
 import { MessageRoomIcon } from "@/components/icons/MessageRoomIcon";
 import { SocketContext } from "@/app/(home)/provider";
 import { useSubscribe } from "@/hooks/useSubscribe";
-import Image from "next/image";
 import { useSubscribeNews } from "@/hooks/useSubscribeNews";
+import { useUnsubscribeUser } from "@/hooks/useUnsubscribeUser";
+import Image from "next/image";
 
 interface Props {
   name: string;
@@ -28,10 +21,20 @@ function ComponentButton({
   title,
   onClick,
   disabled,
+  color,
+  border,
+  bgcolor,
+  minWidth,
+  maxWidth,
 }: {
   onClick: (value: any) => void;
   title: string;
   disabled?: boolean;
+  color?: string;
+  border?: string;
+  bgcolor?: string;
+  minWidth?: string | number;
+  maxWidth?: string | number;
 }) {
   return (
     <ActionButton
@@ -39,11 +42,13 @@ function ComponentButton({
       title={title || "title"}
       size="small"
       borderRadius={"16px"}
-      bgcolor="#fff"
-      color="#000"
+      bgcolor={bgcolor || "#fff"}
+      color={color || "#000"}
       padding={"0 10px"}
       fontWeight={400}
-      border
+      minWidth={minWidth}
+      maxWidth={maxWidth}
+      border={border || "0"}
       onClick={onClick}
       disabled={disabled}
     />
@@ -51,25 +56,85 @@ function ComponentButton({
 }
 
 function AddFriendButton({
-  onClick,
+  subAction,
+  unsubAction,
   checkSubscribe,
   sub,
 }: {
-  onClick: (value: any) => void;
+  subAction: (value: any) => void;
+  unsubAction: (value: any) => void;
   checkSubscribe: any;
   sub: boolean;
 }) {
-  if (checkSubscribe?.length <= 0 && !sub)
-    return <ComponentButton title="Follow" onClick={onClick} />;
+  if (checkSubscribe?.length > 0)
+    return (
+      <ComponentButton
+        title="Fllowing"
+        bgcolor="#000"
+        color="#fff"
+        minWidth={"86px"}
+        maxWidth={"86px"}
+        onClick={unsubAction}
+        border="1px solid #282828"
+      />
+    );
 
-  return <ComponentButton title="Fllowing" onClick={onClick} disabled={true} />;
+  if (sub) {
+    return (
+      <ComponentButton
+        title="Fllowing"
+        bgcolor="#000"
+        color="#fff"
+        minWidth={"86px"}
+        maxWidth={"86px"}
+        onClick={unsubAction}
+        border="1px solid #282828"
+      />
+    );
+  }
+
+  return <ComponentButton title="Follow" onClick={subAction} />;
+}
+
+function RemoveFriend({
+  subAction,
+  unsubAction,
+  checkSubscribe,
+  unsub,
+}: {
+  subAction: (value: any) => void;
+  unsubAction: (value: any) => void;
+  checkSubscribe: any;
+  unsub: boolean;
+}) {
+  if (checkSubscribe?.length < 0) {
+    return <ComponentButton title="Follow" onClick={subAction} />;
+  }
+
+  if (unsub) {
+    return <ComponentButton title="Follow" onClick={subAction} />;
+  }
+
+  return (
+    <ComponentButton
+      title="Fllowing"
+      bgcolor="#000"
+      color="#fff"
+      minWidth={"86px"}
+      maxWidth={"86px"}
+      onClick={unsubAction}
+      border="1px solid #282828"
+    />
+  );
 }
 
 export const ProfileItem: React.FC<Props> = ({ name, userID, options, subscribers }) => {
   const { userData } = useContext<any>(SocketContext);
   const { triggerSubscribe, subscribeData, mutatingSubscribe } = useSubscribe();
   const { triggerNews, dataNews, mutatingNews } = useSubscribeNews();
-  const [sub, setSub] = useState<boolean>(false);
+  const { dataUnsub, triggerUnsub } = useUnsubscribeUser();
+  const [sub, setSub] = useState<boolean>(subscribers?.subscribers > 0);
+  const [unsub, setUnsub] = useState<boolean>(false);
   const router = useRouter();
 
   const redirectToUserProfile = (event: any) => {
@@ -91,21 +156,58 @@ export const ProfileItem: React.FC<Props> = ({ name, userID, options, subscriber
       userId: userID,
     }).then((e) => {
       setSub(true);
+      setUnsub(false);
     });
     await triggerNews({
       userId: userID,
     });
     return;
   };
-  
+
+  const unsubAction = async (event: React.MouseEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+
+    await triggerUnsub({ userId: userID }).then(() => {
+      setUnsub(true);
+      setSub(false);
+    });
+    return;
+  };
+
+  function ButtonsComponent() {
+    if (userData?.id !== userID) {
+      return subscribers?.subscribers < 1 ? (
+        <AddFriendButton
+          subAction={addFriend}
+          unsubAction={unsubAction}
+          checkSubscribe={subscribers?.subscribers}
+          sub={sub}
+        />
+      ) : (
+        <RemoveFriend
+          subAction={addFriend}
+          unsubAction={unsubAction}
+          checkSubscribe={subscribers?.subscribers}
+          unsub={unsub}
+        />
+      );
+    }
+  }
+
   return (
     <>
       <ListItem
         onClick={redirectToUserProfile}
-        sx={{ cursor: "pointer", display: "flex", justifyContent: "space-between" }}
+        sx={{
+          cursor: "pointer",
+          display: "flex",
+          justifyContent: "space-between",
+          borderBottom: "1px solid #282828",
+          height: "73px",
+        }}
       >
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <ListItemAvatar>
+          <ListItemAvatar sx={{ display: "flex", alignItems: "center" }}>
             {options?.image?.length <= 0 ? (
               <Avatar
                 sx={{
@@ -116,7 +218,7 @@ export const ProfileItem: React.FC<Props> = ({ name, userID, options, subscriber
                   fontSize: "24px",
                 }}
               >
-                {name[0].toUpperCase()}
+                {name[0]?.toUpperCase()}
               </Avatar>
             ) : (
               <Image
@@ -127,13 +229,20 @@ export const ProfileItem: React.FC<Props> = ({ name, userID, options, subscriber
                 style={{ objectFit: "cover", borderRadius: "50%", marginRight: "15px" }}
               />
             )}
-          </ListItemAvatar>{" "}
+          </ListItemAvatar>
           <Box sx={{ display: "grid", gridTemplateColumns: "auto" }}>
             <ListItemText
               primary={
                 <Typography
                   variant="inherit"
-                  sx={{ color: "#FFFFFF", fontSize: "18px", whiteSpace: "nowrap" }}
+                  sx={{
+                    color: "#FFFFFF",
+                    fontSize: "18px",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    maxWidth: "400px",
+                  }}
                   textTransform={"capitalize"}
                 >
                   {name}
@@ -167,15 +276,8 @@ export const ProfileItem: React.FC<Props> = ({ name, userID, options, subscriber
           </Box>
         </Box>
 
-        {userData?.id !== userID && (
-          <AddFriendButton
-            onClick={addFriend}
-            checkSubscribe={subscribers?.subscribers}
-            sub={sub}
-          />
-        )}
+        <ButtonsComponent />
       </ListItem>
-      <Divider variant="middle" sx={{ "&.MuiDivider-root": { bgcolor: "#282828" } }} />
     </>
   );
 };

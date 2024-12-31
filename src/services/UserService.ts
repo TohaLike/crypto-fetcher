@@ -36,9 +36,9 @@ export default class UserService {
     }
   }
 
-  static async acceptFriend(data: any) {
+  static async UnsubscribeUser(userId: any) {
     try {
-      const response = await axiosWithAuth.post("/friends/accept", data);
+      const response = await axiosWithAuth.post("/unsubscribe_user", userId);
 
       return response.data
     } catch (e: any) {

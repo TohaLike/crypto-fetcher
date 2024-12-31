@@ -25,7 +25,7 @@ export const ProfileSkeleton: React.FC = () => {
             height: e.height,
             width: "100%",
             bgcolor: "#363636",
-            borderRadius: "16px",
+            borderRadius: "5px",
             m: "10px 0",
           }}
         />

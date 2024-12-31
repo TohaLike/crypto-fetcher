@@ -1,11 +1,13 @@
 "use client";
+import React from "react";
+import { ProfileItemsSkeleton } from "@/components/skeletons";
 import { ProfileItem } from "@/components/ui/ProfileItem/ProfileItem";
 import { useSubscription } from "@/hooks/useSubscription";
 
 export const Friends: React.FC = () => {
-  const { subscribtionsData } = useSubscription();
+  const { subscribtionsData, subscribtionsLoading } = useSubscription();
 
-  console.log(subscribtionsData?.subscribers?.map((item: any) => item));
+  if (subscribtionsLoading) return <ProfileItemsSkeleton />;
 
   return (
     <div>

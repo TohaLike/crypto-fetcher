@@ -7,13 +7,14 @@ import { socket } from "@/socket";
 import { Box, Typography } from "@mui/material";
 import { LinkButton } from "@/components/ui/LinkButton/LinkButton";
 import { SocketContext } from "@/app/(home)/provider";
+import { ProfileItemsSkeleton } from "@/components/skeletons";
 
 export default function MessagesPage() {
   const { isConnected, transport } = useContext<any>(SocketContext);
 
   const [lastMessage, setLastMessage] = useState<any[]>([]);
 
-  const { rooms } = useRooms();
+  const { rooms, loadingRooms } = useRooms();
 
   useEffect(() => {
     socket.on("room__message", (name, message, id, createdAt, usersId) => {
@@ -37,25 +38,33 @@ export default function MessagesPage() {
     return dateB?.getTime() - dateA?.getTime();
   });
 
+  if (loadingRooms) return <ProfileItemsSkeleton />;
+
+  if (sortedChatRooms.length <= 0)
+    return (
+      <div className={roomspage.container__nomessages}>
+        <LinkButton title="Start a conversation" href="/peoples" bgcolor="transparent" />
+      </div>
+    );
+
   return (
     <>
       <div className={roomspage.container}>
-        {sortedChatRooms.length > 0 ? (
-          sortedChatRooms?.map((room, index) => (
-            <ChatRoom
-              key={"room: " + index}
-              name={room.usersId[0]?.name}
-              latestMessage={room.lastMessage?.messageText}
-              roomID={room.usersId[0]?._id}
-              options={room.usersId[0]?.options}
-            />
-          ))
-        ) : (
-          <div className={roomspage.container__nomessages}>
-            <LinkButton title="Start a conversation" href="/peoples" bgcolor="transparent" />
-          </div>
-        )}
+        {sortedChatRooms?.map((room, index) => (
+          <ChatRoom
+            key={"room: " + index}
+            name={room.usersId[0]?.name}
+            latestMessage={room.lastMessage?.messageText}
+            roomID={room.usersId[0]?._id}
+            options={room.usersId[0]?.options}
+          />
+        ))}
       </div>
     </>
   );
 }
+
+// : (
+//   <div className={roomspage.container__nomessages}>
+//     <LinkButton title="Start a conversation" href="/peoples" bgcolor="transparent" />
+//   </div>

@@ -3,7 +3,7 @@ import useSWR from "swr";
 import useSWRImmutable from "swr/immutable";
 
 export const useRooms = () => {
-  const { data, mutate: mutateRooms } = useSWR(
+  const { data, mutate: mutateRooms, isLoading } = useSWR(
     ["rooms"],
     () => SocketService.getAllRooms(),
     {
@@ -15,5 +15,6 @@ export const useRooms = () => {
   return {
     rooms: data,
     mutateRooms,
+    loadingRooms: isLoading
   };
 };

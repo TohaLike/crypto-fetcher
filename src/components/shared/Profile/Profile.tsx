@@ -121,8 +121,6 @@ export const Profile: React.FC<Props> = ({
           height: "calc(100vh - 50px)",
           overflowY: "auto",
           scrollbarWidth: "thin",
-          p: "10px",
-          maxWidth: "700px",
           width: "100%",
           m: "auto",
           "@media (max-width: 1170px)": {

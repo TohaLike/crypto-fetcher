@@ -87,14 +87,14 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
         <div>
           <Box
             sx={{
-              m: "10px 0",
+              // m: "10px 0",
               p: "10px",
               boxSizing: "border-box",
-              borderRadius: "16px",
+              // borderRadius: "16px",
               display: "flex",
               flexDirection: "column",
               // bgcolor: "#0E0E0E",
-              border: "1px solid #282828",
+              borderBottom: "1px solid #282828",
             }}
           >
             <Box display={"flex"} alignItems={"flex-end"} p={"0 0 5px"}>

@@ -4,11 +4,20 @@ import { useFollowing } from "@/hooks/useFriends";
 import { useParams } from "next/navigation";
 import { ProfileItem } from "@/components/ui/ProfileItem/ProfileItem";
 import { Box } from "@mui/material";
+import { ProfileItemsSkeleton } from "@/components/skeletons";
 
 export const FollowingPage: React.FC = () => {
   const params = useParams();
 
-  const { dataFriends } = useFollowing({ userId: params?.profile });
+  const { dataFriends, loadingDataFriends } = useFollowing({ userId: params?.profile });
+
+  if (loadingDataFriends) return <ProfileItemsSkeleton />;
+
+  if (dataFriends?.newsFrom?.length <= 0) return (
+    <div>
+      nope
+    </div>
+  )
 
   return (
     <>
@@ -18,7 +27,7 @@ export const FollowingPage: React.FC = () => {
           overflowY: "auto",
           "@media (max-width: 1170px)": {
             height: "100vh",
-            pb: "110px"
+            pb: "110px",
           },
         }}
       >

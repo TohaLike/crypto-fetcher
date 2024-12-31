@@ -29,58 +29,70 @@ export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID, options
     return;
   };
 
-  // console.log(options)
-
   return (
     <>
-      <ListItem onClick={redirectToRoom} sx={{ cursor: "pointer" }}>
-        <ListItemAvatar>
-          {options?.image?.length > 0 ? (
-            <Image
-              src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options.image[0]?.path}`}
-              alt="avatar"
-              width={50}
-              height={50}
-              draggable={false}
-              style={{ objectFit: "cover", borderRadius: "50%" }}
-            />
-          ) : (
-            <Avatar
-              sx={{
-                bgcolor: `#${options?.defaultColor || "1976d2"}`,
-                width: "50px",
-                height: "50px",
-              }}
-            >
-              {name && name[0]?.toUpperCase()}
-            </Avatar>
-          )}
-        </ListItemAvatar>
-        <Box sx={{ display: "grid", gridTemplateColumns: "auto" }}>
-          <ListItemText
-            primary={
-              <Typography variant="body1" style={{ color: "#FFFFFF" }} textTransform={"capitalize"}>
-                {name}
-              </Typography>
-            }
-            secondary={
-              <Typography
-                variant="body2"
-                style={{
-                  color: "#FFFFFF",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  maxWidth: "500px",
+      <ListItem
+        onClick={redirectToRoom}
+        sx={{
+          cursor: "pointer",
+          borderBottom: "1px solid #282828",
+          width: "auto",
+          height: "73px",
+        }}
+      >
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <ListItemAvatar sx={{ display: "flex", alignItems: "center" }}>
+            {options?.image?.length <= 0 ? (
+              <Avatar
+                sx={{
+                  bgcolor: `#${options?.defaultColor ? options?.defaultColor : "1976d2"}`,
+                  height: "54px",
+                  width: "54px",
+                  mr: "15px",
+                  fontSize: "24px",
                 }}
               >
-                {latestMessage}
-              </Typography>
-            }
-          />
+                {name[0]?.toUpperCase()}
+              </Avatar>
+            ) : (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]?.path}`}
+                alt="avatar"
+                width={54}
+                height={54}
+                style={{ objectFit: "cover", borderRadius: "50%", marginRight: "15px" }}
+              />
+            )}
+          </ListItemAvatar>
+          <Box sx={{ display: "grid", gridTemplateColumns: "auto" }}>
+            <ListItemText
+              primary={
+                <Typography
+                  variant="body1"
+                  style={{ color: "#FFFFFF" }}
+                  textTransform={"capitalize"}
+                >
+                  {name}
+                </Typography>
+              }
+              secondary={
+                <Typography
+                  variant="body2"
+                  style={{
+                    color: "#FFFFFF",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    maxWidth: "500px",
+                  }}
+                >
+                  {latestMessage}
+                </Typography>
+              }
+            />
+          </Box>
         </Box>
       </ListItem>
-      <Divider variant="middle" sx={{ "&.MuiDivider-root": { bgcolor: "#282828" } }} />
     </>
   );
 };
