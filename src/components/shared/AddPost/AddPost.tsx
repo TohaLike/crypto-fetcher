@@ -87,17 +87,14 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
         <div>
           <Box
             sx={{
-              // m: "10px 0",
               p: "10px",
               boxSizing: "border-box",
-              // borderRadius: "16px",
               display: "flex",
               flexDirection: "column",
-              // bgcolor: "#0E0E0E",
               borderBottom: "1px solid #282828",
             }}
           >
-            <Box display={"flex"} alignItems={"flex-end"} p={"0 0 5px"}>
+            <Box display={"flex"} alignItems={"flex-end"} p={"0 0 5px"} m={"0 0 5px"}>
               {userData?.options?.image?.length <= 0 ? (
                 <Avatar
                   sx={{ bgcolor: `#${userData?.options?.defaultColor || "1976d2"}`, mr: "16px" }}
@@ -118,13 +115,15 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
                   }}
                 />
               )}
-              <PostInput text={text} setText={setText} />
+              <Box sx={{ width: "100%", borderBottom: "1px solid #282828" }}>
+                <PostInput text={text} setText={setText} />
+              </Box>
             </Box>
-
+            {/* 
             <Divider
               variant="fullWidth"
               sx={{ "&.MuiDivider-root": { m: "0 0 10px", bgcolor: "#282828" } }}
-            />
+            /> */}
             <Box
               sx={{
                 display: "grid",

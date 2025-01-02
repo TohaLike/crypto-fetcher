@@ -4,7 +4,6 @@ import roomspage from "./roomspage.module.scss";
 import { useRooms } from "@/hooks/useRooms";
 import { ChatRoom } from "@/components/ui";
 import { socket } from "@/socket";
-import { Box, Typography } from "@mui/material";
 import { LinkButton } from "@/components/ui/LinkButton/LinkButton";
 import { SocketContext } from "@/app/(home)/provider";
 import { ProfileItemsSkeleton } from "@/components/skeletons";
@@ -17,10 +16,10 @@ export default function MessagesPage() {
   const { rooms, loadingRooms } = useRooms();
 
   useEffect(() => {
-    socket.on("room__message", (name, message, id, createdAt, usersId) => {
+    socket.on("room__message", (name, message, id, updatedAt, usersId) => {
       setLastMessage([
         ...lastMessage,
-        { name, lastMessage: { messageText: message, createdAt }, id, usersId },
+        { name, lastMessage: { messageText: message, updatedAt }, id, usersId },
       ]);
     });
 
@@ -33,8 +32,8 @@ export default function MessagesPage() {
   const messagesRooms = Array.from(new Map(concatRooms?.map((item) => [item?.id, item])).values());
 
   const sortedChatRooms = messagesRooms?.sort((a, b) => {
-    const dateA = new Date(a?.lastMessage?.createdAt);
-    const dateB = new Date(b?.lastMessage?.createdAt);
+    const dateA = new Date(a?.lastMessage?.updatedAt);
+    const dateB = new Date(b?.lastMessage?.updatedAt);
     return dateB?.getTime() - dateA?.getTime();
   });
 
@@ -57,14 +56,10 @@ export default function MessagesPage() {
             latestMessage={room.lastMessage?.messageText}
             roomID={room.usersId[0]?._id}
             options={room.usersId[0]?.options}
+            createdAt={room?.lastMessage?.updatedAt}
           />
         ))}
       </div>
     </>
   );
 }
-
-// : (
-//   <div className={roomspage.container__nomessages}>
-//     <LinkButton title="Start a conversation" href="/peoples" bgcolor="transparent" />
-//   </div>

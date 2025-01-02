@@ -12,15 +12,19 @@ import {
 import { useRouter } from "next/navigation";
 import { socket } from "@/socket";
 import Image from "next/image";
+import { timeCreated } from "@/helper/timeCreated";
+import { timeUpdated } from "@/helper/timeUpdated";
+import moment from "moment";
 
 interface Props {
   name: string;
   latestMessage: string;
   roomID: string;
   options?: any;
+  createdAt?: string;
 }
 
-export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID, options }) => {
+export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID, options, createdAt }) => {
   const router = useRouter();
 
   const redirectToRoom = () => {
@@ -92,6 +96,9 @@ export const ChatRoom: React.FC<Props> = ({ name, latestMessage, roomID, options
             />
           </Box>
         </Box>
+        <Typography sx={{ position: "absolute", right: "10px", top: "10px", color: "#71767B", fontSize: "12px" }}>
+          {moment(createdAt).locale("ru").format("HH:mm")}
+        </Typography>
       </ListItem>
     </>
   );

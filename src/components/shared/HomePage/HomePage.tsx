@@ -63,9 +63,8 @@ export const HomePage: React.FC = () => {
         <div>
           {dataPosts &&
             sorted?.map((e: any, i: number) => (
-              <div className={homepage.post}>
+              <div className={homepage.post} key={`post-user-${i}`}>
                 <Post
-                  key={`post-user-${i}`}
                   owner={e?.owner?.name}
                   text={e?.text}
                   createdAt={e?.createdAt}
