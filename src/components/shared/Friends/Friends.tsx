@@ -3,6 +3,7 @@ import React from "react";
 import { ProfileItemsSkeleton } from "@/components/skeletons";
 import { ProfileItem } from "@/components/ui/ProfileItem/ProfileItem";
 import { useSubscription } from "@/hooks/useSubscription";
+import { Box } from "@mui/material";
 
 export const Friends: React.FC = () => {
   const { subscribtionsData, subscribtionsLoading } = useSubscription();
@@ -10,7 +11,16 @@ export const Friends: React.FC = () => {
   if (subscribtionsLoading) return <ProfileItemsSkeleton />;
 
   return (
-    <div>
+    <Box
+      sx={{
+        height: "calc(100vh - 50px)",
+        overflowY: "auto",
+        "@media (max-width: 1170px)": {
+          height: "100dvh",
+          pb: "110px",
+        },
+      }}
+    >
       {subscribtionsData?.subscribers?.map((item: any, index: number) => (
         <ProfileItem
           key={`user-profile-${index}`}
@@ -20,6 +30,6 @@ export const Friends: React.FC = () => {
           subscribers={item.subscribers}
         />
       ))}
-    </div>
+    </Box>
   );
 };

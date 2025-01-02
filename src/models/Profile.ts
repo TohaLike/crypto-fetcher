@@ -10,4 +10,6 @@ export interface Profile {
   subscribers: any;
   checkSubscribe: any;
   following: any;
+  countFollowers: number | string;
+  countFollowings: number | string;
 }

@@ -15,9 +15,11 @@ interface Props {
   email?: string;
   posts?: any;
   options?: any;
-  subscribers?: any;
   checkSubscribe?: string;
-  following?: any;
+
+  countFollowers?: number | string;
+  countFollowings?: number | string;
+
   profileLoading?: boolean;
   postLoading?: boolean;
 }
@@ -50,9 +52,9 @@ export const UserProfile: React.FC<Props> = ({
   email,
   posts,
   options,
-  subscribers,
   checkSubscribe,
-  following,
+  countFollowers,
+  countFollowings,
   profileLoading,
   postLoading,
 }) => {
@@ -90,9 +92,9 @@ export const UserProfile: React.FC<Props> = ({
 
   if (profileLoading || postLoading)
     return (
-      <Box sx={{ p: "0 10px" }}>
+      <>
         <ProfileSkeleton />
-      </Box>
+      </>
     );
 
   function Posts() {
@@ -115,12 +117,10 @@ export const UserProfile: React.FC<Props> = ({
           height: "calc(100vh - 50px)",
           overflowY: "auto",
           scrollbarWidth: "thin",
-          // p: "10px",
-          // maxWidth: "700px",
           width: "100%",
           m: "auto",
           "@media (max-width: 1170px)": {
-            height: "100vh",
+            height: "100dvh",
             pb: "110px",
           },
         }}
@@ -152,7 +152,15 @@ export const UserProfile: React.FC<Props> = ({
             </div>
           </div>
           <div className={userprofile.user__profile__surname}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "5px", maxWidth: "430px", width: "100%" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "5px",
+                maxWidth: "430px",
+                width: "100%",
+              }}
+            >
               <Typography
                 variant="h2"
                 fontSize={"36px"}
@@ -160,6 +168,7 @@ export const UserProfile: React.FC<Props> = ({
                 whiteSpace={"nowrap"}
                 overflow={"hidden"}
                 textOverflow={"ellipsis"}
+                sx={{ "@media (max-width: 700px)": { textAlign: "center" } }}
               >
                 {name}
               </Typography>
@@ -171,27 +180,28 @@ export const UserProfile: React.FC<Props> = ({
                 whiteSpace={"nowrap"}
                 overflow={"hidden"}
                 textOverflow={"ellipsis"}
+                sx={{ "@media (max-width: 700px)": { textAlign: "center" } }}
               >
                 {email}
               </Typography>
             </Box>
 
-            <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
+            <Box sx={{ display: "flex", gap: "15px", alignItems: "center" }}>
               <FriendsChip
                 title={"Followers"}
                 path={"followers"}
-                subscribers={subscribers}
+                countSubscribers={countFollowers}
                 userId={userId}
               />
               <FriendsChip
-                title={"Following"}
-                path={"following"}
-                subscribers={following?.newsFrom}
+                title={"Followings"}
+                path={"followings"}
+                countSubscribers={countFollowings}
                 userId={userId}
               />
             </Box>
 
-            <Box sx={{ display: "flex", gap: "5px" }}>
+            <Box sx={{ display: "flex", gap: "5px", mt: "10px" }}>
               <ProfileButton title="Send message" type="button" onClick={redirectToRoom} />
               <AddFriend />
             </Box>

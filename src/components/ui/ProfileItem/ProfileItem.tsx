@@ -9,6 +9,7 @@ import { useSubscribe } from "@/hooks/useSubscribe";
 import { useSubscribeNews } from "@/hooks/useSubscribeNews";
 import { useUnsubscribeUser } from "@/hooks/useUnsubscribeUser";
 import Image from "next/image";
+import { observer } from "mobx-react-lite";
 
 interface Props {
   name: string;
@@ -93,7 +94,7 @@ function AddFriendButton({
     );
   }
 
-  return <ComponentButton title="Follow" onClick={subAction} />;
+  return <ComponentButton title="Follow" onClick={subAction} minWidth={"72px"} maxWidth={"72px"} />;
 }
 
 function RemoveFriend({
@@ -108,11 +109,15 @@ function RemoveFriend({
   unsub: boolean;
 }) {
   if (checkSubscribe?.length < 0) {
-    return <ComponentButton title="Follow" onClick={subAction} />;
+    return (
+      <ComponentButton title="Follow" onClick={subAction} minWidth={"72px"} maxWidth={"72px"} />
+    );
   }
 
   if (unsub) {
-    return <ComponentButton title="Follow" onClick={subAction} />;
+    return (
+      <ComponentButton title="Follow" onClick={subAction} minWidth={"72px"} maxWidth={"72px"} />
+    );
   }
 
   return (
@@ -128,7 +133,7 @@ function RemoveFriend({
   );
 }
 
-export const ProfileItem: React.FC<Props> = ({ name, userID, options, subscribers }) => {
+export const ProfileItem: React.FC<Props> = observer(({ name, userID, options, subscribers }) => {
   const { userData } = useContext<any>(SocketContext);
   const { triggerSubscribe, subscribeData, mutatingSubscribe } = useSubscribe();
   const { triggerNews, dataNews, mutatingNews } = useSubscribeNews();
@@ -280,4 +285,4 @@ export const ProfileItem: React.FC<Props> = ({ name, userID, options, subscriber
       </ListItem>
     </>
   );
-};
+});

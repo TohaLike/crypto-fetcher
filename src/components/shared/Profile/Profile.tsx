@@ -17,8 +17,8 @@ interface Props {
   email?: string;
   posts?: any;
   options?: any;
-  subscribers?: any;
-  following?: any;
+  countFollowers?: number | string;
+  countFollowings?: number | string;
   profileLoading?: boolean;
   postLoading?: boolean;
 }
@@ -45,10 +45,10 @@ export const Profile: React.FC<Props> = ({
   userId,
   name,
   email,
-  subscribers,
+  countFollowers,
   posts,
   options,
-  following,
+  countFollowings,
   profileLoading,
   postLoading,
 }) => {
@@ -96,9 +96,9 @@ export const Profile: React.FC<Props> = ({
 
   if (profileLoading || postLoading)
     return (
-      <Box sx={{ p: "0 10px" }}>
+      <>
         <ProfileSkeleton />
-      </Box>
+      </>
     );
 
   function Posts() {
@@ -124,7 +124,7 @@ export const Profile: React.FC<Props> = ({
           width: "100%",
           m: "auto",
           "@media (max-width: 1170px)": {
-            height: "100vh",
+            height: "100dvh",
             pb: "110px",
           },
         }}
@@ -215,17 +215,17 @@ export const Profile: React.FC<Props> = ({
                       {email}
                     </Typography>
                   </Box>
-                  <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                  <Box sx={{ display: "flex", gap: "15px", alignItems: "center" }}>
                     <FriendsChip
                       title={"Followers"}
                       path={"followers"}
-                      subscribers={subscribers}
+                      countSubscribers={countFollowers}
                       userId={userId}
                     />
                     <FriendsChip
-                      title={"Following"}
-                      path={"following"}
-                      subscribers={following?.newsFrom}
+                      title={"Followings"}
+                      path={"followings"}
+                      countSubscribers={countFollowings}
                       userId={userId}
                     />
                   </Box>

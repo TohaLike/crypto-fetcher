@@ -12,8 +12,20 @@ export const ProfilePage: React.FC = () => {
 
   const params = useParams();
 
-  const { profileData, mutateProfile, profileLoading } = useProfile({ params: params?.profile });
+  const { profileData, profileLoading } = useProfile({ params: params?.profile });
   const { postsData, isLoadingPosts } = useUserPosts({ userId: params?.profile });
+
+  // function splitString(str: any, length: any) {
+  //   let arr: any = str.split(" ");
+  //   let arr2: any = [];
+
+  //   arr.map((e: any, i: number) => {
+  //     if (i < arr.length && i % 200 === 0) arr2.push(arr.slice(i, i + 200).join(" "));
+  //   });
+
+  //   return arr2;
+  // }
+
 
   return (
     <>
@@ -24,8 +36,8 @@ export const ProfilePage: React.FC = () => {
           email={profileData?.email}
           posts={postsData}
           options={profileData?.options}
-          subscribers={profileData?.subscribers?.subscribers}
-          following={profileData?.following}
+          countFollowers={profileData?.countFollowers}
+          countFollowings={profileData?.countFollowings}
           profileLoading={profileLoading}
           postLoading={isLoadingPosts}
         />
@@ -38,9 +50,9 @@ export const ProfilePage: React.FC = () => {
           email={profileData?.email}
           posts={postsData}
           options={profileData?.options}
-          subscribers={profileData?.subscribers?.subscribers}
+          countFollowers={profileData?.countFollowers}
+          countFollowings={profileData?.countFollowings}
           checkSubscribe={profileData?.checkSubscribe}
-          following={profileData?.following}
           profileLoading={profileLoading}
           postLoading={isLoadingPosts}
         />

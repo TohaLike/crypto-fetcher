@@ -6,12 +6,14 @@ import { usePosts } from "@/hooks/usePosts";
 import { Post } from "@/components/ui/Post/Post";
 import { ActionButton } from "@/components/ui";
 import { PostResponse } from "@/models/posts/postsResponse";
+import { ProfileSkeleton } from "@/components/skeletons";
+import { Box } from "@mui/material";
 
 export const HomePage: React.FC = () => {
   const [updated, setUpdated] = useState<number>(0);
   const [addedPost, setAddedPost] = useState<PostResponse[] | any>([]);
 
-  const { dataPosts, mutatePosts, error, loadMoreData, intersectionRef } = usePosts();
+  const { dataPosts, mutatePosts, error, loadMoreData, intersectionRef, isLoading } = usePosts();
 
   useEffect(() => {
     setUpdated(loadMoreData);
@@ -32,11 +34,17 @@ export const HomePage: React.FC = () => {
     return dateB.getTime() - dateA.getTime();
   });
 
+  if (isLoading)
+    return (
+      <div>
+        <ProfileSkeleton />
+      </div>
+    );
+
   return (
     <>
       <div className={homepage.container}>
         <AddPost setAddedPost={setAddedPost} addedPost={addedPost} />
-
         {updated > 0 && (
           <ActionButton
             title={`Show ${loadMoreData} posts`}
@@ -52,19 +60,22 @@ export const HomePage: React.FC = () => {
             maxHeight={"30px"}
           />
         )}
-        {dataPosts &&
-          sorted?.map((e: any, i: number) => (
-            <Post
-              key={`post-user-${i}`}
-              owner={e?.owner?.name}
-              text={e?.text}
-              createdAt={e?.createdAt}
-              images={e?.images?.flat()}
-              options={e?.owner?.options}
-            />
-          ))}
-
-        <div ref={error ? null : intersectionRef}>end</div>
+        <div>
+          {dataPosts &&
+            sorted?.map((e: any, i: number) => (
+              <div className={homepage.post}>
+                <Post
+                  key={`post-user-${i}`}
+                  owner={e?.owner?.name}
+                  text={e?.text}
+                  createdAt={e?.createdAt}
+                  images={e?.images?.flat()}
+                  options={e?.owner?.options}
+                />
+              </div>
+            ))}
+        </div>
+        <div ref={error ? null : intersectionRef}></div>
       </div>
     </>
   );

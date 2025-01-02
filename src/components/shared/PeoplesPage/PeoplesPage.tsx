@@ -10,6 +10,8 @@ export const PeoplesPage: React.FC = () => {
 
   if (loadingUsers) return <ProfileItemsSkeleton />;
 
+  console.log(usersData)
+
 
   return (
     <>

@@ -9,10 +9,17 @@
   margin: auto;
 }
 
+.post {
+  border-bottom: 1px solid #282828;
+}
+
+.post:last-child {
+  border-bottom: 0;
+}
 
 @media (max-width: 1170px) {
   .container {
-    height: 100vh;
-    padding-bottom: 110px;
+    height: 100dvh;
+    padding-bottom: 120px;
   }  
 }

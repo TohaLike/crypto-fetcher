@@ -20,7 +20,7 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options 
       <ListItem
         sx={{
           // bgcolor: "#0E0E0E",
-          borderBottom: "1px solid #282828",
+          // borderBottom: "1px solid #282828",
           p: "10px",
           // m: "10px 0",
           // borderRadius: "16px",

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 
 const POST_SKELETON = [
   { height: "220px" },
@@ -14,22 +14,24 @@ const POST_SKELETON = [
 export const ProfileSkeleton: React.FC = () => {
   return (
     <>
-      {POST_SKELETON.map((e: any, i: number) => (
-        <Skeleton
-          key={`skeleton-${i}`}
-          variant="rectangular"
-          sx={{
-            animationDelay: `${i * 0.1}s`,
-            animationDuration: "1.5s",
-            maxWidth: "700px",
-            height: e.height,
-            width: "100%",
-            bgcolor: "#363636",
-            borderRadius: "5px",
-            m: "10px 0",
-          }}
-        />
-      ))}
+      <Box p={"0 10px"}>
+        {POST_SKELETON.map((e: any, i: number) => (
+          <Skeleton
+            key={`skeleton-${i}`}
+            variant="rectangular"
+            sx={{
+              animationDelay: `${i * 0.1}s`,
+              animationDuration: "1.5s",
+              maxWidth: "700px",
+              height: e.height,
+              width: "100%",
+              bgcolor: "#363636",
+              borderRadius: "5px",
+              m: "10px 0",
+            }}
+          />
+        ))}
+      </Box>
     </>
   );
 };
