@@ -66,6 +66,9 @@ export const Post: React.FC<Props> = ({ ownerId, owner, text, createdAt, images,
                         fontWeight: "100",
                         textDecoration: "none",
                         textTransform: "capitalize",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
                         ":hover": {
                           textDecoration: "underline",
                         },
@@ -73,7 +76,7 @@ export const Post: React.FC<Props> = ({ ownerId, owner, text, createdAt, images,
                     >
                       {owner}
                     </Typography>
-                    <span className={post.createdAt}>{timeCreated(createdAt)}</span>
+                    <span style={{ minWidth: "125px", maxWidth: "125px" }} className={post.createdAt}>{timeCreated(createdAt)}</span>
                   </Box>
                 }
                 secondary={
