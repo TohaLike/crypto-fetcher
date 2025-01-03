@@ -22,7 +22,6 @@ export const ProfileSkeleton: React.FC = () => {
             sx={{
               animationDelay: `${i * 0.1}s`,
               animationDuration: "1.5s",
-              // maxWidth: "700px",
               height: e.height,
               width: "100%",
               bgcolor: "#363636",

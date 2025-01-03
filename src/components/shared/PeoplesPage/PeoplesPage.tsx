@@ -10,9 +10,6 @@ export const PeoplesPage: React.FC = () => {
 
   if (loadingUsers) return <ProfileItemsSkeleton />;
 
-  console.log(usersData)
-
-
   return (
     <>
       <Box
@@ -20,7 +17,7 @@ export const PeoplesPage: React.FC = () => {
           height: "calc(100vh - 50px)",
           overflowY: "auto",
           "@media (max-width: 1170px)": {
-            height: "100vh",
+            height: "100dvh",
             pb: "110px"
           },
         }}

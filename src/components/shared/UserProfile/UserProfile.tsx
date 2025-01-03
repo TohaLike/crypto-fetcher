@@ -8,6 +8,7 @@ import { useParams, useRouter } from "next/navigation";
 import { socket } from "@/socket";
 import { useSubscribeNews } from "@/hooks/useSubscribeNews";
 import { ProfileSkeleton } from "@/components/skeletons";
+import { useUnsubscribeUser } from "@/hooks/useUnsubscribeUser";
 
 interface Props {
   userId?: string;
@@ -46,6 +47,50 @@ function ProfileButton({ onClick, title, type, disabled }: any) {
   );
 }
 
+function AddFriendButton({
+  subAction,
+  unsubAction,
+  checkSubscribe,
+  sub,
+}: {
+  subAction: (value: any) => void;
+  unsubAction: (value: any) => void;
+  checkSubscribe: any;
+  sub: boolean;
+}) {
+  if (checkSubscribe) {
+    return <ProfileButton title="Fllowing" onClick={unsubAction} />;
+  }
+
+  if (sub) {
+    return <ProfileButton title="Fllowing" onClick={unsubAction} />;
+  }
+
+  return <ProfileButton title="Follow" onClick={subAction} />;
+}
+
+function RemoveFriend({
+  subAction,
+  unsubAction,
+  checkSubscribe,
+  unsub,
+}: {
+  subAction: (value: any) => void;
+  unsubAction: (value: any) => void;
+  checkSubscribe: any;
+  unsub: boolean;
+}) {
+  if (!checkSubscribe) {
+    return <ProfileButton title="Follow" onClick={subAction} />;
+  }
+
+  if (unsub) {
+    return <ProfileButton title="Follow" onClick={subAction} />;
+  }
+
+  return <ProfileButton title="Fllowing" onClick={unsubAction} />;
+}
+
 export const UserProfile: React.FC<Props> = ({
   userId,
   name,
@@ -58,10 +103,11 @@ export const UserProfile: React.FC<Props> = ({
   profileLoading,
   postLoading,
 }) => {
-  const [sub, setSub] = useState<boolean>(false);
-
   const { triggerSubscribe, subscribeData, mutatingSubscribe } = useSubscribe();
   const { triggerNews, dataNews, mutatingNews } = useSubscribeNews();
+  const { dataUnsub, triggerUnsub } = useUnsubscribeUser();
+  const [sub, setSub] = useState<boolean>(false);
+  const [unsub, setUnsub] = useState<boolean>(false);
 
   const router = useRouter();
   const params = useParams();
@@ -70,32 +116,6 @@ export const UserProfile: React.FC<Props> = ({
     socket.emit("join__room", params?.profile);
     return;
   };
-
-  const subscribe = async () => {
-    await triggerSubscribe({
-      userId: userId,
-    }).then((e) => {
-      setSub(true);
-    });
-    await triggerNews({
-      userId: userId,
-    });
-    return;
-  };
-
-  function AddFriend() {
-    if (sub || checkSubscribe)
-      return <ProfileButton title="Following" type="button" disabled={true} />;
-
-    return <ProfileButton title={"Follow"} type="button" onClick={subscribe} />;
-  }
-
-  if (profileLoading || postLoading)
-    return (
-      <>
-        <ProfileSkeleton />
-      </>
-    );
 
   function Posts() {
     return posts?.map((post: any, index: number) => (
@@ -109,6 +129,62 @@ export const UserProfile: React.FC<Props> = ({
       />
     ));
   }
+
+  const addFriend = async (event: React.MouseEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+
+    await triggerSubscribe({
+      userId: userId,
+    }).then((e) => {
+      setSub(true);
+      setUnsub(false);
+    });
+    await triggerNews({
+      userId: userId,
+    });
+    return;
+  };
+
+  const unsubAction = async (event: React.MouseEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+
+    await triggerUnsub({ userId: userId }).then(() => {
+      setUnsub(true);
+      setSub(false);
+    });
+    return;
+  };
+
+  console.log(checkSubscribe);
+
+  function ButtonsComponent() {
+    if (checkSubscribe) {
+      return (
+        <AddFriendButton
+          subAction={addFriend}
+          unsubAction={unsubAction}
+          checkSubscribe={checkSubscribe}
+          sub={sub}
+        />
+      );
+    } else {
+      return (
+        <RemoveFriend
+          subAction={addFriend}
+          unsubAction={unsubAction}
+          checkSubscribe={checkSubscribe}
+          unsub={unsub}
+        />
+      );
+    }
+  }
+
+  if (profileLoading || postLoading)
+    return (
+      <>
+        <ProfileSkeleton />
+      </>
+    );
 
   return (
     <>
@@ -203,7 +279,8 @@ export const UserProfile: React.FC<Props> = ({
 
             <Box sx={{ display: "flex", gap: "5px", mt: "10px" }}>
               <ProfileButton title="Send message" type="button" onClick={redirectToRoom} />
-              <AddFriend />
+              <ButtonsComponent />
+              {/* <AddFriend /> */}
             </Box>
           </div>
         </div>

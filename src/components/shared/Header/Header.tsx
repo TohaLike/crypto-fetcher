@@ -24,6 +24,7 @@ export const Header: React.FC = ({}) => {
               columnGap: "11px",
               textDecoration: "none",
               color: "inherit",
+              p: "0 10px",
             }}
           >
             <MainIcon />
