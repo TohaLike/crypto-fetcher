@@ -10,6 +10,10 @@ import { useSubscribeNews } from "@/hooks/useSubscribeNews";
 import { ProfileSkeleton } from "@/components/skeletons";
 import { useUnsubscribeUser } from "@/hooks/useUnsubscribeUser";
 
+import PersonRemoveOutlinedIcon from "@mui/icons-material/PersonRemoveOutlined";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
+import { MessageRoomIcon } from "@/components/icons/MessageRoomIcon";
+
 interface Props {
   userId?: string;
   name?: string;
@@ -17,10 +21,8 @@ interface Props {
   posts?: any;
   options?: any;
   checkSubscribe?: string;
-
   countFollowers?: number | string;
   countFollowings?: number | string;
-
   profileLoading?: boolean;
   postLoading?: boolean;
 }
@@ -32,17 +34,61 @@ function ProfileButton({ onClick, title, type, disabled }: any) {
       title={title || "btn"}
       onClick={onClick}
       disabled={disabled}
-      // disabled={!uploadMutation ? false : true}
-      // title={uploadMutation ? <CircularProgress size={"20px"} sx={{ zIndex: 100 }} /> : "Post"}
-      width={"100%"}
+      width={"max-content"}
+      display={"flex"}
+      justifyContent={"space-between"}
+      gap={"5px"}
+      minHeight={"30px"}
+      fontSize={"14px"}
+      fontWeight={"500"}
+      icon={<MessageRoomIcon width={"16px"} height={"16px"} color={"#000"} />}
+      bgcolor="#fff"
+      color="#000"
+      padding={"0 10px"}
+      hover="#d9d9d9"
+    />
+  );
+}
+
+function ButtonUnfollow({ onClick }: any) {
+  return (
+    <ActionButton
+      type="button"
+      title="Unfollow"
+      onClick={onClick}
+      icon={<PersonRemoveOutlinedIcon sx={{ width: "20px", height: "20px" }} />}
+      width={"max-content"}
+      display={"flex"}
+      justifyContent={"space-between"}
+      gap={"5px"}
+      minHeight={"30px"}
+      fontSize={"14px"}
+      fontWeight={"500"}
+      bgcolor="#000"
+      color="#fff"
+      border={"1px solid #282828"}
+      padding={"0 10px"}
+    />
+  );
+}
+
+function ButtonFollow({ onClick }: any) {
+  return (
+    <ActionButton
+      type="button"
+      title="Follow"
+      onClick={onClick}
+      icon={<PersonAddAltOutlinedIcon sx={{ width: "20px", height: "20px" }} />}
+      width={"max-content"}
+      display={"flex"}
+      justifyContent={"space-between"}
+      gap={"5px"}
       minHeight={"30px"}
       fontSize={"14px"}
       fontWeight={"500"}
       bgcolor="#fff"
       color="#000"
       padding={"0 10px"}
-      minWidth={"130px"}
-      maxWidth={"130px"}
     />
   );
 }
@@ -59,14 +105,14 @@ function AddFriendButton({
   sub: boolean;
 }) {
   if (checkSubscribe) {
-    return <ProfileButton title="Fllowing" onClick={unsubAction} />;
+    return <ButtonUnfollow onClick={unsubAction} />;
   }
 
   if (sub) {
-    return <ProfileButton title="Fllowing" onClick={unsubAction} />;
+    return <ButtonUnfollow onClick={unsubAction} />;
   }
 
-  return <ProfileButton title="Follow" onClick={subAction} />;
+  return <ButtonFollow onClick={subAction} />;
 }
 
 function RemoveFriend({
@@ -81,14 +127,14 @@ function RemoveFriend({
   unsub: boolean;
 }) {
   if (!checkSubscribe) {
-    return <ProfileButton title="Follow" onClick={subAction} />;
+    return <ButtonFollow onClick={subAction} />;
   }
 
   if (unsub) {
-    return <ProfileButton title="Follow" onClick={subAction} />;
+    return <ButtonFollow onClick={subAction} />;
   }
 
-  return <ProfileButton title="Fllowing" onClick={unsubAction} />;
+  return <ButtonUnfollow onClick={unsubAction} />;
 }
 
 export const UserProfile: React.FC<Props> = ({
@@ -103,32 +149,20 @@ export const UserProfile: React.FC<Props> = ({
   profileLoading,
   postLoading,
 }) => {
-  const { triggerSubscribe, subscribeData, mutatingSubscribe } = useSubscribe();
-  const { triggerNews, dataNews, mutatingNews } = useSubscribeNews();
-  const { dataUnsub, triggerUnsub } = useUnsubscribeUser();
+  const { triggerSubscribe, mutatingSubscribe } = useSubscribe();
+  const { triggerNews, mutatingNews } = useSubscribeNews();
+  const { triggerUnsub } = useUnsubscribeUser();
   const [sub, setSub] = useState<boolean>(false);
   const [unsub, setUnsub] = useState<boolean>(false);
 
   const router = useRouter();
   const params = useParams();
+
   const redirectToRoom = () => {
     router.push(`/messages/user?res=${params?.profile}`);
     socket.emit("join__room", params?.profile);
     return;
   };
-
-  function Posts() {
-    return posts?.map((post: any, index: number) => (
-      <Post
-        key={index}
-        owner={post?.owner?.name}
-        text={post?.text}
-        createdAt={post?.createdAt}
-        images={post?.images[0]}
-        options={post?.owner?.options}
-      />
-    ));
-  }
 
   const addFriend = async (event: React.MouseEvent<HTMLInputElement>) => {
     event.stopPropagation();
@@ -155,28 +189,22 @@ export const UserProfile: React.FC<Props> = ({
     return;
   };
 
-  console.log(checkSubscribe);
-
   function ButtonsComponent() {
-    if (checkSubscribe) {
-      return (
-        <AddFriendButton
-          subAction={addFriend}
-          unsubAction={unsubAction}
-          checkSubscribe={checkSubscribe}
-          sub={sub}
-        />
-      );
-    } else {
-      return (
-        <RemoveFriend
-          subAction={addFriend}
-          unsubAction={unsubAction}
-          checkSubscribe={checkSubscribe}
-          unsub={unsub}
-        />
-      );
-    }
+    return !checkSubscribe ? (
+      <AddFriendButton
+        subAction={addFriend}
+        unsubAction={unsubAction}
+        checkSubscribe={checkSubscribe}
+        sub={sub}
+      />
+    ) : (
+      <RemoveFriend
+        subAction={addFriend}
+        unsubAction={unsubAction}
+        checkSubscribe={checkSubscribe}
+        unsub={unsub}
+      />
+    );
   }
 
   if (profileLoading || postLoading)
@@ -185,6 +213,27 @@ export const UserProfile: React.FC<Props> = ({
         <ProfileSkeleton />
       </>
     );
+
+  function Posts() {
+    if (posts?.length <= 0)
+      return (
+        <Box sx={{ width: "100%", display: "flex", justifyContent: "center", p: "30px 10px" }}>
+          <Typography sx={{ fontSize: "18px" }}>The user has no posts yet</Typography>
+        </Box>
+      );
+
+    return posts?.map((post: any, index: number) => (
+      <Post
+        key={index}
+        ownerId={post?.owner?._id}
+        owner={post?.owner?.name}
+        text={post?.text}
+        createdAt={post?.createdAt}
+        images={post?.images[0]}
+        options={post?.owner?.options}
+      />
+    ));
+  }
 
   return (
     <>
@@ -280,7 +329,6 @@ export const UserProfile: React.FC<Props> = ({
             <Box sx={{ display: "flex", gap: "5px", mt: "10px" }}>
               <ProfileButton title="Send message" type="button" onClick={redirectToRoom} />
               <ButtonsComponent />
-              {/* <AddFriend /> */}
             </Box>
           </div>
         </div>

@@ -56,6 +56,24 @@ function ComponentButton({
   );
 }
 
+function ButtonFollow({ onClick }: { onClick: (value: any) => void }) {
+  return <ComponentButton title="Follow" onClick={onClick} minWidth={"72px"} maxWidth={"72px"} />;
+}
+
+function ButtonUnfollow({ onClick }: { onClick: (value: any) => void }) {
+  return (
+    <ComponentButton
+      title="Unfollow"
+      bgcolor="#000"
+      color="#fff"
+      minWidth={"86px"}
+      maxWidth={"86px"}
+      onClick={onClick}
+      border="1px solid #282828"
+    />
+  );
+}
+
 function AddFriendButton({
   subAction,
   unsubAction,
@@ -67,34 +85,13 @@ function AddFriendButton({
   checkSubscribe: any;
   sub: boolean;
 }) {
-  if (checkSubscribe?.length > 0)
-    return (
-      <ComponentButton
-        title="Fllowing"
-        bgcolor="#000"
-        color="#fff"
-        minWidth={"86px"}
-        maxWidth={"86px"}
-        onClick={unsubAction}
-        border="1px solid #282828"
-      />
-    );
+  if (checkSubscribe?.length > 0) return <ButtonUnfollow onClick={unsubAction} />;
 
   if (sub) {
-    return (
-      <ComponentButton
-        title="Fllowing"
-        bgcolor="#000"
-        color="#fff"
-        minWidth={"86px"}
-        maxWidth={"86px"}
-        onClick={unsubAction}
-        border="1px solid #282828"
-      />
-    );
+    return <ButtonUnfollow onClick={unsubAction} />;
   }
 
-  return <ComponentButton title="Follow" onClick={subAction} minWidth={"72px"} maxWidth={"72px"} />;
+  return <ButtonFollow onClick={subAction} />;
 }
 
 function RemoveFriend({
@@ -109,28 +106,14 @@ function RemoveFriend({
   unsub: boolean;
 }) {
   if (checkSubscribe?.length < 0) {
-    return (
-      <ComponentButton title="Follow" onClick={subAction} minWidth={"72px"} maxWidth={"72px"} />
-    );
+    return <ButtonFollow onClick={subAction} />;
   }
 
   if (unsub) {
-    return (
-      <ComponentButton title="Follow" onClick={subAction} minWidth={"72px"} maxWidth={"72px"} />
-    );
+    return <ButtonFollow onClick={subAction} />;
   }
 
-  return (
-    <ComponentButton
-      title="Fllowing"
-      bgcolor="#000"
-      color="#fff"
-      minWidth={"86px"}
-      maxWidth={"86px"}
-      onClick={unsubAction}
-      border="1px solid #282828"
-    />
-  );
+  return <ButtonUnfollow onClick={unsubAction} />;
 }
 
 export const ProfileItem: React.FC<Props> = observer(({ name, userID, options, subscribers }) => {

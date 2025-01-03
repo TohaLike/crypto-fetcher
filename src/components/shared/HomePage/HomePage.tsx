@@ -15,6 +15,8 @@ export const HomePage: React.FC = () => {
 
   const { dataPosts, mutatePosts, error, loadMoreData, intersectionRef, isLoading } = usePosts();
 
+  console.log(dataPosts);
+
   useEffect(() => {
     setUpdated(loadMoreData);
   }, [loadMoreData]);
@@ -65,6 +67,7 @@ export const HomePage: React.FC = () => {
             sorted?.map((e: any, i: number) => (
               <div className={homepage.post} key={`post-user-${i}`}>
                 <Post
+                  ownerId={e?.owner?._id}
                   owner={e?.owner?.name}
                   text={e?.text}
                   createdAt={e?.createdAt}

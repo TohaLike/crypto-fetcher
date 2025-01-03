@@ -83,7 +83,6 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
           name="file"
           value={content}
         />
-
         <div>
           <Box
             sx={{
@@ -115,15 +114,10 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
                   }}
                 />
               )}
-              <Box sx={{ width: "100%", borderBottom: "1px solid #282828" }}>
+              <Box sx={{ width: "100%" }}>
                 <PostInput text={text} setText={setText} />
               </Box>
             </Box>
-            {/* 
-            <Divider
-              variant="fullWidth"
-              sx={{ "&.MuiDivider-root": { m: "0 0 10px", bgcolor: "#282828" } }}
-            /> */}
             <Box
               sx={{
                 display: "grid",

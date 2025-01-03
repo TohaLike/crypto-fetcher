@@ -88,6 +88,18 @@
 @media (max-width: 700px) {
   .user {
     &__profile {
+      &__photo {
+        border-radius: 200px;
+        max-width: 150px;
+        max-height: 150px;
+      }
+
+      &__upload {
+        &__icon {
+          height: 150px;
+          width: 150px;
+        }
+      }
       &__info {
         display: flex;
         flex-direction: column;

@@ -57,10 +57,6 @@
       }
     }
 
-    &__upload:hover {
-      background-color: #0e0e0e21;
-    }
-
     &__buttons {
       display: flex;
       flex-direction: column;
@@ -83,8 +79,6 @@
   justify-content: flex-start;
 }
 
-
-
 @media (max-width: 700px) {
   .user {
     &__profile {
@@ -94,6 +88,19 @@
         align-items: center;
         column-gap: 10px;
       }
+      &__photo {
+        border-radius: 200px;
+        max-width: 150px;
+        max-height: 150px;
+      }
+
+      &__upload {
+        &__icon {
+          height: 150px;
+          width: 150px;
+        }
+      }
+
       &__surname {
         align-items: center;
       }

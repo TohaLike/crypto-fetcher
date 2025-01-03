@@ -5,8 +5,10 @@ import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, Typography } from 
 import { PostImage } from "../PostImage/PostImage";
 import { timeCreated } from "@/helper/timeCreated";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
+  ownerId: string | null;
   owner?: string | null | undefined;
   text?: string;
   createdAt?: string;
@@ -14,49 +16,65 @@ interface Props {
   options?: any;
 }
 
-export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options }) => {
+export const Post: React.FC<Props> = ({ ownerId, owner, text, createdAt, images, options }) => {
   return (
     <>
       <ListItem
         sx={{
-          // bgcolor: "#0E0E0E",
-          // borderBottom: "1px solid #282828",
           p: "10px",
-          // m: "10px 0",
-          // borderRadius: "16px",
           boxSizing: "border-box",
           width: "auto",
         }}
       >
         <div className={post.container}>
           <div className={post.header}>
-            <ListItemAvatar sx={{ minWidth: "40px", mr: "5px" }}>
-              {options?.image?.length <= 0 ? (
-                <Avatar sx={{ bgcolor: `#${options?.defaultColor || "1976d2"}` }}>
-                  {owner && owner[0]?.toUpperCase()}
-                </Avatar>
-              ) : (
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]?.path}`}
-                  alt="avatar"
-                  width={40}
-                  height={40}
-                  style={{ objectFit: "cover", borderRadius: "50%" }}
-                />
-              )}
+            <ListItemAvatar
+              sx={{
+                minWidth: "40px",
+                mr: "5px",
+              }}
+            >
+              <Box component={Link} href={`/${ownerId}`} sx={{ textDecoration: "none" }}>
+                {options?.image?.length <= 0 ? (
+                  <Avatar sx={{ bgcolor: `#${options?.defaultColor || "1976d2"}` }}>
+                    {owner && owner[0]?.toUpperCase()}
+                  </Avatar>
+                ) : (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]?.path}`}
+                    alt="avatar"
+                    width={40}
+                    height={40}
+                    style={{ objectFit: "cover", borderRadius: "50%" }}
+                  />
+                )}
+              </Box>
             </ListItemAvatar>
 
             <Box sx={{ display: "grid", gridTemplateColumns: "auto" }}>
               <ListItemText
                 sx={{ m: 0 }}
                 primary={
-                  <Typography
-                    variant="body1"
-                    sx={{ color: "#FFFFFF", lineHeight: "normal", fontWeight: "100" }}
-                    textTransform={"capitalize"}
-                  >
-                    {owner} <span className={post.createdAt}>{timeCreated(createdAt)}</span>
-                  </Typography>
+                  <Box display={"flex"} alignItems={"center"} gap={"6px"}>
+                    <Typography
+                      component={Link}
+                      href={`/${ownerId}`}
+                      variant="body1"
+                      sx={{
+                        color: "#FFFFFF",
+                        lineHeight: "normal",
+                        fontWeight: "100",
+                        textDecoration: "none",
+                        textTransform: "capitalize",
+                        ":hover": {
+                          textDecoration: "underline",
+                        },
+                      }}
+                    >
+                      {owner}
+                    </Typography>
+                    <span className={post.createdAt}>{timeCreated(createdAt)}</span>
+                  </Box>
                 }
                 secondary={
                   <Typography
@@ -115,16 +133,3 @@ export const Post: React.FC<Props> = ({ owner, text, createdAt, images, options 
     </>
   );
 };
-
-// const cacheImages = async (srcArray: any) => {
-//   const promises = await srcArray.map((src: any) => {
-//     return new Promise((resolve, reject) => {
-//       const image = new Image();
-//       image.onload = () => resolve(image);
-//       image.onerror = () => reject();
-//       image.src = `${process.env.NEXT_PUBLIC_SERVER_URL}/${src.path}`;
-//     });
-//   });
-
-//   await Promise.all(promises);
-// };
