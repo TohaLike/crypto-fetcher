@@ -105,6 +105,7 @@ export const Profile: React.FC<Props> = ({
     return sorted?.map((post: any, index: number) => (
       <Post
         key={index}
+        ownerId={post?.owner?.id}
         owner={post?.owner?.name}
         text={post?.text}
         createdAt={post?.createdAt}
