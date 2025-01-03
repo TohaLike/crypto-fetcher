@@ -53,13 +53,16 @@ export const HomePage: React.FC = () => {
             onClick={loadPosts}
             type="button"
             width={"100%"}
-            bgcolor="#0E0E0E"
+            bgcolor="#000"
             color="#00EAFF"
             boxSizing={"border-box"}
             fontSize={"15px"}
             fontWeight={"100"}
             height={"100%"}
+            padding={"18px"}
             maxHeight={"30px"}
+            borderRadius={"0px"}
+            borderBottom={"1px solid #282828"}
           />
         )}
         <div>
