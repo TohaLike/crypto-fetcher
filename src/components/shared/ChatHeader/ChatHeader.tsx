@@ -18,6 +18,7 @@ export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
       <AppBar
         position="static"
         sx={{
+          p: "0 5px",
           bgcolor: "#1A1A1A",
           "&.MuiAppBar-root": {
             maxHeight: "50px",
@@ -40,18 +41,25 @@ export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
               },
             }}
           >
-            <LinkButton
-              icon={<BackIcon />}
-              title={""}
-              p={"5px 10px 5px 5px"}
-              color={"#707070"}
-              minWidth={"24px"}
-              minHeight={"24px"}
-              bgcolor={"transparent"}
-              href={`/messages`}
-              cursor={"pointer"}
-            />
-            {userData.options?.image?.length <= 0 ? (
+            <Box
+              sx={{
+                display: "none",
+                "@media (max-width: 1170px)": { display: "flex", alignItems: "center", pr: "10px" },
+              }}
+            >
+              <LinkButton
+                icon={<BackIcon />}
+                title={""}
+                p={"5px 10px 5px 5px"}
+                color={"#707070"}
+                minWidth={"24px"}
+                minHeight={"24px"}
+                bgcolor={"transparent"}
+                href={`/messages`}
+                cursor={"pointer"}
+              />
+            </Box>
+            {userData?.options?.image?.length <= 0 ? (
               <Avatar
                 component={Link}
                 href={`/${userData?.id}`}

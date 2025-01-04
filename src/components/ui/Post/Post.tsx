@@ -24,6 +24,7 @@ export const Post: React.FC<Props> = ({ ownerId, owner, text, createdAt, images,
           p: "10px",
           boxSizing: "border-box",
           width: "auto",
+          borderBottom: "1px solid #282828",
         }}
       >
         <div className={post.container}>

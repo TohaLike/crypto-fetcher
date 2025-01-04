@@ -89,6 +89,7 @@ function ButtonFollow({ onClick }: any) {
       bgcolor="#fff"
       color="#000"
       padding={"0 10px"}
+      hover="#d9d9d9"
     />
   );
 }
@@ -245,8 +246,8 @@ export const UserProfile: React.FC<Props> = ({
           width: "100%",
           m: "auto",
           "@media (max-width: 1170px)": {
-            height: "100dvh",
-            pb: "110px",
+            height: "115dvh",
+            pb: "210px",
           },
         }}
       >

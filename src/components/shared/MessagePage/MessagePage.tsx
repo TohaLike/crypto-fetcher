@@ -20,18 +20,15 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import { SocketContext } from "@/app/(home)/provider";
 
-type myKey = {
-  [key: string]: any;
-};
-
 export const MessagePage: React.FC = () => {
   const { isConnected, transport } = useContext<any>(SocketContext);
 
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState<string>("");
 
+
   const [typing, setTyping] = useState<boolean>(false);
-  const [typingVisible, setTypingVisible] = useState<myKey>();
+  const [typingVisible, setTypingVisible] = useState<any>();
 
   const searchParams = useSearchParams();
   const search = searchParams.get("res");
@@ -60,7 +57,7 @@ export const MessagePage: React.FC = () => {
   const sendMessage = (event: any) => {
     event.preventDefault();
 
-    if (message.trim()) {
+    if (message.trim().length < 2400) {
       if (typingTimeout.current) clearTimeout(typingTimeout.current);
 
       socket.emit("send__message", message.trim(), search);
@@ -93,6 +90,7 @@ export const MessagePage: React.FC = () => {
     };
   }, [socket, isConnected, isMutating]);
 
+  
   useEffect(() => {
     if (typing) {
       if (typingTimeout.current) clearTimeout(typingTimeout.current);
@@ -117,39 +115,7 @@ export const MessagePage: React.FC = () => {
     };
   }, [socket, isConnected, messages, isMutating, typing]);
 
-  const test = () => {
-    if (socket.connected) {
-      console.log("disconnect");
-      socket.disconnect();
-    } else {
-      console.log("connect");
-      socket.connect();
-    }
-  };
 
-  if (isLoading) {
-    return (
-      <div className={chat.chat__container}>
-        <div className={chat.chat__container__response}>
-          <CircularProgress />
-        </div>
-      </div>
-    );
-  }
-
-  if (!profileData) {
-    return (
-      <div className={chat.chat__container}>
-        <div className={chat.chat__container__response}>
-          <Typography></Typography>
-          <Typography variant="inherit" fontSize={32}>
-            User not found
-          </Typography>
-          <Link href="/messages">Back to Messages</Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className={chat.chat__container}>
@@ -204,7 +170,6 @@ export const MessagePage: React.FC = () => {
               m: "0 10px 0 0",
             }}
           >
-            {/* <button onClick={test}>tsst</button> */}
             <div className={chat.messages__input__emoji}>
               <EmojiButton setMessage={setMessage} />
             </div>
@@ -244,9 +209,33 @@ export const MessagePage: React.FC = () => {
           )}
         </div>
       </div>
-      {/* <div style={{minHeight: "760px"}}>
-        test
-      </div> */}
     </div>
   );
 };
+
+
+
+
+
+// if (!profileData) {
+//   return (
+//     <div className={chat.chat__container}>
+//       <div className={chat.chat__container__response}>
+//         <Typography></Typography>
+//         <Typography variant="inherit" fontSize={32}>
+//           User not found
+//         </Typography>
+//         <Link href="/messages">Back to Messages</Link>
+//       </div>
+//     </div>
+//   );
+// }
+  // if (isLoading) {
+  //   return (
+  //     <div className={chat.chat__container}>
+  //       <div className={chat.chat__container__response}>
+  //         <CircularProgress />
+  //       </div>
+  //     </div>
+  //   );
+  // }
