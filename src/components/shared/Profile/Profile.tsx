@@ -125,7 +125,7 @@ export const Profile: React.FC<Props> = ({
           width: "100%",
           m: "auto",
           "@media (max-width: 1170px)": {
-            height: "150dvh",
+            height: "115dvh",
             pb: "210px",
           },
         }}

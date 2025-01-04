@@ -17,7 +17,7 @@ export const PeoplesPage: React.FC = () => {
           height: "calc(100vh - 50px)",
           overflowY: "auto",
           "@media (max-width: 1170px)": {
-            height: "150dvh",
+            height: "115dvh",
             pb: "210px"
           },
         }}
