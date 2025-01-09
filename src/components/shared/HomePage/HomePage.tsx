@@ -15,8 +15,6 @@ export const HomePage: React.FC = () => {
 
   const { dataPosts, mutatePosts, error, loadMoreData, intersectionRef, isLoading } = usePosts();
 
-  console.log(dataPosts);
-
   useEffect(() => {
     setUpdated(loadMoreData);
   }, [loadMoreData]);

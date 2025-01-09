@@ -25,6 +25,7 @@ export const FollowingPage: React.FC = () => {
         sx={{
           height: "calc(100vh - 50px)",
           overflowY: "auto",
+          scrollbarWidth: "thin",
           "@media (max-width: 1170px)": {
             height: "115dvh",
             pb: "210px",

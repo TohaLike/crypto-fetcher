@@ -24,7 +24,7 @@ export const Header: React.FC = ({}) => {
               columnGap: "11px",
               textDecoration: "none",
               color: "inherit",
-              p: "0 10px",
+              // p: "0 10px",
             }}
           >
             <MainIcon />
@@ -50,7 +50,7 @@ export const Header: React.FC = ({}) => {
                   alt="avatar"
                   width={40}
                   height={40}
-                  style={{ objectFit: "cover", borderRadius: "50%", marginRight: "15px" }}
+                  style={{ objectFit: "cover", borderRadius: "50%" }}
                 />
               )}
             </Link>

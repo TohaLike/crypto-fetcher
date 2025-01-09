@@ -4,6 +4,7 @@
   width: 100%;
   height: calc(100vh - 50px);
   box-sizing: border-box;
+  padding: 0 10px;
 }
 
 .right {
@@ -20,6 +21,7 @@
   .article {
     grid-template-columns: auto;
     height: 100vh;
+    padding: 0;
   }
 
   .mobile {
