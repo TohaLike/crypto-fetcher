@@ -173,6 +173,13 @@ export const Profile: React.FC<Props> = ({
     );
 
   function Posts() {
+    if (sorted?.length === 0)
+      return (
+        <Box sx={{ width: "100%", display: "flex", justifyContent: "center", p: "30px 10px" }}>
+          <Typography sx={{ fontSize: "18px" }}>You have no posts</Typography>
+        </Box>
+      );
+
     return sorted?.map((post: any, index: number) => (
       <Post
         key={index}

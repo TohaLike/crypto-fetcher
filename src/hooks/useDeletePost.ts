@@ -10,6 +10,7 @@ export const useDeletePost = () => {
 
   return {
     triggerDeletePost: trigger,
-    deleteDataPost: data
+    deleteDataPost: data,
+    mutatingDelete: isMutating
   };
 };

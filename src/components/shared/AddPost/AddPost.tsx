@@ -154,6 +154,7 @@ export const AddPost: React.FC<Props> = ({ setAddedPost, addedPost }) => {
                 fontWeight={"500"}
                 bgcolor="#fff"
                 color="#000"
+                hover="#d9d9d9"
               />
             </Box>
           </Box>

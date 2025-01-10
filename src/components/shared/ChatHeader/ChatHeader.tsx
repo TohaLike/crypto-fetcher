@@ -43,8 +43,9 @@ export const ChatHeader: React.FC<Props> = ({ userData, userActivity }) => {
           >
             <Box
               sx={{
-                display: "none",
-                "@media (max-width: 1170px)": { display: "flex", alignItems: "center", pr: "10px" },
+                display: "flex",
+                alignItems: "center",
+                pr: "10px",
               }}
             >
               <LinkButton
