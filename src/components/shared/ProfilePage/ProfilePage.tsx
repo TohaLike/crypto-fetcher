@@ -7,6 +7,7 @@ import { useUserPosts } from "@/hooks/useUserPosts";
 import { SocketContext } from "@/app/(home)/provider";
 import { UserProfile } from "@/components/shared/UserProfile/UserProfile";
 import { Box, Typography } from "@mui/material";
+import { ProfileSkeleton } from "@/components/skeletons";
 
 export const ProfilePage: React.FC = () => {
   const { userData } = useContext<any>(SocketContext);
@@ -26,6 +27,13 @@ export const ProfilePage: React.FC = () => {
 
   //   return arr2;
   // }
+
+  if (profileLoading || isLoadingPosts)
+    return (
+      <>
+        <ProfileSkeleton />
+      </>
+    );
 
   if (!profileData)
     return (

@@ -208,12 +208,12 @@ export const UserProfile: React.FC<Props> = ({
     );
   }
 
-  if (profileLoading || postLoading)
-    return (
-      <>
-        <ProfileSkeleton />
-      </>
-    );
+  // if (profileLoading || postLoading)
+  //   return (
+  //     <>
+  //       <ProfileSkeleton />
+  //     </>
+  //   );
 
   function Posts() {
     if (posts?.length <= 0)

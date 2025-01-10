@@ -165,12 +165,6 @@ export const Profile: React.FC<Props> = ({
     );
   }
 
-  if (profileLoading || postLoading)
-    return (
-      <>
-        <ProfileSkeleton />
-      </>
-    );
 
   function Posts() {
     if (sorted?.length === 0)
