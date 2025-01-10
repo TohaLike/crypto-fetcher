@@ -27,7 +27,7 @@ export const PostImage: React.FC<Props> = ({ src, alt, onClick, rootWidth, rootH
           height={rootHeight || 0}
           sizes="100vw"
           draggable={false}
-          // priority={true}
+          priority={true}
           style={{ objectFit: "cover", aspectRatio: "1", ...props }}
         />
         {onClick && (

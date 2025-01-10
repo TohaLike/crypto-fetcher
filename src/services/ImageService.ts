@@ -15,6 +15,15 @@ export default class ImageService {
     }
   }
 
+  static async deletePost(arg: object) {
+    try {
+      const response = await axiosWithAuth.post("delete_post", arg);
+      return response.data;
+    } catch (e: any) {
+      console.log(e.response?.data?.message);
+    }
+  }
+
   static async getPosts(url: string | any) {
     try {
       const response = await axiosWithAuth.get<PostResponse[] | any>(url);

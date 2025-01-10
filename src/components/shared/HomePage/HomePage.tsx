@@ -68,6 +68,7 @@ export const HomePage: React.FC = () => {
             sorted?.map((e: any, i: number) => (
               <div className={homepage.post} key={`post-user-${i}`}>
                 <Post
+                  id={e?.id}
                   ownerId={e?.owner?._id}
                   owner={e?.owner?.name}
                   text={e?.text}

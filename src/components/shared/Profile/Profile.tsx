@@ -1,15 +1,18 @@
 "use client";
 import React, { ChangeEvent, useState } from "react";
 import profile from "./profile.module.scss";
-import { Box, Typography } from "@mui/material";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import { Avatar, Box, Menu, MenuItem, Typography } from "@mui/material";
 import { useUploadOptions } from "@/hooks/useUploadOptions";
 import { AddPost } from "@/components/shared/AddPost/AddPost";
 import { useLogout } from "@/hooks/useLogout";
 import { ActionButton, FriendsChip, Post, PostImage } from "@/components/ui";
-import LogoutIcon from "@mui/icons-material/Logout";
 import { PostResponse } from "@/models/posts/postsResponse";
 import { ProfileSkeleton } from "@/components/skeletons";
+
+import LogoutIcon from "@mui/icons-material/Logout";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 interface Props {
   userId?: string;
@@ -23,21 +26,32 @@ interface Props {
   postLoading?: boolean;
 }
 
-function ProfileButton({ onClick, title, type, mutateProfile }: any) {
+function ProfileButton({ onClick, title, type, disabled, minWidth }: any) {
   return (
     <ActionButton
       type={type}
       title={title || "btn"}
       onClick={onClick}
-      // disabled={!uploadMutation ? false : true}
-      // title={uploadMutation ? <CircularProgress size={"20px"} sx={{ zIndex: 100 }} /> : "Post"}
       width={"100%"}
+      minWidth={minWidth}
       minHeight={"30px"}
       fontSize={"17px"}
       fontWeight={"500"}
       bgcolor="#fff"
       color="#000"
+      disabled={disabled}
     />
+  );
+}
+
+function MenuItemCustom({ onClick, title, icon }: any) {
+  return (
+    <MenuItem
+      onClick={onClick}
+      sx={{ display: "flex", alignItems: "center", gap: "5px", justifyContent: "space-between" }}
+    >
+      {title || title} {icon && icon}
+    </MenuItem>
   );
 }
 
@@ -55,9 +69,11 @@ export const Profile: React.FC<Props> = ({
   const [file, setFile] = useState<File | null>(null);
   const [image, setImage] = useState<string>("");
   const [content, setContent] = useState<string>("");
-  const [loadNewImage, setLoadNewImage] = useState<any>([]);
-
   const [addedPost, setAddedPost] = useState<PostResponse[] | any>([]);
+  const [isOptions, setOpenOptions] = useState<boolean>(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const open = Boolean(anchorEl);
 
   const concatData = addedPost.concat(posts);
 
@@ -94,6 +110,61 @@ export const Profile: React.FC<Props> = ({
     }
   };
 
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleOpenOptions = () => {
+    setOpenOptions(true);
+    setAnchorEl(null);
+  };
+
+  const handleCloseOptions = () => {
+    setOpenOptions(false);
+    setFile(null);
+    setImage("");
+    setContent("");
+  };
+
+  const handleLogout = async () => {
+    await logoutTrigger().then(() => {
+      window.location.replace("/");
+    });
+  };
+
+  function ProfileImg() {
+    return options?.image?.length <= 0 ? (
+      <Avatar
+        sx={{
+          width: 170,
+          height: 170,
+          bgcolor: `#${options?.defaultColor || "1976d2"}`,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          "@media (max-width: 600px)": { width: 100, height: 100 },
+        }}
+      >
+        <Typography sx={{ fontSize: "48px", fontWeight: 100 }}>
+          {name && name[0]?.toUpperCase()}
+        </Typography>
+      </Avatar>
+    ) : (
+      <PostImage
+        src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]?.path}`}
+        alt={`image-profile`}
+        rootHeight={170}
+        rootWidth={170}
+        minWidth={170}
+        minHeight={170}
+      />
+    );
+  }
+
   if (profileLoading || postLoading)
     return (
       <>
@@ -105,7 +176,8 @@ export const Profile: React.FC<Props> = ({
     return sorted?.map((post: any, index: number) => (
       <Post
         key={index}
-        ownerId={post?.owner?.id}
+        id={post?._id}
+        ownerId={post?.owner?._id}
         owner={post?.owner?.name}
         text={post?.text}
         createdAt={post?.createdAt}
@@ -142,44 +214,52 @@ export const Profile: React.FC<Props> = ({
           />
 
           <div className={profile.user__profile__info}>
-            {file ? (
+            {isOptions ? (
               <div className={profile.user__profile__avatar}>
                 <div className={profile.modal__photo}>
-                  <PostImage src={image} alt={`image-profile`} rootHeight={200} rootWidth={200} />
+                  {!image ? (
+                    <ProfileImg />
+                  ) : (
+                    <PostImage src={image} alt={`image-profile`} rootHeight={170} rootWidth={170} />
+                  )}
                 </div>
                 <div className={profile.user__profile__buttons}>
-                  <ProfileButton type="submit" title="Save Image" onClick={uploadImage} />
-                  <ProfileButton type="submit" title="Cancel" onClick={() => setFile(null)} />
+                  <ProfileButton
+                    type="submit"
+                    title="Save Image"
+                    onClick={uploadImage}
+                    disabled={!image}
+                    minWidth={"120px"}
+                  />
+                  {/* <ProfileButton
+                    type="submit"
+                    title="Delete Image"
+                    onClick={uploadImage}
+                    // disabled={!image}
+                    minWidth={"120px"}
+                  /> */}
                   <label htmlFor="mainImageButton" className={profile.user__profile__change}>
                     Change image
                   </label>
+                </div>
+                <div className={profile.options}>
+                  <ActionButton
+                    icon={<CloseOutlinedIcon />}
+                    onClick={handleCloseOptions}
+                    type="button"
+                    minWidth={"30px"}
+                    minHeight={"30px"}
+                    bgcolor="transparent"
+                  />
                 </div>
               </div>
             ) : (
               <>
                 <div className={profile.user__profile__avatar}>
                   <div className={profile.user__profile__photo}>
-                    <label htmlFor="mainImageButton" className={profile.user__profile__upload}>
-                      {options?.image?.length <= 0 ? (
-                        <div
-                          className={profile.user__profile__upload__icon}
-                          style={{
-                            backgroundColor: `#${(options?.defaultColor || "1976d2") + "99"}`,
-                          }}
-                        >
-                          <AddPhotoAlternateIcon sx={{ width: 50, height: 50 }} />
-                        </div>
-                      ) : (
-                        <PostImage
-                          src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${options?.image[0]?.path}`}
-                          alt={`image-profile`}
-                          rootHeight={200}
-                          rootWidth={200}
-                          minWidth={200}
-                          minHeight={200}
-                        />
-                      )}
-                    </label>
+                    {/* <label htmlFor="mainImageButton" className={profile.user__profile__upload}> */}
+                    <ProfileImg />
+                    {/* </label> */}
                   </div>
                 </div>
                 <div className={profile.user__profile__surname}>
@@ -195,7 +275,6 @@ export const Profile: React.FC<Props> = ({
                     <Typography
                       variant="h2"
                       fontSize={"36px"}
-                      // fontFamily={"unset"}
                       whiteSpace={"nowrap"}
                       overflow={"hidden"}
                       textOverflow={"ellipsis"}
@@ -231,19 +310,44 @@ export const Profile: React.FC<Props> = ({
                     />
                   </Box>
 
-                  <div className={profile.logout}>
+                  <div className={profile.options}>
                     <ActionButton
-                      icon={<LogoutIcon />}
-                      onClick={async () => {
-                        await logoutTrigger().then(() => {
-                          window.location.replace("/");
-                        });
-                      }}
+                      icon={<SettingsIcon />}
+                      onClick={handleClick}
+                      ariaControls={open ? "options-menu" : undefined}
+                      ariaHaspopup="true"
+                      ariaExpanded={open ? "true" : undefined}
                       type="button"
                       minWidth={"30px"}
                       minHeight={"30px"}
                       bgcolor="transparent"
                     />
+                    <Menu
+                      id="demo-positioned-menu"
+                      aria-labelledby="demo-positioned-button"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "left",
+                      }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                    >
+                      <MenuItemCustom
+                        onClick={handleOpenOptions}
+                        icon={<ManageAccountsOutlinedIcon />}
+                        title={"Options"}
+                      />
+                      <MenuItemCustom
+                        onClick={handleLogout}
+                        icon={<LogoutIcon />}
+                        title={"Logout"}
+                      />
+                    </Menu>
                   </div>
                 </div>
               </>

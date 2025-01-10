@@ -19,8 +19,8 @@
       box-sizing: border-box;
       border-radius: 200px;
       overflow: hidden;
-      max-width: 200px;
-      max-height: 200px;
+      max-width: 170px;
+      max-height: 170px;
     }
 
     &__avatar {
@@ -38,23 +38,19 @@
       width: 100%;
     }
 
+    &__change {
+      min-width: 116px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     &__upload {
       cursor: pointer;
       transition: 0.2s;
-      border-radius: 50%;
-      // padding: 5px;
       box-sizing: border-box;
       min-width: 52px;
       min-height: 52px;
-      &__icon {
-        height: 200px;
-        width: 200px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid #fff;
-        border-radius: 50%;
-      }
     }
 
     &__upload:hover {
@@ -70,20 +66,17 @@
   }
 }
 
-.logout {
+.options {
   position: absolute;
   right: 10px;
-  bottom: 10px;
+  top: 10px;
 }
 
 .modal__photo {
-  max-width: 200px;
-  min-height: 200px;
-  border-radius: 50%;
+  max-width: 170px;
+  max-height: 170px;
+  border-radius: 200px;
   overflow: hidden;
-}
-
-.subscriptions {
 }
 
 @media (max-width: 700px) {
@@ -94,28 +87,16 @@
         max-width: 150px;
         max-height: 150px;
       }
-
-      &__upload {
-        &__icon {
-          height: 150px;
-          width: 150px;
-        }
-      }
       &__info {
         display: flex;
         flex-direction: column;
         align-items: center;
         column-gap: 10px;
       }
+
       &__surname {
         align-items: center;
       }
     }
-  }
-  .logout {
-    position: absolute;
-    top: 0;
-    right: 10px;
-    bottom: 10px;
   }
 }

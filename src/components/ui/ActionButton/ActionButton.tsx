@@ -17,6 +17,9 @@ interface Props {
   borderRadius?: string | number;
   endIcon?: React.ReactNode;
   [props: string]: any;
+  ariaControls?: string | undefined | any;
+  ariaHaspopup?: boolean | undefined | any;
+  ariaExpanded?: boolean | undefined | any;
 }
 
 export const ActionButton: React.FC<Props> = ({
@@ -33,11 +36,17 @@ export const ActionButton: React.FC<Props> = ({
   startIcon,
   endIcon,
   borderRadius,
+  ariaControls,
+  ariaExpanded,
+  ariaHaspopup,
   ...props
 }) => {
   return (
     <>
       <Button
+        aria-controls={ariaControls || undefined}
+        aria-haspopup={ariaHaspopup || undefined}
+        aria-expanded={ariaExpanded || undefined}
         variant={variant || "contained"}
         disabled={disabled}
         disableElevation

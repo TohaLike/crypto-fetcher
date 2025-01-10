@@ -226,6 +226,7 @@ export const UserProfile: React.FC<Props> = ({
     return posts?.map((post: any, index: number) => (
       <Post
         key={index}
+        id={post?._id}
         ownerId={post?.owner?._id}
         owner={post?.owner?.name}
         text={post?.text}
