@@ -26,7 +26,6 @@ export const MessagePage: React.FC = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState<string>("");
 
-
   const [typing, setTyping] = useState<boolean>(false);
   const [typingVisible, setTypingVisible] = useState<any>();
 
@@ -90,7 +89,6 @@ export const MessagePage: React.FC = () => {
     };
   }, [socket, isConnected, isMutating]);
 
-  
   useEffect(() => {
     if (typing) {
       if (typingTimeout.current) clearTimeout(typingTimeout.current);
@@ -115,7 +113,29 @@ export const MessagePage: React.FC = () => {
     };
   }, [socket, isConnected, messages, isMutating, typing]);
 
+  if (isLoading) {
+    return (
+      <div className={chat.chat__container}>
+        <div className={chat.chat__container__response}>
+          <CircularProgress />
+        </div>
+      </div>
+    );
+  }
 
+  if (!profileData) {
+    return (
+      <div className={chat.chat__container}>
+        <div className={chat.chat__container__response}>
+          <Typography></Typography>
+          <Typography variant="inherit" fontSize={32}>
+            User not found
+          </Typography>
+          <Link href="/messages">Back to Messages</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={chat.chat__container}>
@@ -213,10 +233,6 @@ export const MessagePage: React.FC = () => {
   );
 };
 
-
-
-
-
 // if (!profileData) {
 //   return (
 //     <div className={chat.chat__container}>
@@ -230,12 +246,12 @@ export const MessagePage: React.FC = () => {
 //     </div>
 //   );
 // }
-  // if (isLoading) {
-  //   return (
-  //     <div className={chat.chat__container}>
-  //       <div className={chat.chat__container__response}>
-  //         <CircularProgress />
-  //       </div>
-  //     </div>
-  //   );
-  // }
+// if (isLoading) {
+//   return (
+//     <div className={chat.chat__container}>
+//       <div className={chat.chat__container__response}>
+//         <CircularProgress />
+//       </div>
+//     </div>
+//   );
+// }
