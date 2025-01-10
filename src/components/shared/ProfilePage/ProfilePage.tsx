@@ -6,6 +6,7 @@ import { Profile } from "@/components/shared/Profile/Profile";
 import { useUserPosts } from "@/hooks/useUserPosts";
 import { SocketContext } from "@/app/(home)/provider";
 import { UserProfile } from "@/components/shared/UserProfile/UserProfile";
+import { Box, Typography } from "@mui/material";
 
 export const ProfilePage: React.FC = () => {
   const { userData } = useContext<any>(SocketContext);
@@ -26,6 +27,12 @@ export const ProfilePage: React.FC = () => {
   //   return arr2;
   // }
 
+  if (!profileData)
+    return (
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "center", p: "30px 10px" }}>
+        <Typography sx={{ fontSize: "18px" }}>User not found</Typography>
+      </Box>
+    );
 
   return (
     <>
